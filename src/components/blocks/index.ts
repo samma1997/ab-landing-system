@@ -1,0 +1,16 @@
+export { HeroSection } from "./HeroSection";
+export { SocialProofBar } from "./SocialProofBar";
+export { BenefitsSection } from "./BenefitsSection";
+export { TestimonialSection } from "./TestimonialSection";
+export { SpeakerSection } from "./SpeakerSection";
+export { EventDetailsSection } from "./EventDetailsSection";
+export { PricingSection } from "./PricingSection";
+export { FAQSection } from "./FAQSection";
+export { CountdownTimer } from "./CountdownTimer";
+export { HubSpotFormSection } from "./HubSpotFormSection";
+export { StripeCheckoutSection } from "./StripeCheckoutSection";
+export { ThankYouSection } from "./ThankYouSection";
+export { FooterSection } from "./FooterSection";
+export { HeroAnimated } from "./HeroAnimated";
+export { SocialProofAnimated } from "./SocialProofAnimated";
+export { BenefitsAnimated } from "./BenefitsAnimated";

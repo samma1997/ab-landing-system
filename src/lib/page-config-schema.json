@@ -1,0 +1,447 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abtg.com/schemas/landing-page-config.json",
+  "title": "ABTG Landing Page Configuration",
+  "description": "JSON schema for generating Alfio Bardolla Training Group landing pages via API",
+  "type": "object",
+  "required": ["slug", "template", "seo", "blocks"],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "URL slug for the page (lowercase, hyphens only)"
+    },
+    "template": {
+      "type": "string",
+      "enum": ["event", "course-sales", "webinar", "lead-magnet", "thank-you", "custom"],
+      "description": "Base template type"
+    },
+    "seo": {
+      "type": "object",
+      "required": ["title", "description"],
+      "properties": {
+        "title": { "type": "string", "maxLength": 70 },
+        "description": { "type": "string", "maxLength": 160 },
+        "ogImage": { "type": "string", "format": "uri" },
+        "noIndex": { "type": "boolean", "default": false },
+        "canonicalUrl": { "type": "string", "format": "uri" }
+      }
+    },
+    "tracking": {
+      "type": "object",
+      "properties": {
+        "googleAnalyticsId": { "type": "string" },
+        "facebookPixelId": { "type": "string" },
+        "hubspotTrackingCode": { "type": "string" },
+        "customScripts": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "theme": {
+      "type": "object",
+      "properties": {
+        "primaryColor": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+        "fontFamily": { "type": "string" }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/heroBlock" },
+          { "$ref": "#/$defs/socialProofBlock" },
+          { "$ref": "#/$defs/benefitsBlock" },
+          { "$ref": "#/$defs/testimonialBlock" },
+          { "$ref": "#/$defs/speakerBlock" },
+          { "$ref": "#/$defs/eventDetailsBlock" },
+          { "$ref": "#/$defs/pricingBlock" },
+          { "$ref": "#/$defs/faqBlock" },
+          { "$ref": "#/$defs/countdownBlock" },
+          { "$ref": "#/$defs/hubspotFormBlock" },
+          { "$ref": "#/$defs/stripeCheckoutBlock" },
+          { "$ref": "#/$defs/thankYouBlock" },
+          { "$ref": "#/$defs/footerBlock" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "ctaButton": {
+      "type": "object",
+      "required": ["text", "href"],
+      "properties": {
+        "text": { "type": "string" },
+        "href": { "type": "string" },
+        "variant": { "type": "string", "enum": ["primary", "secondary", "outline", "ghost"] },
+        "size": { "type": "string", "enum": ["sm", "md", "lg"] },
+        "openInNewTab": { "type": "boolean" }
+      }
+    },
+    "mediaAsset": {
+      "type": "object",
+      "required": ["src", "alt"],
+      "properties": {
+        "src": { "type": "string" },
+        "alt": { "type": "string" },
+        "width": { "type": "integer" },
+        "height": { "type": "integer" }
+      }
+    },
+    "blockBase": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "bgOverride": { "type": "string" },
+        "className": { "type": "string" },
+        "visibility": {
+          "type": "object",
+          "properties": {
+            "mobile": { "type": "boolean" },
+            "desktop": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "heroBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "layout", "headline", "cta"],
+      "properties": {
+        "type": { "const": "hero" },
+        "layout": { "type": "string", "enum": ["centered", "split", "video-bg"] },
+        "headline": { "type": "string" },
+        "headlineHtml": { "type": "string" },
+        "subheadline": { "type": "string" },
+        "cta": { "$ref": "#/$defs/ctaButton" },
+        "secondaryCta": { "$ref": "#/$defs/ctaButton" },
+        "heroImage": { "$ref": "#/$defs/mediaAsset" },
+        "heroVideo": {
+          "type": "object",
+          "required": ["src"],
+          "properties": {
+            "src": { "type": "string" },
+            "posterImage": { "type": "string" },
+            "autoplay": { "type": "boolean" }
+          }
+        },
+        "badge": { "type": "string" },
+        "trustIndicators": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "socialProofBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "layout"],
+      "properties": {
+        "type": { "const": "social-proof" },
+        "layout": { "type": "string", "enum": ["stats", "logos", "combined"] },
+        "stats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "label"],
+            "properties": {
+              "value": { "type": "string" },
+              "label": { "type": "string" },
+              "prefix": { "type": "string" },
+              "suffix": { "type": "string" }
+            }
+          }
+        },
+        "logos": { "type": "array", "items": { "$ref": "#/$defs/mediaAsset" } },
+        "mediaLogos": { "type": "array", "items": { "$ref": "#/$defs/mediaAsset" } },
+        "description": { "type": "string" }
+      }
+    },
+    "benefitsBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "layout", "benefits"],
+      "properties": {
+        "type": { "const": "benefits" },
+        "layout": { "type": "string", "enum": ["grid-3", "grid-2", "alternating"] },
+        "sectionTitle": { "type": "string" },
+        "sectionSubtitle": { "type": "string" },
+        "benefits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["icon", "title", "description"],
+            "properties": {
+              "icon": { "type": "string" },
+              "title": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "testimonialBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "layout", "testimonials"],
+      "properties": {
+        "type": { "const": "testimonials" },
+        "layout": { "type": "string", "enum": ["carousel", "grid", "featured"] },
+        "sectionTitle": { "type": "string" },
+        "testimonials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "quote"],
+            "properties": {
+              "name": { "type": "string" },
+              "role": { "type": "string" },
+              "avatar": { "$ref": "#/$defs/mediaAsset" },
+              "quote": { "type": "string" },
+              "video": {
+                "type": "object",
+                "required": ["src"],
+                "properties": {
+                  "src": { "type": "string" },
+                  "posterImage": { "type": "string" }
+                }
+              },
+              "rating": { "type": "integer", "minimum": 1, "maximum": 5 }
+            }
+          }
+        }
+      }
+    },
+    "speakerBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "name", "title", "bio", "photo", "credentials"],
+      "properties": {
+        "type": { "const": "speaker" },
+        "name": { "type": "string" },
+        "title": { "type": "string" },
+        "bio": { "type": "string" },
+        "bioHtml": { "type": "string" },
+        "photo": { "$ref": "#/$defs/mediaAsset" },
+        "credentials": { "type": "array", "items": { "type": "string" } },
+        "books": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["title", "coverImage"],
+            "properties": {
+              "title": { "type": "string" },
+              "coverImage": { "$ref": "#/$defs/mediaAsset" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "eventDetailsBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "eventName", "date", "dateISO", "location"],
+      "properties": {
+        "type": { "const": "event-details" },
+        "eventName": { "type": "string" },
+        "date": { "type": "string" },
+        "dateISO": { "type": "string", "format": "date-time" },
+        "endDate": { "type": "string" },
+        "location": { "type": "string" },
+        "locationDetails": { "type": "string" },
+        "mapEmbedUrl": { "type": "string" },
+        "isOnline": { "type": "boolean" },
+        "agenda": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["time", "title"],
+            "properties": {
+              "time": { "type": "string" },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "speaker": { "type": "string" }
+            }
+          }
+        },
+        "cta": { "$ref": "#/$defs/ctaButton" }
+      }
+    },
+    "pricingBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "tiers"],
+      "properties": {
+        "type": { "const": "pricing" },
+        "sectionTitle": { "type": "string" },
+        "sectionSubtitle": { "type": "string" },
+        "tiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "price", "features", "cta"],
+            "properties": {
+              "name": { "type": "string" },
+              "badge": { "type": "string" },
+              "price": { "type": "string" },
+              "originalPrice": { "type": "string" },
+              "period": { "type": "string" },
+              "description": { "type": "string" },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["text", "included"],
+                  "properties": {
+                    "text": { "type": "string" },
+                    "included": { "type": "boolean" }
+                  }
+                }
+              },
+              "cta": { "$ref": "#/$defs/ctaButton" },
+              "highlighted": { "type": "boolean" }
+            }
+          }
+        },
+        "guarantee": { "type": "string" }
+      }
+    },
+    "faqBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "items"],
+      "properties": {
+        "type": { "const": "faq" },
+        "sectionTitle": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["question", "answer"],
+            "properties": {
+              "question": { "type": "string" },
+              "answer": { "type": "string" },
+              "answerHtml": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "countdownBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "targetDate"],
+      "properties": {
+        "type": { "const": "countdown" },
+        "targetDate": { "type": "string", "format": "date-time" },
+        "headline": { "type": "string" },
+        "subheadline": { "type": "string" },
+        "cta": { "$ref": "#/$defs/ctaButton" },
+        "expiredMessage": { "type": "string" },
+        "style": { "type": "string", "enum": ["inline", "banner", "floating"] }
+      }
+    },
+    "hubspotFormBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "portalId", "formId"],
+      "properties": {
+        "type": { "const": "hubspot-form" },
+        "portalId": { "type": "string" },
+        "formId": { "type": "string" },
+        "sectionTitle": { "type": "string" },
+        "sectionSubtitle": { "type": "string" },
+        "redirectUrl": { "type": "string" },
+        "sideContent": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "type": "string", "enum": ["image", "benefits"] },
+            "image": { "$ref": "#/$defs/mediaAsset" },
+            "benefits": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "stripeCheckoutBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "priceId", "mode", "successUrl", "cancelUrl"],
+      "properties": {
+        "type": { "const": "stripe-checkout" },
+        "priceId": { "type": "string" },
+        "mode": { "type": "string", "enum": ["payment", "subscription"] },
+        "sectionTitle": { "type": "string" },
+        "sectionSubtitle": { "type": "string" },
+        "successUrl": { "type": "string" },
+        "cancelUrl": { "type": "string" },
+        "productSummary": {
+          "type": "object",
+          "required": ["name", "description", "price"],
+          "properties": {
+            "name": { "type": "string" },
+            "description": { "type": "string" },
+            "price": { "type": "string" },
+            "image": { "$ref": "#/$defs/mediaAsset" },
+            "features": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "thankYouBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "headline", "message"],
+      "properties": {
+        "type": { "const": "thank-you" },
+        "headline": { "type": "string" },
+        "message": { "type": "string" },
+        "messageHtml": { "type": "string" },
+        "nextSteps": { "type": "array", "items": { "type": "string" } },
+        "cta": { "$ref": "#/$defs/ctaButton" },
+        "socialShare": {
+          "type": "object",
+          "required": ["text", "url"],
+          "properties": {
+            "text": { "type": "string" },
+            "url": { "type": "string" }
+          }
+        },
+        "calendarLink": { "type": "string" }
+      }
+    },
+    "footerBlock": {
+      "allOf": [{ "$ref": "#/$defs/blockBase" }],
+      "type": "object",
+      "required": ["id", "type", "companyName", "links"],
+      "properties": {
+        "type": { "const": "footer" },
+        "companyName": { "type": "string" },
+        "companyInfo": { "type": "string" },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["text", "href"],
+            "properties": {
+              "text": { "type": "string" },
+              "href": { "type": "string" }
+            }
+          }
+        },
+        "socialLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["platform", "url", "icon"],
+            "properties": {
+              "platform": { "type": "string" },
+              "url": { "type": "string" },
+              "icon": { "type": "string" }
+            }
+          }
+        },
+        "disclaimers": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}
