@@ -190,7 +190,7 @@ export function StackingCards({
                 >
                   {/* ── ABTG Card Style (matches PillarCards/NumberedPhases) ── */}
                   <div
-                    className={`rounded-2xl p-6 sm:p-8 transition-all duration-300 ${
+                    className={`rounded-2xl p-6 sm:p-8 transition-all duration-300 min-h-[320px] ${
                       isDark
                         ? 'bg-[#1e293b] border border-white/10 hover:border-[#EF7B11]/30 shadow-lg'
                         : 'bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#EF7B11]/20'
