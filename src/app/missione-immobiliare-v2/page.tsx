@@ -841,10 +841,10 @@ export default function MissioneImmobiliareV2Page() {
 
           {/* Links */}
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8">
-            <a href="https://lp.alfiobardolla.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Privacy Policy</a>
-            <a href="https://lp.alfiobardolla.com/cookie-policy/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Cookie Policy</a>
-            <a href="https://lp.alfiobardolla.com/condizioni-di-vendita/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Condizioni di Vendita</a>
-            <a href="https://lp.alfiobardolla.com/disclaimer/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Disclaimer</a>
+            <a href="https://www.alfiobardolla.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Privacy Policy</a>
+            <a href="https://www.alfiobardolla.com/cookie-policy/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Cookie Policy</a>
+            <a href="https://www.alfiobardolla.com/condizioni-di-vendita/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Condizioni di Vendita</a>
+            <a href="https://www.alfiobardolla.com/disclaimer" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Disclaimer</a>
           </div>
 
           <div className="text-center space-y-3">
