@@ -78,6 +78,11 @@ const BLOCK_PROPS_MAP: Record<string, string[]> = {
   'form-section': ['title', 'formFields', 'eventDetails', 'ctaText', 'formAction', 'bgColor', 'preTitle', 'titleHighlight', 'subtitle', 'requisitoTitle', 'requisitoText', 'ctaSubtext', 'privacyText', 'bonusBadge', 'id'],
   'cta-divider': ['ctaText', 'text', 'ctaHref', 'variant', 'size', 'id'],
   'footer-abtg': ['companyName', 'companyAddress', 'companyVat', 'logo', 'links', 'socialLinks', 'disclaimers', 'copyrightYear', 'id'],
+  'horizontal-scroll-cards': ['title', 'titleHighlight', 'subtitle', 'cards', 'bgColor', 'cardWidth', 'gap', 'id'],
+}
+
+const BLOCK_DEMO_LINKS: Record<string, string> = {
+  'horizontal-scroll-cards': `${BASE_PATH}/test-horizontal`,
 }
 
 const CATEGORY_DISPLAY: Record<BlockCategory, { label: string; color: string; bg: string }> = {
@@ -570,16 +575,31 @@ function BlockCard({ block, props, dark, cardBg, textPrimary, textSecondary, tex
         <h3 className={`text-sm font-bold ${textPrimary}`}>{block.name}</h3>
         <p className={`mt-1 text-xs leading-relaxed ${textSecondary}`}>{block.description}</p>
 
-        {/* Props toggle */}
-        <button
-          onClick={() => setShowProps(!showProps)}
-          className={`mt-3 flex items-center gap-1 text-[11px] font-semibold transition-colors ${
-            dark ? 'text-[#EF7B11]/80 hover:text-[#EF7B11]' : 'text-[#EF7B11] hover:text-[#d96a0e]'
-          }`}
-        >
-          <ChevronRight className={`h-3 w-3 transition-transform ${showProps ? 'rotate-90' : ''}`} />
-          {props.length} props
-        </button>
+        {/* Actions row */}
+        <div className="mt-3 flex items-center gap-3">
+          <button
+            onClick={() => setShowProps(!showProps)}
+            className={`flex items-center gap-1 text-[11px] font-semibold transition-colors ${
+              dark ? 'text-[#EF7B11]/80 hover:text-[#EF7B11]' : 'text-[#EF7B11] hover:text-[#d96a0e]'
+            }`}
+          >
+            <ChevronRight className={`h-3 w-3 transition-transform ${showProps ? 'rotate-90' : ''}`} />
+            {props.length} props
+          </button>
+          {BLOCK_DEMO_LINKS[block.id] && (
+            <a
+              href={BLOCK_DEMO_LINKS[block.id]}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center gap-1 text-[11px] font-semibold transition-colors ${
+                dark ? 'text-cyan-400/80 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'
+              }`}
+            >
+              <Eye className="h-3 w-3" />
+              Demo live
+            </a>
+          )}
+        </div>
 
         {showProps && (
           <div className={`mt-2 rounded-lg border p-3 ${dark ? 'border-white/5 bg-white/[0.02]' : 'border-gray-100 bg-gray-50'}`}>
@@ -736,6 +756,20 @@ function BlockMiniPreview({ blockId, dark }: { blockId: string; dark: boolean })
           </div>
           <div className="h-7 w-20 rounded-md bg-white/20" />
         </div>
+      </div>
+    ),
+    'horizontal-scroll-cards': (
+      <div className="flex h-full items-center gap-2 overflow-hidden p-4">
+        {/* Arrow left hint */}
+        <div className={`text-[10px] ${base}`}>&#8592;</div>
+        {[1,2,3,4].map(i => (
+          <div key={i} className={`flex h-24 w-20 flex-shrink-0 flex-col gap-1.5 rounded-lg border p-2 ${dark ? 'border-white/5 bg-white/[0.02]' : 'border-gray-200 bg-white'}`}>
+            <div className="h-4 w-10 rounded text-[10px] font-black" style={{ color: accent }}>{['87%','1.2K','30K','120'][i-1]}</div>
+            <div className={`h-1.5 w-full rounded ${dark ? 'bg-white/10' : 'bg-gray-200'}`} />
+            <div className={`h-1.5 w-3/4 rounded ${dark ? 'bg-white/5' : 'bg-gray-100'}`} />
+          </div>
+        ))}
+        <div className={`text-[10px] ${base}`}>&#8594;</div>
       </div>
     ),
     'footer-abtg': (
