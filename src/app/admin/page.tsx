@@ -93,6 +93,7 @@ const CATEGORY_DISPLAY: Record<BlockCategory, { label: string; color: string; bg
   content: { label: 'Contenuto', color: 'text-emerald-700 dark:text-emerald-300', bg: 'bg-emerald-100 dark:bg-emerald-500/20' },
   conversion: { label: 'Conversione', color: 'text-orange-700 dark:text-orange-300', bg: 'bg-orange-100 dark:bg-orange-500/20' },
   layout: { label: 'Layout', color: 'text-gray-700 dark:text-gray-300', bg: 'bg-gray-200 dark:bg-gray-500/20' },
+  animation: { label: 'Animazione', color: 'text-cyan-700 dark:text-cyan-300', bg: 'bg-cyan-100 dark:bg-cyan-500/20' },
 }
 
 // ────────────────────────────────────────────────────────

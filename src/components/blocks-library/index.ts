@@ -52,7 +52,7 @@ import { FooterABTG } from './FooterABTG'
 import { HorizontalScrollCards } from './HorizontalScrollCards'
 import { StackingCards } from './StackingCards'
 
-export type BlockCategory = 'hero' | 'social-proof' | 'content' | 'conversion' | 'layout'
+export type BlockCategory = 'hero' | 'social-proof' | 'content' | 'conversion' | 'layout' | 'animation'
 
 export interface BlockCatalogEntry {
   id: string
@@ -155,7 +155,7 @@ export const BLOCK_CATALOG: BlockCatalogEntry[] = [
   {
     id: 'horizontal-scroll-cards',
     name: 'Horizontal Scroll Cards',
-    category: 'content',
+    category: 'animation',
     component: HorizontalScrollCards as unknown as React.ComponentType<Record<string, unknown>>,
     description:
       'Sezione con card grandi che scorrono orizzontalmente con pin ScrollTrigger. Supporta card con stat, citazioni e contenuti. Su mobile le card si impilano verticalmente.',
@@ -163,7 +163,7 @@ export const BLOCK_CATALOG: BlockCatalogEntry[] = [
   {
     id: 'stacking-cards',
     name: 'Stacking Cards',
-    category: 'content',
+    category: 'animation',
     component: StackingCards as unknown as React.ComponentType<Record<string, unknown>>,
     description:
       'Card che salgono dal basso con effetto ventaglio durante lo scroll. Sezione sticky con pin GSAP ScrollTrigger, ideale per step di processo o fasi di un percorso.',
