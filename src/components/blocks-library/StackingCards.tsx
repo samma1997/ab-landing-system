@@ -50,9 +50,9 @@ export function StackingCards({
     const center = (total - 1) / 2
     const offset = i - center
     return {
-      x: offset * 180, // px from center
-      rotation: offset * 5,
-      y: Math.abs(offset) * 20,
+      x: offset * 300, // px from center — enough space to not overlap
+      rotation: offset * 4,
+      y: Math.abs(offset) * 15,
     }
   }
 
@@ -142,7 +142,7 @@ export function StackingCards({
       ref={sectionRef}
       id={id}
       className={`${bgClasses[bgColor]} relative`}
-      style={{ height: `${(total + 1) * 100}vh` }}
+      style={{ height: `${(total + 1) * 70}vh` }}
     >
       {/* ═══ DESKTOP ═══ */}
       <div
@@ -192,7 +192,7 @@ export function StackingCards({
                   <div
                     className={`rounded-2xl p-6 sm:p-8 transition-all duration-300 ${
                       isDark
-                        ? 'bg-white/5 border border-white/10 hover:border-[#EF7B11]/30'
+                        ? 'bg-[#1e293b] border border-white/10 hover:border-[#EF7B11]/30 shadow-lg'
                         : 'bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#EF7B11]/20'
                     }`}
                   >
