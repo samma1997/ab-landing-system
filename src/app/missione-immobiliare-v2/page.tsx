@@ -287,10 +287,10 @@ export default function MissioneImmobiliareV2Page() {
       </div>
 
       {/* ════════════════════════════════════════════════════════════════════════
-          HERO SECTION — dark bg (#1e293b), same layout as commodity page
+          HERO SECTION — split layout: testo sx + form dx (come early-birds)
           ════════════════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden">
-        {/* Full background image like commodity page */}
+      <section className="relative overflow-hidden rounded-b-[20px] sm:rounded-b-[30px]">
+        {/* Background image with overlay */}
         <div className="absolute inset-0">
           <Image
             src={img("/images/missione-immobiliare/ChatGPT-Image-Feb-27-2026-10_48_00-PM-1024x683.webp")}
@@ -299,72 +299,95 @@ export default function MissioneImmobiliareV2Page() {
             className="object-cover"
             priority
           />
-          {/* Dark gradient overlay — exactly like commodity page */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1e293b]/85 via-[#1e293b]/75 to-[#1e293b]/90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1e293b]/90 via-[#1e293b]/80 to-[#1e293b]/60" />
         </div>
 
-        {/* Centered content — same as commodity page layout */}
-        <div className="relative z-10 max-w-[900px] mx-auto px-4 sm:px-6 py-14 sm:py-20 lg:py-28 text-center">
-          {/* Trustpilot — exact ABTG styling */}
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <span className="text-white text-sm font-medium">
-              Eccezionale
-            </span>
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <TrustpilotStar key={i} />
-              ))}
+        <div className="relative z-10 max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* LEFT — Testo */}
+            <div>
+              {/* Trustpilot */}
+              <div className="flex items-center gap-2 mb-5">
+                <span className="text-white text-sm font-medium">Eccezionale</span>
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <TrustpilotStar key={i} />
+                  ))}
+                </div>
+                <span className="text-white/70 text-xs">4,8</span>
+              </div>
+
+              {/* Title */}
+              <h1
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-[1.1]"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+              >
+                <span className="text-[#EF7B11]">Missione Immobiliare</span>
+                {' '}dove inizia la tua prima operazione!
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-white/90 text-base sm:text-lg mb-6 leading-relaxed">
+                Scopri come centinaia di persone stanno realizzando le loro prime operazioni immobiliari sopra i 30.000 euro di profitto nel 2026 - anche se non l&apos;hai mai fatto
+              </p>
+
+              {/* Disclaimer */}
+              <p className="text-white/40 text-xs italic mb-6">
+                I risultati mostrati sono basati su casi reali di studenti di Alfio Bardolla Training Group e non costituiscono garanzia di guadagno. I risultati individuali dipendono da impegno, capitale, contesto di mercato e altri fattori.
+              </p>
+
+              {/* Lead magnet */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <p className="text-white text-sm leading-relaxed">
+                  <span className="text-[#EF7B11] font-bold">BONUS GRATUITO:</span>{' '}
+                  Partecipando a &ldquo;Missione Immobiliare&rdquo; riceverai gratis &ldquo;La tua prima operazione da 30k&rdquo;, una videoguida che mostra i principi di Alfio Bardolla Training Group per lanciare un&apos;operazione immobiliare da almeno 30.000 euro di profitto
+                </p>
+              </div>
             </div>
-            <span className="text-white/70 text-xs">
-              Valutata 4.8 su 5 sulla base di 1400 recensioni su Trustpilot
-            </span>
-          </div>
 
-          {/* Pre-title */}
-          <p className="text-white/80 text-sm sm:text-base mb-5">
-            Per chi intende investire almeno 20.000&nbsp;&euro; nell&apos;immobiliare:
-          </p>
-
-          {/* Title — orange highlighted like commodity page */}
-          <h1
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-[1.1]"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-          >
-            <span className="inline-block bg-[#EF7B11] px-4 py-2 rounded-md">
-              Missione
-            </span>{' '}
-            <span className="inline-block bg-[#EF7B11] px-4 py-2 rounded-md mt-2">
-              Immobiliare
-            </span>
-          </h1>
-
-          {/* Subtitle — bold white */}
-          <p
-            className="text-white font-semibold text-lg sm:text-xl lg:text-2xl mb-4 max-w-2xl mx-auto leading-snug"
-          >
-            Scopri come centinaia di persone stanno realizzando le loro prime operazioni immobiliari sopra i 30.000 euro di profitto nel 2026 - anche se non l&apos;hai mai fatto
-          </p>
-
-          {/* Small text */}
-          <p className="text-white/60 text-sm sm:text-base mb-8 max-w-xl mx-auto">
-            I risultati mostrati sono basati su casi reali di studenti di Alfio Bardolla Training Group e non costituiscono garanzia di guadagno. I risultati individuali dipendono da impegno, capitale, contesto di mercato e altri fattori.
-          </p>
-
-          {/* CTA */}
-          <div className="mb-4">
-            <CTAButton>Richiedi il tuo posto gratuito</CTAButton>
-          </div>
-
-          <p className="text-white/50 text-sm">
-            (Partecipa da casa dal 27 al 30 Aprile)
-          </p>
-
-          {/* Lead magnet */}
-          <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-xl p-5 max-w-lg mx-auto text-left">
-            <p className="text-white text-sm leading-relaxed">
-              <span className="text-[#EF7B11] font-bold">BONUS GRATUITO:</span>{' '}
-              Partecipando a Missione Immobiliare riceverai gratis &ldquo;La tua prima operazione da 30k&rdquo;, una videoguida pratica per impostare la tua prima operazione.
-            </p>
+            {/* RIGHT — Form */}
+            <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8" id="partecipa">
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    placeholder="Nome*"
+                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Cognome*"
+                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="email"
+                    placeholder="testt@gmail.com"
+                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
+                  />
+                  <input
+                    type="tel"
+                    placeholder="+39"
+                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
+                  />
+                </div>
+                <label className="flex items-start gap-2 text-xs text-[#67768e]">
+                  <input type="checkbox" className="mt-1 shrink-0" />
+                  <span>Presa visione e accettazione della Privacy Policy inclusa la possibilita di ricevere chiamate esplicative delle risorse gratuite scaricate*</span>
+                </label>
+                <button
+                  type="button"
+                  className="w-full py-4 rounded-full text-lg font-bold uppercase tracking-wide bg-[#22c55e] hover:bg-[#16a34a] text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-[0_8px_30px_rgba(34,197,94,0.4)]"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                >
+                  SI, VOGLIO ISCRIVERMI AL WORKSHOP &ldquo;MISSIONE IMMOBILIARE&rdquo;
+                </button>
+                <p className="text-center text-xs text-[#67768e]">
+                  (Partecipa da casa dal 27 al 30 Aprile)
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
