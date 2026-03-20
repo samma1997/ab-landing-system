@@ -156,7 +156,7 @@ export function HorizontalScrollCards({
       {/* Scoped card width for desktop */}
       <style>{`
         @media (min-width: 768px) {
-          .${cardWidthClass} { width: ${cardWidth}; min-width: 450px; }
+          .${cardWidthClass} { width: ${cardWidth}; min-width: ${cardWidth}; max-width: ${cardWidth}; }
         }
       `}</style>
       {/* Section heading — always in normal flow */}
@@ -197,7 +197,7 @@ export function HorizontalScrollCards({
           ref={trackRef}
           className="
             flex flex-col gap-6 px-4 pb-16
-            md:flex-row md:flex-nowrap md:items-stretch md:pb-0 md:py-12
+            md:flex-row md:flex-nowrap md:items-center md:pb-0 md:min-h-screen
           "
           style={{
             willChange: 'transform',
@@ -225,9 +225,7 @@ export function HorizontalScrollCards({
                 }
               `}
               style={{
-                width: '100%',
-                maxWidth: '100%',
-                minHeight: '380px',
+                minHeight: '350px',
               }}
             >
 

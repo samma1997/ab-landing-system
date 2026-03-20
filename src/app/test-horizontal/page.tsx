@@ -73,7 +73,7 @@ export default function TestHorizontalPage() {
         subtitle="Risultati concreti dai nostri studenti e dal metodo ABTG applicato sul campo."
         cards={sampleCards}
         bgColor="dark"
-        cardWidth="520px"
+        cardWidth="420px"
         gap={36}
         id="risultati"
       />
@@ -122,7 +122,7 @@ export default function TestHorizontalPage() {
           },
         ]}
         bgColor="light"
-        cardWidth="480px"
+        cardWidth="400px"
         gap={28}
       />
 
