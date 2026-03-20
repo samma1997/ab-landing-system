@@ -289,7 +289,7 @@ export default function MissioneImmobiliareV2Page() {
       {/* ════════════════════════════════════════════════════════════════════════
           HERO SECTION — split layout: testo sx + form dx (come early-birds)
           ════════════════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden rounded-b-[20px] sm:rounded-b-[30px]">
+      <section className="relative overflow-hidden">
         {/* Background image with overlay */}
         <div className="absolute inset-0">
           <Image
@@ -337,8 +337,8 @@ export default function MissioneImmobiliareV2Page() {
               </p>
 
               {/* Lead magnet */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                <p className="text-white text-sm leading-relaxed">
+              <div className="bg-[#1e293b]/80 backdrop-blur-md border border-white/10 rounded-xl p-5">
+                <p className="text-white text-sm sm:text-base leading-relaxed">
                   <span className="text-[#EF7B11] font-bold">BONUS GRATUITO:</span>{' '}
                   Partecipando a &ldquo;Missione Immobiliare&rdquo; riceverai gratis &ldquo;La tua prima operazione da 30k&rdquo;, una videoguida che mostra i principi di Alfio Bardolla Training Group per lanciare un&apos;operazione immobiliare da almeno 30.000 euro di profitto
                 </p>
@@ -346,42 +346,52 @@ export default function MissioneImmobiliareV2Page() {
             </div>
 
             {/* RIGHT — Form */}
-            <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8" id="partecipa">
+            <div className="bg-white rounded-2xl shadow-2xl p-5 sm:p-8" id="partecipa">
               <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    placeholder="Nome*"
-                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Cognome*"
-                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-[#1e293b] mb-1.5">Nome *</label>
+                    <input
+                      type="text"
+                      placeholder="Il tuo nome"
+                      className="w-full px-4 py-4 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[#1e293b] mb-1.5">Cognome *</label>
+                    <input
+                      type="text"
+                      placeholder="Il tuo cognome"
+                      className="w-full px-4 py-4 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
+                    />
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-[#1e293b] mb-1.5">Email *</label>
                   <input
                     type="email"
-                    placeholder="testt@gmail.com"
-                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="+39"
-                    className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
+                    placeholder="La tua email"
+                    className="w-full px-4 py-4 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
                   />
                 </div>
-                <label className="flex items-start gap-2 text-xs text-[#67768e]">
-                  <input type="checkbox" className="mt-1 shrink-0" />
-                  <span>Presa visione e accettazione della Privacy Policy inclusa la possibilita di ricevere chiamate esplicative delle risorse gratuite scaricate*</span>
+                <div>
+                  <label className="block text-sm font-medium text-[#1e293b] mb-1.5">Telefono *</label>
+                  <input
+                    type="tel"
+                    placeholder="Il tuo numero"
+                    className="w-full px-4 py-4 border border-gray-200 rounded-lg text-[#1e293b] text-base outline-none focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20 transition-all"
+                  />
+                </div>
+                <label className="flex items-start gap-2.5 text-xs text-[#67768e] pt-1">
+                  <input type="checkbox" className="mt-0.5 shrink-0 w-4 h-4" />
+                  <span>Presa visione e accettazione della <a href="https://www.alfiobardolla.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="underline">Privacy Policy</a> inclusa la possibilita di ricevere chiamate esplicative delle risorse gratuite scaricate*</span>
                 </label>
                 <button
                   type="button"
-                  className="w-full py-4 rounded-full text-lg font-bold uppercase tracking-wide bg-[#22c55e] hover:bg-[#16a34a] text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-[0_8px_30px_rgba(34,197,94,0.4)]"
+                  className="w-full py-5 rounded-full text-base sm:text-lg font-bold uppercase tracking-wide bg-[#22c55e] hover:bg-[#16a34a] text-white transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] shadow-lg hover:shadow-[0_8px_30px_rgba(34,197,94,0.4)] mt-2"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
-                  SI, VOGLIO ISCRIVERMI AL WORKSHOP &ldquo;MISSIONE IMMOBILIARE&rdquo;
+                  SI! VOGLIO ISCRIVERMI AL WORKSHOP
                 </button>
                 <p className="text-center text-xs text-[#67768e]">
                   (Partecipa da casa dal 27 al 30 Aprile)
@@ -884,10 +894,8 @@ export default function MissioneImmobiliareV2Page() {
 
           <hr className="my-8 border-white/10" />
 
-          <p className="text-white/30 text-xs leading-relaxed max-w-4xl mx-auto text-center">
-            Disclaimer: I risultati presentati non costituiscono una garanzia di rendimenti futuri. Ogni investimento immobiliare comporta dei rischi.
-            Le testimonianze e i case study riportati rappresentano risultati individuali e non sono necessariamente rappresentativi di cio che tutti possono ottenere.
-            Prima di effettuare qualsiasi investimento, si consiglia di valutare attentamente la propria situazione finanziaria e di consultare un professionista qualificato.
+          <p className="text-white/30 text-xs leading-relaxed max-w-4xl mx-auto text-center italic">
+            &ldquo;I risultati mostrati sono basati su casi reali di studenti di Alfio Bardolla Training Group e non costituiscono garanzia di guadagno. I risultati individuali dipendono da impegno, capitale, contesto di mercato e altri fattori.&rdquo;
           </p>
         </div>
       </footer>
