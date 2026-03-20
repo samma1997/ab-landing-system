@@ -435,7 +435,7 @@ export default function MissioneImmobiliareV2Page() {
           ════════════════════════════════════════════════════════════════════════ */}
       <section className="bg-white py-12 sm:py-16">
         <div className="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {CHECKMARKS.map((item, i) => (
               <div
                 key={i}
@@ -615,7 +615,7 @@ export default function MissioneImmobiliareV2Page() {
             I <span className="text-[#E57713]">Coach</span> che ti guideranno durante Missione Immobiliare
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {SPEAKERS.map((speaker, i) => (
               <div
                 key={i}
