@@ -26,10 +26,6 @@ export interface StackingCardsProps {
   id?: string
 }
 
-// ── Accent colors for bottom area and badge per card ──
-const CARD_ACCENTS = ['#e8e0f0', '#d0e8f0', '#f0e8d0', '#d0f0e0', '#f0d0d8', '#e0e0f0']
-const BADGE_COLORS = ['#f5c6c6', '#c6e8c6', '#f5f0c6', '#c6d8f5', '#f5d0e0', '#d0f0f0']
-
 // ── Component ──────────────────────────────────────────
 
 export function StackingCards({
@@ -44,10 +40,21 @@ export function StackingCards({
   const sectionRef = useRef<HTMLElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement[]>([])
-  const mobileTrackRef = useRef<HTMLDivElement>(null)
   const [mobileIndex, setMobileIndex] = useState(0)
 
   const isDark = bgColor === 'dark'
+
+  // Fan layout: spread cards from center with slight rotation + offset
+  const total = cards.length
+  const getFan = (i: number) => {
+    const center = (total - 1) / 2
+    const offset = i - center
+    return {
+      x: offset * 180, // px from center
+      rotation: offset * 5,
+      y: Math.abs(offset) * 20,
+    }
+  }
 
   useGSAP(
     () => {
@@ -58,61 +65,69 @@ export function StackingCards({
 
       const mm = gsap.matchMedia()
 
-      // ── Desktop: pinned, cards rise from bottom one by one ──
+      // ── Desktop: pinned, cards rise from bottom into fan ──
       mm.add('(min-width: 1024px)', () => {
-        const total = cardEls.length
+        // Heading fade
+        const heading = sectionRef.current!.querySelector('.sc-heading')
+        if (heading) {
+          gsap.from(heading, {
+            y: 30, opacity: 0, duration: 0.7, ease: 'power2.out',
+            scrollTrigger: { trigger: heading, start: 'top 85%' },
+          })
+        }
 
-        // Each card starts below viewport
+        // Cards start below
         cardEls.forEach((card) => {
-          gsap.set(card, { yPercent: 130, opacity: 0 })
+          gsap.set(card, { y: 600, opacity: 0, scale: 0.9, rotation: 0 })
         })
 
-        // Individual ScrollTrigger per card
+        // Timeline with scrub
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: 'bottom bottom',
+            pin: stickyRef.current,
+            pinSpacing: false,
+            scrub: 0.6,
+          },
+        })
+
+        // Each card rises into its fan position
         cardEls.forEach((card, i) => {
-          gsap.to(card, {
-            yPercent: 0,
+          const fan = getFan(i)
+          tl.to(card, {
+            y: fan.y,
+            x: fan.x,
+            rotation: fan.rotation,
             opacity: 1,
+            scale: 1,
             duration: 1,
             ease: 'power2.out',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: () => `top+=${i * (100 / total)}% top`,
-              end: () => `top+=${(i + 0.7) * (100 / total)}% top`,
-              scrub: 0.5,
-            },
-          })
+          }, i * 0.6)
         })
 
-        // Pin the sticky container
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom bottom',
-          pin: stickyRef.current,
-          pinSpacing: false,
-        })
+        // Hold at end
+        tl.to({}, { duration: 0.8 })
       })
+
+      // ── Mobile: no GSAP needed, using CSS carousel ──
 
       return () => mm.revert()
     },
     { scope: sectionRef }
   )
 
-  // ── Mobile swipe handlers ──
+  // Mobile swipe
   const touchStart = useRef(0)
-
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStart.current = e.touches[0].clientX
   }
-
   const handleTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStart.current - e.changedTouches[0].clientX
     if (Math.abs(diff) > 50) {
-      if (diff > 0 && mobileIndex < cards.length - 1) {
-        setMobileIndex(mobileIndex + 1)
-      } else if (diff < 0 && mobileIndex > 0) {
-        setMobileIndex(mobileIndex - 1)
-      }
+      if (diff > 0 && mobileIndex < cards.length - 1) setMobileIndex(mobileIndex + 1)
+      else if (diff < 0 && mobileIndex > 0) setMobileIndex(mobileIndex - 1)
     }
   }
 
@@ -122,13 +137,6 @@ export function StackingCards({
     dark: 'bg-[#1e293b]',
   }
 
-  // Calculate card width and positions based on count
-  // Cards overlap like dontboardme: each offset ~15-18% of viewport
-  const total = cards.length
-  const cardWidthRem = total <= 3 ? 24 : total <= 4 ? 20 : 17
-  const stepPercent = Math.min(18, 75 / Math.max(total - 1, 1))
-  const startPercent = Math.max(2, 50 - (stepPercent * (total - 1)) / 2 - cardWidthRem * 0.5)
-
   return (
     <section
       ref={sectionRef}
@@ -136,111 +144,88 @@ export function StackingCards({
       className={`${bgClasses[bgColor]} relative`}
       style={{ height: `${(total + 1) * 100}vh` }}
     >
-      {/* ═══ DESKTOP: Sticky pinned viewport ═══ */}
+      {/* ═══ DESKTOP ═══ */}
       <div
         ref={stickyRef}
-        className="h-screen w-full overflow-hidden relative hidden lg:block"
+        className="h-screen w-full overflow-hidden hidden lg:flex flex-col items-center justify-center"
       >
-        {/* Pre-title — top center */}
-        {preTitle && (
-          <div className="absolute top-6 left-0 right-0 z-30 text-center">
-            <p className="text-[#EF7B11] font-semibold text-xs uppercase tracking-[0.2em]">
+        {/* Heading */}
+        <div className="sc-heading text-center mb-10 px-4 relative z-10">
+          {preTitle && (
+            <p className="text-[#EF7B11] font-semibold text-sm uppercase tracking-wider mb-3">
               {preTitle}
             </p>
-          </div>
-        )}
-
-        {/* Subtitle — bottom center */}
-        {subtitle && (
-          <div className="absolute bottom-6 left-0 right-0 z-30 text-center px-4">
-            <p className={`text-sm font-semibold uppercase tracking-wider ${
-              isDark ? 'text-white/50' : 'text-[#67768e]'
-            }`}>
+          )}
+          <h2
+            className={`text-3xl sm:text-4xl lg:text-5xl font-black mb-4 ${
+              isDark ? 'text-white' : 'text-[#1e293b]'
+            }`}
+          >
+            {title}
+            {titleHighlight && <span className="text-[#EF7B11]"> {titleHighlight}</span>}
+          </h2>
+          {subtitle && (
+            <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-white/60' : 'text-[#67768e]'}`}>
               {subtitle}
             </p>
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* Cards */}
-        {cards.map((card, i) => {
-          const num = card.number ?? i + 1
-          const leftPos = `${startPercent + i * stepPercent}%`
-
-          return (
-            <div
-              key={i}
-              ref={(el) => {
-                if (el) cardsRef.current[i] = el
-              }}
-              className="absolute"
-              style={{
-                left: leftPos,
-                top: '8%',
-                width: `${cardWidthRem}rem`,
-                height: '72%',
-                zIndex: i + 1,
-              }}
-            >
-              <div
-                className={`h-full w-full rounded-[3px] flex flex-col overflow-hidden relative ${
-                  isDark
-                    ? 'bg-[#1a2332] shadow-2xl'
-                    : 'bg-[#F5F5F0] shadow-2xl'
-                }`}
-                style={{
-                  boxShadow: isDark
-                    ? '0 20px 60px rgba(0,0,0,0.4)'
-                    : '0 20px 60px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06)',
-                }}
-              >
-                {/* Number badge — floating top-right */}
+        {/* Cards container — centered, cards positioned relative to center */}
+        <div className="relative" style={{ width: '100%', height: '360px' }}>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            {cards.map((card, i) => {
+              const num = card.number ?? i + 1
+              return (
                 <div
-                  className="absolute -top-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold z-10"
+                  key={i}
+                  ref={(el) => { if (el) cardsRef.current[i] = el }}
+                  className="absolute"
                   style={{
-                    background: isDark ? CARD_ACCENTS[i % CARD_ACCENTS.length] : BADGE_COLORS[i % BADGE_COLORS.length],
-                    color: '#1e293b',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                    left: '-150px',
+                    top: '-160px',
+                    width: '300px',
+                    zIndex: i + 1,
                   }}
                 >
-                  {num}
-                </div>
+                  {/* ── ABTG Card Style (matches PillarCards/NumberedPhases) ── */}
+                  <div
+                    className={`rounded-2xl p-6 sm:p-8 transition-all duration-300 ${
+                      isDark
+                        ? 'bg-white/5 border border-white/10 hover:border-[#EF7B11]/30'
+                        : 'bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#EF7B11]/20'
+                    }`}
+                  >
+                    {/* Number badge — ABTG style */}
+                    <div className="w-12 h-12 rounded-xl bg-[#EF7B11] flex items-center justify-center mb-5">
+                      <span className="text-white font-black text-lg">{num}</span>
+                    </div>
 
-                {/* Title — big uppercase */}
-                <div className="px-6 pt-6 flex-shrink-0">
-                  <h3
-                    className={`text-2xl xl:text-3xl font-black uppercase leading-[0.95] ${
-                      isDark ? 'text-white' : 'text-[#1e293b]'
-                    }`}
-                  >
-                    {card.title}
-                  </h3>
-                </div>
+                    {/* Title */}
+                    <h3
+                      className={`text-lg font-bold mb-2 ${
+                        isDark ? 'text-white' : 'text-[#1e293b]'
+                      }`}
+                    >
+                      {card.title}
+                    </h3>
 
-                {/* Number + description */}
-                <div className="px-6 pt-6 flex-1">
-                  <p
-                    className={`text-7xl xl:text-8xl font-black leading-none mb-3 ${
-                      isDark ? 'text-white/70' : 'text-[#1e293b]/70'
-                    }`}
-                  >
-                    {String(num).padStart(2, '0')}.
-                  </p>
-                  <p
-                    className={`text-[10px] xl:text-xs uppercase tracking-wider font-semibold leading-relaxed ${
-                      isDark ? 'text-white/50' : 'text-[#67768e]'
-                    }`}
-                  >
-                    {card.description}
-                  </p>
+                    {/* Description */}
+                    <p className={`text-sm leading-relaxed ${
+                      isDark ? 'text-white/60' : 'text-[#67768e]'
+                    }`}>
+                      {card.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
-          )
-        })}
+              )
+            })}
+          </div>
+        </div>
       </div>
 
-      {/* ═══ MOBILE: Horizontal carousel (like dontboardme.com) ═══ */}
-      <div className="lg:hidden relative" style={{ height: 'auto', position: 'relative' }}>
+      {/* ═══ MOBILE: Carousel ═══ */}
+      <div className="lg:hidden" style={{ height: 'auto' }}>
         <div className={`${bgClasses[bgColor]} py-12 px-4`}>
           {/* Heading */}
           <div className="text-center mb-8">
@@ -260,62 +245,42 @@ export function StackingCards({
             )}
           </div>
 
-          {/* Swipeable carousel */}
+          {/* Swipeable */}
           <div
             className="overflow-hidden"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
             <div
-              ref={mobileTrackRef}
               className="flex transition-transform duration-300 ease-out"
-              style={{
-                transform: `translateX(-${mobileIndex * 85}%)`,
-              }}
+              style={{ transform: `translateX(-${mobileIndex * 85}%)` }}
             >
               {cards.map((card, i) => {
                 const num = card.number ?? i + 1
                 return (
-                  <div
-                    key={i}
-                    className="flex-shrink-0 pr-4"
-                    style={{ width: '85%' }}
-                  >
+                  <div key={i} className="flex-shrink-0 pr-4" style={{ width: '85%' }}>
+                    {/* ── ABTG Card ── */}
                     <div
-                      className={`rounded-2xl overflow-hidden h-[22rem] flex flex-col ${
+                      className={`rounded-2xl p-6 ${
                         isDark
-                          ? 'bg-[#1a2332] border border-white/10'
-                          : 'bg-[#F5F5F0] shadow-lg'
+                          ? 'bg-white/5 border border-white/10'
+                          : 'bg-white border border-gray-100 shadow-sm'
                       }`}
                     >
-                      {/* Title */}
-                      <div className="px-5 pt-5 flex-shrink-0">
-                        <h3
-                          className={`text-xl font-black uppercase leading-tight ${
-                            isDark ? 'text-white' : 'text-[#1e293b]'
-                          }`}
-                        >
-                          {card.title}
-                        </h3>
+                      {/* Number badge */}
+                      <div className="w-12 h-12 rounded-xl bg-[#EF7B11] flex items-center justify-center mb-5">
+                        <span className="text-white font-black text-lg">{num}</span>
                       </div>
 
-                      {/* Number + description */}
-                      <div className="px-5 pt-4 flex-1">
-                        <p
-                          className={`text-5xl font-black leading-none mb-2 ${
-                            isDark ? 'text-white/70' : 'text-[#1e293b]/70'
-                          }`}
-                        >
-                          {String(num).padStart(2, '0')}.
-                        </p>
-                        <p
-                          className={`text-xs uppercase tracking-wider font-medium leading-relaxed ${
-                            isDark ? 'text-white/50' : 'text-[#67768e]'
-                          }`}
-                        >
-                          {card.description}
-                        </p>
-                      </div>
+                      {/* Title */}
+                      <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-[#1e293b]'}`}>
+                        {card.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className={`text-sm leading-relaxed ${isDark ? 'text-white/60' : 'text-[#67768e]'}`}>
+                        {card.description}
+                      </p>
                     </div>
                   </div>
                 )
@@ -323,7 +288,7 @@ export function StackingCards({
             </div>
           </div>
 
-          {/* Dots indicator */}
+          {/* Dots */}
           <div className="flex items-center justify-center gap-2 mt-6">
             {cards.map((_, i) => (
               <button
