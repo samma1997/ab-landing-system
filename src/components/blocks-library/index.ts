@@ -14,6 +14,7 @@ export { UrgencySection } from './UrgencySection'
 export { FormSection } from './FormSection'
 export { CTADivider } from './CTADivider'
 export { FooterABTG } from './FooterABTG'
+export { HorizontalScrollCards } from './HorizontalScrollCards'
 
 // Re-export types
 export type { HeroSplitProps, HeroSplitFormField } from './HeroSplit'
@@ -28,6 +29,7 @@ export type { UrgencySectionProps } from './UrgencySection'
 export type { FormSectionProps, FormField, EventDetail } from './FormSection'
 export type { CTADividerProps } from './CTADivider'
 export type { FooterABTGProps, FooterLink } from './FooterABTG'
+export type { HorizontalScrollCardsProps, HorizontalScrollCard } from './HorizontalScrollCards'
 
 // ────────────────────────────────────────────────────────
 // Block Catalog — used by page builder / factory system
@@ -45,6 +47,7 @@ import { UrgencySection } from './UrgencySection'
 import { FormSection } from './FormSection'
 import { CTADivider } from './CTADivider'
 import { FooterABTG } from './FooterABTG'
+import { HorizontalScrollCards } from './HorizontalScrollCards'
 
 export type BlockCategory = 'hero' | 'social-proof' | 'content' | 'conversion' | 'layout'
 
@@ -145,6 +148,14 @@ export const BLOCK_CATALOG: BlockCatalogEntry[] = [
     component: CTADivider as unknown as React.ComponentType<Record<string, unknown>>,
     description:
       'Divisore con CTA singolo tra sezioni. Disponibile in variante arancione, verde o scuro.',
+  },
+  {
+    id: 'horizontal-scroll-cards',
+    name: 'Horizontal Scroll Cards',
+    category: 'content',
+    component: HorizontalScrollCards as unknown as React.ComponentType<Record<string, unknown>>,
+    description:
+      'Sezione con card grandi che scorrono orizzontalmente con pin ScrollTrigger. Supporta card con stat, citazioni e contenuti. Su mobile le card si impilano verticalmente.',
   },
   {
     id: 'footer-abtg',

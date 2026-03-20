@@ -340,6 +340,47 @@ export function scrollMarquee(
   return () => tween.kill()
 }
 
+// ────────────────────────────────────────────────────────
+// Horizontal Scroll Pin
+// ────────────────────────────────────────────────────────
+
+/**
+ * Pin a container and scroll a track horizontally as user scrolls vertically.
+ * Only activates on desktop (min-width: 768px).
+ * Returns a cleanup function that kills all ScrollTrigger instances.
+ */
+export function horizontalScrollPin(
+  container: HTMLElement,
+  track: HTMLElement,
+  opts?: { scrub?: number; start?: string }
+): CleanupFn {
+  const scrub = opts?.scrub ?? 1
+  const start = opts?.start ?? 'top top'
+
+  const mm = gsap.matchMedia()
+
+  mm.add('(min-width: 768px)', () => {
+    // Calculate distance: how far the track needs to move
+    const scrollDistance = track.scrollWidth - container.offsetWidth
+
+    gsap.to(track, {
+      x: -scrollDistance,
+      ease: 'none',
+      force3D: true,
+      scrollTrigger: {
+        trigger: container,
+        pin: true,
+        scrub,
+        start,
+        end: `+=${scrollDistance}`,
+        invalidateOnRefresh: true,
+      },
+    })
+  })
+
+  return () => mm.revert()
+}
+
 /** Create a GSAP context for React component cleanup */
 export function createAnimContext(
   scope: React.RefObject<HTMLElement | null>,
