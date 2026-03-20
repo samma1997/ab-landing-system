@@ -126,7 +126,13 @@ export function HorizontalScrollCards({
             tween.kill()
           }
         } else {
-          // Cards fit — just fade them in without pinning
+          // Cards fit — center them and hide spacers
+          track.style.justifyContent = 'center'
+          track.querySelectorAll('.hs-spacer').forEach(s => {
+            (s as HTMLElement).style.display = 'none'
+          })
+
+          // Just fade them in without pinning
           cardEls.forEach((card, i) => {
             gsap.from(card, {
               opacity: 0,
@@ -231,7 +237,7 @@ export function HorizontalScrollCards({
         >
           {/* Left spacer on desktop — pushes first card to comfortable position */}
           <div
-            className="hidden md:block flex-shrink-0"
+            className="hs-spacer hidden md:block flex-shrink-0"
             style={{ width: 'max(40px, calc((100vw - 1200px) / 2))' }}
             aria-hidden="true"
           />
@@ -349,7 +355,7 @@ export function HorizontalScrollCards({
 
           {/* Right spacer on desktop */}
           <div
-            className="hidden md:block flex-shrink-0"
+            className="hs-spacer hidden md:block flex-shrink-0"
             style={{ width: 'max(40px, calc((100vw - 1200px) / 2))' }}
             aria-hidden="true"
           />
