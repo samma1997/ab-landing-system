@@ -27,6 +27,7 @@ import {
   ChevronDown,
 } from 'lucide-react'
 import clsx from 'clsx'
+import { StackingCards } from '@/components/blocks-library/StackingCards'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -549,50 +550,20 @@ export default function MissioneImmobiliareV2Page() {
       </section>
 
       {/* ════════════════════════════════════════════════════════════════════════
-          4 PILLARS (Metodo Prevendi) — ABTG icon-box card style
+          4 PILLARS (Metodo Prevendi) — StackingCards animation block
           ════════════════════════════════════════════════════════════════════════ */}
-      <section className="bg-[#F5F5F7] py-12 sm:py-16 lg:py-20">
-        <div className="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
-          <h2
-            className="gsap-fade-up text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-[#1e293b] mb-4"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-          >
-            <span className="text-[#E57713]">I 4 Pilastri</span> del Metodo Prevendi
-          </h2>
-          <p className="gsap-fade-up text-center text-[#67768e] text-base sm:text-lg mb-10 sm:mb-14 max-w-3xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Un sistema collaudato in oltre 1.200 operazioni immobiliari documentate
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-            {PILLARS.map((pillar, i) => {
-              const Icon = pillar.icon
-              return (
-                <div
-                  key={i}
-                  className="gsap-fade-up bg-white rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 border border-gray-100"
-                >
-                  <div className="flex items-start gap-4 sm:gap-5">
-                    <div className="w-12 h-12 rounded-xl bg-[#EF7B11] flex items-center justify-center shrink-0">
-                      <Icon className="w-6 h-6 text-white" strokeWidth={2} />
-                    </div>
-                    <div>
-                      <h3
-                        className="text-lg sm:text-xl font-semibold text-[#1e293b] mb-2"
-                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                      >
-                        {i + 1}) {pillar.title}
-                      </h3>
-                      <p className="text-[#67768e] text-sm sm:text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
-                        {pillar.desc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+      <StackingCards
+        preTitle="Il Metodo"
+        title="I 4 Pilastri del"
+        titleHighlight="Metodo Prevendi"
+        subtitle="Un sistema collaudato in oltre 1.200 operazioni immobiliari documentate"
+        bgColor="light"
+        cards={PILLARS.map((p) => ({
+          title: p.title,
+          description: p.desc,
+        }))}
+        id="metodo"
+      />
 
       {/* ════════════════════════════════════════════════════════════════════════
           CTA DIVIDER
