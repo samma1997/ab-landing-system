@@ -332,8 +332,8 @@ export default function MissioneImmobiliareV2Page() {
               </p>
 
               {/* Disclaimer */}
-              <p className="text-white/40 text-xs italic mb-6">
-                I risultati mostrati sono basati su casi reali di studenti di Alfio Bardolla Training Group e non costituiscono garanzia di guadagno. I risultati individuali dipendono da impegno, capitale, contesto di mercato e altri fattori.
+              <p className="text-white/70 text-xs italic mb-6">
+                &ldquo;I risultati mostrati sono basati su casi reali di studenti di Alfio Bardolla Training Group e non costituiscono garanzia di guadagno. I risultati individuali dipendono da impegno, capitale, contesto di mercato e altri fattori.&rdquo;
               </p>
 
               {/* Lead magnet */}
@@ -892,11 +892,6 @@ export default function MissioneImmobiliareV2Page() {
             </p>
           </div>
 
-          <hr className="my-8 border-white/10" />
-
-          <p className="text-white/30 text-xs leading-relaxed max-w-4xl mx-auto text-center italic">
-            &ldquo;I risultati mostrati sono basati su casi reali di studenti di Alfio Bardolla Training Group e non costituiscono garanzia di guadagno. I risultati individuali dipendono da impegno, capitale, contesto di mercato e altri fattori.&rdquo;
-          </p>
         </div>
       </footer>
     </div>
