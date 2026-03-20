@@ -52,20 +52,18 @@ const MEDIA_LOGOS = [
 
 const CHECKMARKS = [
   'Dal 2017 unica scuola di educazione finanziaria quotata in Borsa in Italia',
-  'Oltre 1.200 operazioni immobiliari documentate',
-  'Metodo proprietario "Prevendi" per ridurre al minimo il rischio',
-  'Durata media delle operazioni: 120 giorni',
+  'Oltre X operazioni immobiliari documentate da studenti e clienti',
+  'Metodo proprietario "Prevendi" per ridurre al minimo il rischio di immobili invenduti',
 ]
 
 const BEFORE_AFTER = [
-  { before: 'Cerchi immobili "a caso" sperando nell\'affare', after: 'Selezioni solo zone ad alto potenziale con dati alla mano' },
-  { before: 'Compri e speri di rivendere', after: 'Prevendi prima di comprare, riducendo il rischio al minimo' },
-  { before: 'Non sai quanto offrire e paghi troppo', after: 'Calcoli il prezzo massimo sostenibile con formule precise' },
-  { before: 'Ristrutturi senza budget e i costi esplodono', after: 'Pianifichi ogni euro con il metodo "budget blindato"' },
-  { before: 'Aspetti mesi per vendere con l\'agenzia', after: 'Vendi in media in 120 giorni con il sistema Prevendi' },
-  { before: 'Margini risicati o addirittura perdite', after: 'Operazioni da 30.000+ euro di profitto medio' },
-  { before: 'Nessun supporto, sei completamente solo', after: 'Community di investitori e coach dedicati' },
-  { before: 'Paura di sbagliare ti blocca dal partire', after: 'Metodo step-by-step che elimina l\'incertezza' },
+  { before: 'Cerchi gli immobili giusti a intuizione, sperando di trovare qualcosa di buono', after: 'Sai esattamente dove guardare — zona, prezzo, tempistica — prima ancora di fare un\'offerta' },
+  { before: 'Compri e poi speri di vendere', after: 'Compri ad almeno il 30% di sconto e sei sicuro di aver fatto un affare' },
+  { before: 'Il rischio di invenduto ti blocca o ti tiene sveglio la notte', after: 'Il Metodo che vedrai al workshop riduce al minimo il rischio di invenduto sin dalla prima operazione' },
+  { before: 'Aspetti mesi per trovare un acquirente al prezzo che vuoi', after: 'Esci dal mercato in tempi medi sotto i 6 mesi perche il prezzo e calcolato per vendere veloce' },
+  { before: 'Fai un\'operazione ogni tanto, quando "capita l\'occasione giusta"', after: 'Hai un metodo replicabile: ogni operazione finanzia la prossima' },
+  { before: 'Non sai se stai facendo un affare o un errore finche non e troppo tardi', after: 'Calcoli il margine prima di comprare, non dopo aver venduto' },
+  { before: 'Lavori con agenzie e fornitori ogni volta da zero, senza potere negoziale', after: 'Costruisci relazioni continuative che valgono centinaia di migliaia di euro di risparmio nel tempo' },
 ]
 
 const PHASES = [
@@ -73,19 +71,19 @@ const PHASES = [
     num: '01',
     title: 'Fase Esplorativa',
     subtitle: 'Stai valutando se l\'immobiliare fa per te',
-    desc: 'Hai sentito parlare di investimenti immobiliari ma non sai da dove partire. Hai paura di fare errori costosi e vuoi capire se esiste un metodo sicuro prima di rischiare i tuoi soldi.',
+    desc: 'Hai almeno 20.000 euro da destinare a investimenti, e l\'idea di lasciarli fermi su un conto che perde potere d\'acquisto ogni anno ti disturba. L\'immobiliare ti ispira, ma non sai da dove cominciare senza rischiare di sbagliare la prima mossa.',
   },
   {
     num: '02',
     title: 'Fase Operativa Iniziale',
     subtitle: 'Hai fatto 1-2 operazioni ma senza un metodo',
-    desc: 'Hai provato a investire in immobili ma i risultati non sono stati all\'altezza. Margini bassi, tempi lunghi, stress alto. Senti di aver bisogno di un sistema strutturato per scalare.',
+    desc: 'Hai gia fatto qualcosa. Hai preso un appartamento, l\'hai ristrutturato, l\'hai messo sul mercato. E alla fine, dopo mesi di lavoro, i conti non tornano. Hai guadagnato meno di quanto ti aspettavi, o hai perso. E non hai capito esattamente dove hai sbagliato.',
   },
   {
     num: '03',
     title: 'Fase di Scaling',
     subtitle: 'Vuoi trasformare l\'immobiliare nel tuo business',
-    desc: 'Hai esperienza ma vuoi passare al livello successivo: operazioni piu grandi, margini piu alti, rischio ancora piu basso. Il Metodo Prevendi ti da gli strumenti per farlo in modo sistematico.',
+    desc: 'Hai sentito parlare di flipping immobiliare e cessioni di compromesso. Sembrano cose per chi ha gia esperienza, una rete di contatti, capitali importanti. Non per te, non ancora.',
   },
 ]
 
@@ -93,53 +91,59 @@ const PILLARS = [
   {
     icon: Search,
     title: 'Ricerca Strategica',
-    desc: 'Si parte dall\'analisi del territorio, non dall\'immobile. Il software ABTG identifica le zone ad alto potenziale prima che diventino competitive.',
+    desc: 'Si parte dall\'analisi del territorio, non dall\'immobile. Densita di popolazione, presenza di infrastrutture, previsione di sviluppo futuro: il software ABTG identifica le zone ad alto potenziale prima che diventino competitive. Non si compra dove si vuole vivere. Si compra dove i numeri indicano che conviene.',
   },
   {
     icon: BarChart3,
     title: 'Pricing Intelligente',
-    desc: 'Formula proprietaria che calcola il prezzo massimo sostenibile per ogni operazione, eliminando il rischio di pagare troppo.',
+    desc: 'Il mercato premia chi vende in fretta, non chi aspetta il prezzo massimo. Uscire a 3.800 \u20AC/mq invece di aspettare chi paga 4.000 significa incassare mesi prima e reinvestire quel capitale in un\'altra operazione. La velocita di rotazione del capitale e il vero indicatore di un\'operazione ben costruita.',
   },
   {
     icon: Handshake,
     title: 'Negoziazione Privilegiata',
-    desc: 'Accesso a canali preferenziali e tecniche di negoziazione che permettono di acquistare a prezzi significativamente sotto mercato.',
+    desc: 'Chi negozia bene ottiene le chiavi prima del rogito. Questo ti permette di incassare subito, e costruire relazioni continuative con i fornitori che, nel tempo, valgono riduzioni di costo nell\'ordine delle centinaia di migliaia di euro per singola operazione.',
   },
   {
     icon: ShieldCheck,
     title: 'Prevendi',
-    desc: 'Il cuore del metodo: vendi prima di comprare. Raccogli manifestazioni di interesse concrete prima di procedere all\'acquisto, azzerando il rischio invenduto.',
+    desc: 'Vendere quando l\'immobile e finito e da dilettanti. Vendere quando esiste ancora solo su carta, con rendering, virtual reality e accordi con le agenzie attivati dal giorno zero, significa arrivare al rogito con l\'immobile gia venduto. Sold out prima di aver pagato. Rischio di invenduto ridotto al minimo. Cash flow positivo sin dall\'inizio.',
   },
 ]
 
 const SPEAKERS = [
   {
     name: 'Alfio Bardolla',
-    role: 'Fondatore ABTG',
+    role: 'Fondatore di Alfio Bardolla Training Group',
     img: '',
     initials: 'AB',
-    bio: 'Fondatore di Alfio Bardolla Training Group, la prima societa di formazione finanziaria quotata in Borsa in Italia. Autore bestseller e imprenditore seriale, ha formato oltre 50.000 persone negli ultimi 20 anni.',
+    bio: [
+      'Ha fondato ABTG nel 2008 dopo anni di operazioni immobiliari condotte in prima persona',
+      'Non insegna dall\'esterno: ogni operazione che cita l\'ha fatta con i suoi soldi e i suoi rischi',
+      'Ha portato ABTG alla quotazione in Borsa nel 2017 — prima e unica scuola di educazione finanziaria italiana su Euronext Growth Milan (ticker: ABTG)',
+      'I bilanci sono pubblici, i numeri sono verificabili: non e un guru con un profilo Instagram',
+    ],
   },
   {
     name: 'Saverio Rodriguez',
     role: 'Imprenditore, fondatore di Vivi Salute',
     img: '',
     initials: 'SR',
-    bio: 'Non e un formatore: e un imprenditore socio di ABTG. Ha fondato Vivi Salute, il primo network odontoiatrico italiano: 170 strutture convenzionate, 56 citta, oltre 200.000 pazienti.',
-  },
-  {
-    name: 'Alberto Colombo',
-    role: 'Coach ABTG — Stralci e Aste',
-    img: '',
-    initials: 'AC',
-    bio: 'Specializzato in stralci e aste giudiziarie: le forme di acquisto immobiliare con il maggiore potenziale di sconto sul valore di mercato. Non porta teoria: porta operazioni reali con numeri verificabili.',
+    bio: [
+      'Non e un formatore: e un imprenditore socio di ABTG',
+      'Ha fondato Vivi Salute, il primo network odontoiatrico italiano: 170 strutture convenzionate, 56 citta, oltre 200.000 pazienti',
+      'Oltre X operazioni immobiliari svolte, con un profitto complessivo di Y',
+    ],
   },
   {
     name: 'Avv. Fracassi Stefano',
-    role: 'Avvocato Immobiliarista',
+    role: 'Avvocato immobiliarista',
     img: '',
     initials: 'FS',
-    bio: 'Socio fondatore di AFBN Studio Legale, specializzazione esclusiva nel diritto immobiliare. Spiega cosa deve contenere un contratto per proteggerti davvero e cosa lo trasforma in una trappola.',
+    bio: [
+      'Socio fondatore di AFBN Studio Legale: una delle pochissime realta in Italia con specializzazione esclusiva nel diritto immobiliare',
+      'Spiega cosa deve contenere un contratto per proteggerti davvero e cosa lo trasforma invece in una trappola',
+      'E il profilo che separa chi fa un\'operazione buona da chi fa un\'operazione buona che poi diventa un problema legale',
+    ],
   },
 ]
 
@@ -338,12 +342,12 @@ export default function MissioneImmobiliareV2Page() {
           <p
             className="text-white font-semibold text-lg sm:text-xl lg:text-2xl mb-4 max-w-2xl mx-auto leading-snug"
           >
-            Il workshop gratuito di 4 serate che ti mostra come realizzare operazioni immobiliari sopra i 30.000&nbsp;&euro; di profitto
+            Scopri come centinaia di persone stanno realizzando le loro prime operazioni immobiliari sopra i 30.000 euro di profitto nel 2026 - anche se non l&apos;hai mai fatto
           </p>
 
           {/* Small text */}
           <p className="text-white/60 text-sm sm:text-base mb-8 max-w-xl mx-auto">
-            Questo metodo riduce al minimo le decisioni da prendere, perch&eacute; segue un processo collaudato su oltre 1.200 operazioni documentate.
+            I risultati mostrati sono basati su casi reali di studenti di Alfio Bardolla Training Group e non costituiscono garanzia di guadagno. I risultati individuali dipendono da impegno, capitale, contesto di mercato e altri fattori.
           </p>
 
           {/* CTA */}
@@ -488,21 +492,12 @@ export default function MissioneImmobiliareV2Page() {
                 key={i}
                 className="gsap-fade-up bg-[#F5F5F7] rounded-2xl p-6 sm:p-8 transition-transform hover:-translate-y-0.5 border border-gray-100"
               >
-                <div className="w-14 h-14 rounded-xl bg-[#EF7B11] flex items-center justify-center mb-5">
-                  <span className="text-white text-xl font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <div className="w-10 h-10 rounded-lg bg-[#EF7B11] flex items-center justify-center mb-4">
+                  <span className="text-white text-lg font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {phase.num}
                   </span>
                 </div>
-                <h3
-                  className="text-xl sm:text-2xl font-semibold text-[#1e293b] mb-2"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  {phase.title}
-                </h3>
-                <p className="text-[#E57713] font-semibold text-sm mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  {phase.subtitle}
-                </p>
-                <p className="text-[#67768e] text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                <p className="text-[#1e293b] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
                   {phase.desc}
                 </p>
               </div>
@@ -619,9 +614,14 @@ export default function MissioneImmobiliareV2Page() {
                   <p className="text-[#E57713] text-sm font-semibold mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
                     {speaker.role}
                   </p>
-                  <p className="text-[#67768e] text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    {speaker.bio}
-                  </p>
+                  <ul className="space-y-2">
+                    {(speaker.bio as string[]).map((point, j) => (
+                      <li key={j} className="flex items-start gap-2 text-[#67768e] text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                        <Check className="w-4 h-4 text-[#EF7B11] mt-0.5 shrink-0" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}
