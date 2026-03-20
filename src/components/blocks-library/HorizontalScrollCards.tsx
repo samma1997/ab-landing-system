@@ -83,40 +83,64 @@ export function HorizontalScrollCards({
         // Recalculate on refresh
         const getScrollDistance = () => track.scrollWidth - container.offsetWidth
 
-        const tween = gsap.to(track, {
-          x: () => -getScrollDistance(),
-          ease: 'none',
-          force3D: true,
-          scrollTrigger: {
-            trigger: container,
-            pin: true,
-            scrub: 1,
-            start: 'top top',
-            end: () => `+=${getScrollDistance()}`,
-            invalidateOnRefresh: true,
-          },
-        })
-
-        // Stagger card entrance while scrolling
         const cardEls = track.querySelectorAll('.hs-card')
-        cardEls.forEach((card, i) => {
-          gsap.from(card, {
-            opacity: 0,
-            scale: 0.92,
-            duration: 0.5,
-            delay: i * 0.05,
-            ease: 'power2.out',
+
+        // Only pin + horizontal scroll if cards overflow the container
+        const scrollDist = getScrollDistance()
+        if (scrollDist > 0) {
+          track.style.minHeight = '100vh'
+
+          const tween = gsap.to(track, {
+            x: () => -getScrollDistance(),
+            ease: 'none',
+            force3D: true,
             scrollTrigger: {
               trigger: container,
-              start: 'top 80%',
-              toggleActions: 'play none none none',
+              pin: true,
+              scrub: 1,
+              start: 'top top',
+              end: () => `+=${getScrollDistance()}`,
+              invalidateOnRefresh: true,
             },
           })
-        })
 
-        return () => {
-          tween.scrollTrigger?.kill()
-          tween.kill()
+          // Stagger card entrance while scrolling
+          cardEls.forEach((card, i) => {
+            gsap.from(card, {
+              opacity: 0,
+              scale: 0.92,
+              duration: 0.5,
+              delay: i * 0.05,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: container,
+                start: 'top 80%',
+                toggleActions: 'play none none none',
+              },
+            })
+          })
+
+          return () => {
+            track.style.minHeight = ''
+            tween.scrollTrigger?.kill()
+            tween.kill()
+          }
+        } else {
+          // Cards fit — just fade them in without pinning
+          cardEls.forEach((card, i) => {
+            gsap.from(card, {
+              opacity: 0,
+              y: 30,
+              duration: 0.6,
+              delay: i * 0.1,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+              },
+            })
+          })
         }
       })
 
@@ -197,7 +221,7 @@ export function HorizontalScrollCards({
           ref={trackRef}
           className="
             flex flex-col gap-6 px-4 pb-16
-            md:flex-row md:flex-nowrap md:items-center md:pb-0 md:min-h-screen
+            md:flex-row md:flex-nowrap md:items-center md:pb-0
           "
           style={{
             willChange: 'transform',
@@ -292,7 +316,7 @@ export function HorizontalScrollCards({
 
               {/* Author footer — for quote cards */}
               {card.author && (
-                <div className="flex items-center gap-3 mt-6 pt-6 border-t border-white/10">
+                <div className={`flex items-center gap-3 mt-6 pt-6 border-t ${isDark ? 'border-white/10' : 'border-gray-200'}`}>
                   {card.authorImage && (
                     <img
                       src={img(card.authorImage)}
