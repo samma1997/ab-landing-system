@@ -1,2177 +1,1152 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useRef } from 'react'
+import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+import {
+  CheckCircle,
+  Play,
+  Search,
+  TrendingUp,
+  Handshake,
+  ShieldCheck,
+  Clock,
+  Building2,
+  Users,
+  ChevronRight,
+  X,
+  Check,
+  Calendar,
+  Star,
+  Award,
+  Target,
+  BarChart3,
+  Briefcase,
+} from 'lucide-react'
+import clsx from 'clsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   TYPOGRAPHY SCALE
+   DESIGN TOKENS — extracted from ABTG scraped pages
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const TYPO = {
-  hero: 'max(52px, min(2.5rem + 8vw, 8rem))',
-  sectionTitle: 'max(28px, min(1.25rem + 3.5vw, 3.5rem))',
-  cardTitle: 'max(18px, min(1rem + 0.5vw, 1.35rem))',
-  body: 'max(15px, min(0.875rem + 0.2vw, 1.0625rem))',
-  small: 'max(12px, min(0.7rem + 0.15vw, 0.875rem))',
-  label: 'max(11px, min(0.625rem + 0.15vw, 0.8rem))',
-} as const
+const COLORS = {
+  orange: '#EF7B11',        // top bar, badge backgrounds
+  orangeAccent: '#E57713',  // accent text, icon backgrounds
+  orangeIcon: '#E57712',    // SVG icon fills
+  green: '#31B15C',         // CTA buttons
+  greenHover: '#28A052',    // CTA hover
+  dark: '#1e293b',          // headings, dark text
+  gray: '#67768e',          // body text
+  lightBg: '#F5F5F7',      // light section backgrounds
+  white: '#FFFFFF',
+  deepBlue: '#060097',      // used minimally
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   DATA CONSTANTS
+   CTA BUTTON — GREEN like the real ABTG pages
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const BENEFITS = [
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <circle cx="16" cy="16" r="14" stroke="#D06A11" strokeWidth="1.5" />
-        <path d="M10 16l4 4 8-8" stroke="#D06A11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    title: 'Analisi di Mercato',
-    desc: "Impara a leggere il mercato e trovare opportunita' invisibili al 95% delle persone.",
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <path d="M16 4v24M4 16h24" stroke="#D06A11" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="16" cy="16" r="8" stroke="#D06A11" strokeWidth="1.5" />
-      </svg>
-    ),
-    title: "Trovare l'Affare",
-    desc: 'Il metodo per immobili sotto mercato: aste, saldo e stralcio, trattative private.',
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <rect x="5" y="12" width="22" height="14" rx="2" stroke="#D06A11" strokeWidth="1.5" />
-        <path d="M10 12V9a6 6 0 0112 0v3" stroke="#D06A11" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    title: 'Finanziamento Creativo',
-    desc: 'Operazioni anche senza capitale: leva bancaria, cessione del compromesso.',
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <path d="M6 26V10l6-6h14v22" stroke="#D06A11" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M12 4v6H6" stroke="#D06A11" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M11 16h10M11 20h7" stroke="#D06A11" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    title: 'I Numeri che Contano',
-    desc: 'Calcola il ROI prima di investire un euro. Fai i conti come un professionista.',
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <path d="M16 4l3 6h7l-5.5 4.5 2 7L16 17l-6.5 4.5 2-7L6 10h7l3-6z" stroke="#D06A11" strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    ),
-    title: 'Protezione Legale',
-    desc: "Fiscalita', aspetti legali, protezione del patrimonio. Opera in sicurezza.",
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <rect x="4" y="6" width="24" height="18" rx="2" stroke="#D06A11" strokeWidth="1.5" />
-        <path d="M4 12h24" stroke="#D06A11" strokeWidth="1.5" />
-        <circle cx="16" cy="19" r="3" stroke="#D06A11" strokeWidth="1.5" />
-      </svg>
-    ),
-    title: 'La Tua Prima Operazione',
-    desc: 'Workshop pratico: individua e analizza la tua prima operazione reale.',
-  },
-]
-
-const AGENDA = [
-  { day: 1, title: 'Le Fondamenta', desc: "Mindset dell'investitore + Come leggere il mercato immobiliare italiano." },
-  { day: 2, title: "Trovare l'Affare", desc: 'Aste, saldo e stralcio, analisi dei numeri. Dove trovare le migliori occasioni.' },
-  { day: 3, title: "Strutturare l'Operazione", desc: "Finanziamento, aspetti legali, fiscalita'. Tutto cio' che serve per operare in sicurezza." },
-  { day: 4, title: 'La Tua Prima Operazione', desc: "Workshop pratico + piano d'azione personalizzato. Esci con un'operazione reale." },
-]
-
-const TESTIMONIALS = [
-  { name: 'Marco R.', role: 'Imprenditore, Milano', quote: 'Partito da zero, prima operazione in 3 mesi. ROI del 22%. Il metodo funziona, punto.' },
-  { name: 'Giulia S.', role: 'Impiegata, Roma', quote: "Pensavo servissero centinaia di migliaia. Con il finanziamento creativo, prima operazione con meno di 10.000\u20AC." },
-  { name: 'Alessandro P.', role: 'Libero Professionista, Torino', quote: 'Il team ti segue davvero. 3 operazioni nel primo anno, cash flow mensile stabile.' },
-  { name: 'Francesca M.', role: 'Ex Manager, Napoli', quote: 'Ho lasciato il lavoro dopo 18 mesi. Le rendite hanno superato lo stipendio. Non magia, metodo.' },
-]
-
-const FAQ_DATA = [
-  { q: "Il workshop e' davvero gratuito?", a: "Si', 100% gratuito. Nessun costo nascosto per i 4 giorni di workshop intensivo." },
-  { q: "Perche' serve una chiamata di profilazione?", a: 'Per assicurarci che i 500 posti vadano a persone realmente motivate e pronte ad agire.' },
-  { q: 'Serve esperienza immobiliare?', a: 'No, il 70% dei partecipanti parte da zero. Il percorso parte dalle basi e arriva alla pratica.' },
-  { q: 'Servono soldi da investire subito?', a: 'No. Imparerai tecniche di finanziamento creativo che richiedono capitale minimo o nullo.' },
-  { q: 'Come funziona online?', a: '4 giorni in live streaming interattivo con sessioni Q&A e esercizi pratici in tempo reale.' },
-  { q: "Cos'e' Real Estate Evolution?", a: "Il percorso completo post-workshop: 70+ video lezioni, software Real Estate Pro, 4h di coaching 1:1." },
-]
-
-const MEDIA_PILLS = ['RAI', 'CORRIERE', 'SOLE 24 ORE', 'FORBES']
-
-const TARGET_DATE = new Date('2026-04-21T09:30:00+02:00').getTime()
-
-const MARQUEE_TEXT = 'WORKSHOP GRATUITO \u2014 4 GIORNI \u2014 500 POSTI \u2014 ALFIO BARDOLLA'
+function CTAButton({
+  children,
+  className,
+}: {
+  children?: React.ReactNode
+  className?: string
+}) {
+  return (
+    <a
+      href="#hs-form-missione"
+      className={clsx(
+        'inline-block rounded-[50px] bg-[#31B15C] px-8 py-[18px] text-center text-lg font-semibold leading-tight text-white shadow-lg transition-all duration-300 hover:scale-[1.03] hover:bg-[#28A052] hover:shadow-xl md:px-10 md:text-xl',
+        className
+      )}
+    >
+      {children ?? (
+        <>
+          SI! VOGLIO ISCRIVERMI AL WORKSHOP
+          <br className="hidden sm:block" />
+          &ldquo;MISSIONE IMMOBILIARE&rdquo;
+        </>
+      )}
+    </a>
+  )
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   KEYFRAME ANIMATIONS
+   SECTION WRAPPER
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const KEYFRAMES = `
-  @keyframes mi-marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+function Section({
+  children,
+  bg = 'white',
+  className,
+  id,
+}: {
+  children: React.ReactNode
+  bg?: 'white' | 'surface' | 'dark' | 'orange'
+  className?: string
+  id?: string
+}) {
+  const bgMap = {
+    white: 'bg-white',
+    surface: 'bg-[#F5F5F7]',
+    dark: 'bg-[#1e293b]',
+    orange: 'bg-[#EF7B11]',
   }
-
-  @keyframes mi-glow-pulse {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.05); }
-  }
-
-  @keyframes mi-float-1 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    33% { transform: translate(15px, -20px) rotate(1deg); }
-    66% { transform: translate(-10px, -10px) rotate(-0.5deg); }
-  }
-
-  @keyframes mi-float-2 {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-20px, -25px); }
-  }
-
-  @keyframes mi-shine {
-    0% { left: -100%; }
-    100% { left: 200%; }
-  }
-
-  @keyframes mi-pulse-dot {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(208,106,17,0.4); }
-    70% { box-shadow: 0 0 0 12px rgba(208,106,17,0); }
-  }
-
-  @keyframes mi-gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* ─── Page ──────────────────────────────────────────────────────────── */
-  .mi-page {
-    font-family: 'Inter', system-ui, sans-serif;
-    color: #1A1A2E;
-    background: #F3F4F6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
-    scroll-behavior: smooth;
-  }
-
-  /* ─── Marquee ───────────────────────────────────────────────────────── */
-  .mi-marquee-bar {
-    background: linear-gradient(90deg, #D06A11, #e8852a, #D06A11);
-    background-size: 200% 100%;
-    animation: mi-gradient-shift 4s ease infinite;
-    overflow: hidden;
-    white-space: nowrap;
-    padding: 10px 0;
-  }
-  .mi-marquee-track {
-    display: inline-flex;
-    animation: mi-marquee 20s linear infinite;
-    will-change: transform;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  /* ─── Floating orbs ─────────────────────────────────────────────────── */
-  .mi-orb {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(80px);
-    z-index: 0;
-  }
-  .mi-orb-1 {
-    width: clamp(300px, 40vw, 700px);
-    height: clamp(300px, 40vw, 700px);
-    background: rgba(208, 106, 17, 0.06);
-    top: 10%;
-    left: -10%;
-    animation: mi-float-1 15s ease-in-out infinite;
-  }
-  .mi-orb-2 {
-    width: clamp(200px, 30vw, 500px);
-    height: clamp(200px, 30vw, 500px);
-    background: rgba(50, 177, 92, 0.04);
-    bottom: 5%;
-    right: -5%;
-    animation: mi-float-2 18s ease-in-out infinite;
-  }
-  .mi-orb-3 {
-    width: clamp(250px, 35vw, 600px);
-    height: clamp(250px, 35vw, 600px);
-    background: rgba(208, 106, 17, 0.05);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: mi-glow-pulse 6s ease-in-out infinite;
-  }
-
-  /* ─── Noise texture overlay ─────────────────────────────────────────── */
-  .mi-noise {
-    position: absolute;
-    inset: 0;
-    opacity: 0.015;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 256px 256px;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* ─── Grid lines overlay ────────────────────────────────────────────── */
-  .mi-grid-overlay {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(208,106,17,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(208,106,17,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 1;
-    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black 0%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black 0%, transparent 70%);
-  }
-
-  /* ─── Glass card ────────────────────────────────────────────────────── */
-  .mi-glass {
-    background: #FFFFFF;
-    border: 1px solid rgba(208, 106, 17, 0.12);
-    border-radius: 1.25rem;
-    padding: clamp(1.5rem, 3vw, 2.5rem);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.3s, box-shadow 0.3s;
-    will-change: transform, opacity;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  }
-  .mi-glass:hover {
-    border-color: rgba(208, 106, 17, 0.35);
-    transform: translateY(-6px);
-    box-shadow: 0 12px 40px rgba(208, 106, 17, 0.08), 0 4px 12px rgba(0,0,0,0.04);
-  }
-
-  /* ─── CTA Button ────────────────────────────────────────────────────── */
-  .mi-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: clamp(1rem, 1.5vw, 1.25rem) clamp(2rem, 4vw, 3rem);
-    background: linear-gradient(135deg, #32B15C 0%, #28a04f 100%);
-    color: #fff;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    border: none;
-    border-radius: 0.75rem;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 4px 30px rgba(50, 177, 92, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-    font-family: inherit;
-  }
-  .mi-cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    animation: mi-shine 3s ease-in-out infinite;
-  }
-  .mi-cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 40px rgba(50, 177, 92, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-
-  /* ─── FAQ ────────────────────────────────────────────────────────────── */
-  .mi-faq-q {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: clamp(1.25rem, 2vw, 1.75rem) 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: 600;
-    color: #1A1A2E;
-    text-align: left;
-    transition: color 0.2s;
-  }
-  .mi-faq-q:hover { color: #D06A11; }
-  .mi-faq-answer {
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s;
-    max-height: 0;
-    opacity: 0;
-  }
-  .mi-faq-answer[data-open="true"] { max-height: 12rem; opacity: 1; }
-
-  /* ─── Testimonial cards ─────────────────────────────────────────────── */
-  .mi-testimonial-card {
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease, border-color 0.3s;
-  }
-  .mi-testimonial-card:nth-child(odd):hover {
-    transform: translateY(-6px) rotate(-0.5deg);
-    border-color: rgba(208, 106, 17, 0.35);
-    box-shadow: 0 20px 60px rgba(208, 106, 17, 0.08);
-  }
-  .mi-testimonial-card:nth-child(even):hover {
-    transform: translateY(-6px) rotate(0.5deg);
-    border-color: rgba(208, 106, 17, 0.35);
-    box-shadow: 0 20px 60px rgba(208, 106, 17, 0.08);
-  }
-
-  /* ─── Input ─────────────────────────────────────────────────────────── */
-  .mi-input {
-    width: 100%;
-    padding: clamp(0.9rem, 1.2vw, 1.1rem) clamp(1rem, 1.5vw, 1.25rem);
-    background: #FFFFFF;
-    border: 1.5px solid rgba(26,26,46,0.12);
-    border-radius: 0.75rem;
-    color: #1A1A2E;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    backdrop-filter: blur(4px);
-  }
-  .mi-input::placeholder { color: rgba(26,26,46,0.35); }
-  .mi-input:focus { border-color: rgba(208,106,17,0.5); box-shadow: 0 0 0 3px rgba(208,106,17,0.08); }
-
-  /* ─── Responsive grids ──────────────────────────────────────────────── */
-  .mi-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(1rem,2vw,1.5rem); }
-  .mi-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: clamp(1rem,2vw,1.5rem); }
-  @media (max-width:960px) {
-    .mi-grid-3 { grid-template-columns: repeat(2,1fr); }
-    .mi-speaker-grid { grid-template-columns: 1fr !important; }
-    .mi-form-grid { grid-template-columns: 1fr !important; }
-  }
-  @media (max-width:560px) {
-    .mi-grid-3, .mi-grid-2 { grid-template-columns: 1fr; }
-    .mi-stats-row { flex-wrap: wrap !important; }
-    .mi-stat-cell { min-width: 50% !important; border-right: none !important; }
-    .mi-stat-cell:nth-child(odd) { border-right: 1px solid rgba(208,106,17,0.1) !important; }
-    .mi-stat-cell:nth-child(1), .mi-stat-cell:nth-child(2) { border-bottom: 1px solid rgba(208,106,17,0.1) !important; }
-  }
-  @media (max-width:480px) {
-    .mi-floating-text { display: none !important; }
-  }
-
-  /* ─── Mobile-specific refinements ──────────────────────────────────── */
-  @media (max-width:640px) {
-    .mi-page { line-height: 1.6; }
-
-    /* Hero: tighter vertical padding on mobile */
-    .mi-hero-section {
-      min-height: auto !important;
-      padding-top: clamp(5rem, 12vh, 7rem) !important;
-      padding-bottom: clamp(3rem, 8vh, 5rem) !important;
-      padding-left: 1.25rem !important;
-      padding-right: 1.25rem !important;
-    }
-
-    /* Countdown boxes: compact 2×2 grid on mobile */
-    .mi-countdown-row {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
-      gap: 0.75rem !important;
-    }
-    .mi-countdown-cell {
-      min-width: unset !important;
-      padding: 1.25rem 0.75rem !important;
-    }
-
-    /* Speaker grid: photo smaller on mobile */
-    .mi-speaker-photo {
-      aspect-ratio: 1/1 !important;
-      max-width: 280px !important;
-      margin: 0 auto !important;
-    }
-
-    /* Glass cards: tighter padding on mobile */
-    .mi-glass {
-      padding: 1.25rem !important;
-      border-radius: 1rem !important;
-    }
-
-    /* Section paddings: less vertical space on mobile */
-    .mi-section-inner {
-      padding-top: clamp(3rem, 8vw, 5rem) !important;
-      padding-bottom: clamp(3rem, 8vw, 5rem) !important;
-      padding-left: 1.25rem !important;
-      padding-right: 1.25rem !important;
-    }
-
-    /* Floating CTA bar: full-width button */
-    .mi-floating-bar {
-      padding: 0.75rem 1rem !important;
-    }
-    .mi-floating-bar .mi-cta {
-      width: 100% !important;
-      padding: 0.85rem 1.5rem !important;
-      font-size: max(13px, min(0.75rem + 0.2vw, 0.875rem)) !important;
-    }
-
-    /* Form section: stack vertically */
-    .mi-form-grid {
-      grid-template-columns: 1fr !important;
-      gap: 2rem !important;
-    }
-
-    /* Agenda items: tighter */
-    .mi-agenda-item {
-      gap: 1rem !important;
-    }
-    .mi-agenda-circle {
-      width: 3rem !important;
-      height: 3rem !important;
-    }
-
-    /* Stats section: compact padding */
-    .mi-stat-cell {
-      padding: 1.25rem 0.75rem !important;
-    }
-
-    /* SVG waves: shorter on mobile */
-    .mi-wave-svg {
-      height: 30px !important;
-    }
-
-    /* Marquee bar: thinner */
-    .mi-marquee-bar {
-      padding: 7px 0 !important;
-    }
-
-    /* Trust indicators: stack vertically */
-    .mi-trust-row {
-      flex-direction: column !important;
-      gap: 0.75rem !important;
-    }
-
-    /* Section headings: more bottom margin on mobile */
-    .mi-section-header {
-      margin-bottom: 2rem !important;
-    }
-
-    /* Hero title: smaller on mobile */
-    .mi-hero-title {
-      font-size: max(36px, min(2rem + 6vw, 4rem)) !important;
-    }
-
-    /* CTA buttons: full-width tap target on mobile */
-    .mi-cta-mobile-full {
-      width: 100% !important;
-      padding: 1rem 1.5rem !important;
-      font-size: max(14px, 0.875rem) !important;
-    }
-
-    /* Hide decorative floating images on mobile */
-    .mi-benefits-deco {
-      display: none !important;
-    }
-
-    /* Speaker image max-height on mobile */
-    .mi-speaker-photo {
-      max-height: 320px !important;
-    }
-
-    /* Gallery section: horizontal scroll on mobile */
-    .mi-gallery-grid {
-      display: flex !important;
-      overflow-x: auto !important;
-      scroll-snap-type: x mandatory !important;
-      -webkit-overflow-scrolling: touch !important;
-      gap: 0.75rem !important;
-      padding-bottom: 0.5rem !important;
-    }
-    .mi-gallery-item {
-      min-width: 260px !important;
-      scroll-snap-align: start !important;
-    }
-  }
-
-  /* ─── Scrollbar ─────────────────────────────────────────────────────── */
-  .mi-page::-webkit-scrollbar { width: 8px; }
-  .mi-page::-webkit-scrollbar-track { background: #F3F4F6; }
-  .mi-page::-webkit-scrollbar-thumb { background: #D06A11; border-radius: 4px; }
-
-  /* ─── Section reveal ────────────────────────────────────────────────── */
-  .mi-reveal { will-change: transform, opacity; }
-`
+  return (
+    <section
+      id={id}
+      className={clsx(bgMap[bg], 'py-16 md:py-24', className)}
+    >
+      <div className="mx-auto max-w-[1250px] px-5 md:px-10">{children}</div>
+    </section>
+  )
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MAIN COMPONENT
+   MEDIA LOGOS — "Visto Su" bar
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const mediaLogos = [
+  { src: '/images/missione-immobiliare/imgi_12_Rai1.webp', alt: 'Rai 1' },
+  { src: '/images/missione-immobiliare/imgi_35_Corriere-della-sera.webp', alt: 'Corriere della Sera' },
+  { src: '/images/missione-immobiliare/imgi_15_Sole-24-ore.webp', alt: 'Il Sole 24 Ore' },
+  { src: '/images/missione-immobiliare/imgi_37_Huffpost.webp', alt: 'HuffPost' },
+  { src: '/images/missione-immobiliare/imgi_17_La7.webp', alt: 'La7' },
+  { src: '/images/missione-immobiliare/imgi_19_Gazzetta-dello-sport.webp', alt: 'Gazzetta dello Sport' },
+  { src: '/images/missione-immobiliare/imgi_16_GQ.webp', alt: 'GQ' },
+  { src: '/images/missione-immobiliare/imgi_13_Messaggero.webp', alt: 'Il Messaggero' },
+  { src: '/images/missione-immobiliare/imgi_20_Il-Giornale.webp', alt: 'Il Giornale' },
+  { src: '/images/missione-immobiliare/imgi_21_Il-secolo-XIX.webp', alt: 'Il Secolo XIX' },
+]
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPARISON DATA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const comparisonRows = [
+  {
+    before:
+      'Cerchi gli immobili giusti a intuizione, sperando di trovare un affare nascosto',
+    after:
+      'Sai esattamente dove guardare, con criteri precisi di selezione basati su dati reali e zona',
+  },
+  {
+    before: 'Compri e poi speri di vendere',
+    after:
+      'Vendi prima di comprare grazie al Metodo Prevendi, riducendo quasi a zero il rischio di invenduto',
+  },
+  {
+    before:
+      'Il rischio di invenduto ti blocca e ti impedisce di fare il primo passo',
+    after:
+      'Il Metodo Prevendi riduce al minimo il rischio e ti permette di agire con sicurezza',
+  },
+  {
+    before:
+      'Aspetti mesi per trovare un acquirente, con il capitale bloccato e ansia crescente',
+    after:
+      'Esci dal mercato in tempi medi di 120 giorni, con acquirente già individuato',
+  },
+  {
+    before:
+      'Il tuo capitale resta bloccato a lungo, senza generare ritorni prevedibili',
+    after:
+      'Hai cashflow positivo prima del rogito, con margini calcolati in anticipo',
+  },
+  {
+    before:
+      "Fai un'operazione ogni tanto, senza un sistema che generi risultati costanti",
+    after:
+      'Hai un metodo replicabile che ti permette di creare un flusso continuo di operazioni',
+  },
+  {
+    before:
+      "Non sai se stai facendo un affare o stai comprando un problema mascherato",
+    after:
+      'Calcoli il margine prima di comprare, con analisi di fattibilità dettagliata',
+  },
+  {
+    before:
+      'Lavori con agenzie e fornitori ogni volta da zero, perdendo tempo e trattando da sconosciuto',
+    after:
+      'Costruisci relazioni continuative con una rete di professionisti fidati',
+  },
+]
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PILLARS DATA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const pillars = [
+  {
+    icon: Search,
+    title: 'Ricerca Strategica',
+    desc: "Non cerchi immobili a caso. Impari a identificare le zone con la domanda più alta e l'offerta più bassa, a leggere i segnali del mercato locale e a selezionare solo gli immobili con un margine reale. L'80% del risultato si decide prima dell'acquisto.",
+  },
+  {
+    icon: BarChart3,
+    title: 'Pricing Intelligente',
+    desc: "Stabilisci il prezzo giusto usando dati comparativi reali, non stime a sensazione. Sai quanto puoi offrire, quanto puoi rivendere e quale margine puoi aspettarti, prima di firmare qualsiasi proposta d'acquisto.",
+  },
+  {
+    icon: Handshake,
+    title: 'Negoziazione Privilegiata',
+    desc: "Accedi a condizioni che il mercato aperto non offre: sospensive, acconti minimi, tempi tecnici favorevoli. Impari a strutturare proposte che tutelano te e lasciano spazio al profitto, senza forzare il venditore.",
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Prevendi',
+    desc: "Il cuore del metodo. Prima di acquistare, verifichi che esista già un acquirente disposto a comprare a un prezzo che ti garantisce il margine. È la differenza tra investire con un piano e scommettere alla cieca. È ciò che ha permesso a centinaia di studenti di completare operazioni sopra i 30.000€ di profitto.",
+  },
+]
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SPEAKERS DATA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const speakers = [
+  {
+    name: 'Alfio Bardolla',
+    role: 'Fondatore di ABTG',
+    credentials: [
+      'Autore best-seller di finanza personale in Italia',
+      'Fondatore di ABTG, unica scuola di educazione finanziaria quotata in Borsa',
+      "Oltre 25 anni di esperienza nell'immobiliare e negli investimenti",
+    ],
+  },
+  {
+    name: 'Saverio Rodriguez',
+    role: 'Imprenditore, fondatore di Vivi Salute',
+    credentials: [
+      'Imprenditore seriale con oltre 15 anni di esperienza',
+      'Fondatore di Vivi Salute e altre aziende di successo',
+      'Investitore immobiliare con portafoglio multi-milionario',
+    ],
+  },
+  {
+    name: 'Alberto Colombo',
+    role: 'Coach ABTG — Stralci e Aste',
+    credentials: [
+      'Specialista in stralci immobiliari e aste giudiziarie',
+      'Coach ABTG con centinaia di studenti formati',
+      'Oltre 200 operazioni immobiliari completate',
+    ],
+  },
+  {
+    name: 'Avv. Fracassi Stefano',
+    role: 'Avvocato immobiliarista',
+    credentials: [
+      'Avvocato specializzato in diritto immobiliare',
+      'Consulente legale per centinaia di operazioni',
+      'Esperto in contrattualistica e tutela degli investitori',
+    ],
+  },
+]
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PHASES DATA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const phases = [
+  {
+    num: 1,
+    title: 'Non hai ancora iniziato',
+    text: "Hai letto libri, seguito corsi, forse anche guardato annunci. Ma non hai ancora fatto la tua prima operazione. Ti manca un metodo chiaro, step-by-step, che ti dica esattamente cosa fare, in quale ordine e con quale livello di rischio. Non è paura: è che nessuno ti ha mai dato un percorso operativo concreto.",
+  },
+  {
+    num: 2,
+    title: "Hai fatto qualche operazione, ma non riesci a renderla un'attività",
+    text: "Hai comprato e rivenduto qualcosa. Forse ci hai guadagnato, forse no. Ma non hai un sistema. Ogni operazione sembra ripartire da zero. Non hai un flusso prevedibile di deal, non hai una rete di contatti consolidata e il tempo che investi non è proporzionato ai risultati.",
+  },
+  {
+    num: 3,
+    title: 'Stai ottenendo risultati, ma vuoi scalare',
+    text: "Sai come funziona il mercato, hai fatto operazioni con profitto. Ma senti che stai lasciando soldi sul tavolo. Vuoi capire come aumentare il volume, come delegare alcune fasi, come usare leva finanziaria e strumenti avanzati per moltiplicare i risultati senza moltiplicare il tempo.",
+  },
+]
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ORANGE ICON SVG COMPONENT (matches ABTG icon style)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function OrangeIconBox({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[5px] bg-[#E57712]">
+      {children}
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MAIN PAGE COMPONENT
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export default function MissioneImmobiliarePage() {
-  const pageRef = useRef<HTMLDivElement>(null)
-  const heroRef = useRef<HTMLElement>(null)
-  const socialRef = useRef<HTMLElement>(null)
-  const benefitsRef = useRef<HTMLElement>(null)
-  const speakerRef = useRef<HTMLElement>(null)
-  const agendaRef = useRef<HTMLElement>(null)
-  const testimonialsRef = useRef<HTMLElement>(null)
-  const countdownRef = useRef<HTMLElement>(null)
-  const formRef = useRef<HTMLElement>(null)
-  const floatingBarRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-
-  /* ── Countdown Timer ─────────────────────────────────────────────────── */
-  useEffect(() => {
-    const tick = () => {
-      const now = Date.now()
-      const diff = Math.max(0, TARGET_DATE - now)
-      setCountdown({
-        days: Math.floor(diff / 86400000),
-        hours: Math.floor((diff % 86400000) / 3600000),
-        minutes: Math.floor((diff % 3600000) / 60000),
-        seconds: Math.floor((diff % 60000) / 1000),
-      })
-    }
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [])
-
-  /* ── GSAP Master Timeline & Scroll Animations ────────────────────────── */
-  useEffect(() => {
-    const page = pageRef.current
-    if (!page) return
-
-    const ctx = gsap.context(() => {
-
-      /* ─── HERO TIMELINE ──────────────────────────────────────────── */
-      const heroTl = gsap.timeline({ delay: 0.5 })
-      heroTl
-        .fromTo('[data-mi-badge]',
-          { scale: 0.8, autoAlpha: 0 },
-          { scale: 1, autoAlpha: 1, duration: 0.7, ease: 'back.out(1.7)' }
-        )
-        .fromTo('[data-mi-headline]',
-          { yPercent: 100, autoAlpha: 0 },
-          { yPercent: 0, autoAlpha: 1, duration: 1, ease: 'expo.out', stagger: 0.15 },
-          '-=0.3'
-        )
-        .fromTo('[data-mi-sub]',
-          { y: 30, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
-          '-=0.5'
-        )
-        .fromTo('[data-mi-cta]',
-          { y: 20, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
-          '-=0.3'
-        )
-        .fromTo('[data-mi-trust]',
-          { y: 16, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out', stagger: 0.08 },
-          '-=0.2'
-        )
-
-      /* ─── FLOATING BAR ──────────────────────────────────────────── */
-      ScrollTrigger.create({
-        trigger: heroRef.current,
-        start: 'bottom top',
-        onEnter: () => gsap.to(floatingBarRef.current, { y: 0, autoAlpha: 1, duration: 0.4, ease: 'power3.out' }),
-        onLeaveBack: () => gsap.to(floatingBarRef.current, { y: 60, autoAlpha: 0, duration: 0.3, ease: 'power2.in' }),
-      })
-
-      /* ─── SECTION REVEALS ───────────────────────────────────────── */
-      page.querySelectorAll('[data-mi-reveal]').forEach(el => {
-        gsap.fromTo(el, { opacity: 0, y: 50 }, {
-          opacity: 1, y: 0, duration: 0.9, ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
-        })
-      })
-
-      /* ─── COUNTERS ──────────────────────────────────────────────── */
-      page.querySelectorAll<HTMLElement>('[data-mi-counter]').forEach(el => {
-        const target = parseFloat(el.dataset.miTarget || '0')
-        const suffix = el.dataset.miSuffix || ''
-        const isDecimal = el.dataset.miDecimal === 'true'
-        const obj = { val: 0 }
-        gsap.to(obj, {
-          val: target,
-          duration: 2.5,
+  /* ── GSAP animations ────────────────────────────────────────────────── */
+  useGSAP(
+    () => {
+      // Fade-up for all sections
+      gsap.utils.toArray<HTMLElement>('.gs-fade-up').forEach((el) => {
+        gsap.from(el, {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
           ease: 'power2.out',
-          scrollTrigger: { trigger: socialRef.current, start: 'top 80%', toggleActions: 'play none none reset' },
-          onUpdate: () => {
-            el.textContent = isDecimal ? obj.val.toFixed(1) + suffix : Math.round(obj.val).toLocaleString('it-IT') + suffix
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
           },
         })
       })
 
-      /* ─── BENEFITS STAGGER ──────────────────────────────────────── */
-      gsap.fromTo('[data-mi-benefit]',
-        { opacity: 0, y: 60, scale: 0.95 },
-        {
-          opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out',
-          stagger: { each: 0.1, from: 'start' },
-          scrollTrigger: { trigger: benefitsRef.current, start: 'top 75%', toggleActions: 'play none none reset' },
-        }
-      )
+      // Stagger for cards
+      gsap.utils.toArray<HTMLElement>('.gs-stagger-parent').forEach((parent) => {
+        const children = parent.querySelectorAll('.gs-stagger-child')
+        if (!children.length) return
+        gsap.from(children, {
+          y: 30,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: parent,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        })
+      })
 
-      /* ─── SPEAKER ───────────────────────────────────────────────── */
-      gsap.fromTo('[data-mi-speaker-img]',
-        { x: -80, autoAlpha: 0 },
-        { x: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: speakerRef.current, start: 'top 70%' } }
-      )
-      gsap.fromTo('[data-mi-speaker-text]',
-        { x: 80, autoAlpha: 0 },
-        { x: 0, autoAlpha: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: speakerRef.current, start: 'top 70%' } }
-      )
+      // Comparison table rows
+      const tableRows = gsap.utils.toArray<HTMLElement>('.gs-table-row')
+      if (tableRows.length) {
+        gsap.from(tableRows, {
+          x: -30,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: tableRows[0],
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
+        })
+      }
 
-      /* ─── AGENDA STAGGER ────────────────────────────────────────── */
-      gsap.fromTo('[data-mi-agenda]',
-        { x: -60, autoAlpha: 0 },
-        {
-          x: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out', stagger: 0.15,
-          scrollTrigger: { trigger: agendaRef.current, start: 'top 75%' },
-        }
-      )
-
-      /* ─── TESTIMONIALS STAGGER ──────────────────────────────────── */
-      gsap.fromTo('[data-mi-testimonial]',
-        { opacity: 0, y: 50, scale: 0.96 },
-        {
-          opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out', stagger: { each: 0.12 },
-          scrollTrigger: { trigger: testimonialsRef.current, start: 'top 75%' },
-        }
-      )
-
-      /* ─── COUNTDOWN ─────────────────────────────────────────────── */
-      gsap.fromTo('[data-mi-cd]',
-        { scale: 0.8, autoAlpha: 0 },
-        {
-          scale: 1, autoAlpha: 1, duration: 0.7, ease: 'back.out(1.7)', stagger: 0.1,
-          scrollTrigger: { trigger: countdownRef.current, start: 'top 80%' },
-        }
-      )
-
-      /* ─── FORM ──────────────────────────────────────────────────── */
-      gsap.fromTo('[data-mi-form]',
-        { y: 50, autoAlpha: 0 },
-        {
-          y: 0, autoAlpha: 1, duration: 0.9, ease: 'power3.out',
-          scrollTrigger: { trigger: formRef.current, start: 'top 80%' },
-        }
-      )
-
-      /* ─── PARALLAX on orbs ──────────────────────────────────────── */
-      gsap.to('.mi-orb-1', { yPercent: -20, ease: 'none', scrollTrigger: { trigger: page, start: 'top top', end: 'bottom bottom', scrub: true } })
-      gsap.to('.mi-orb-3', { yPercent: 15, ease: 'none', scrollTrigger: { trigger: page, start: 'top top', end: 'bottom bottom', scrub: true } })
-
-    }, page)
-
-    return () => ctx.revert()
-  }, [])
-
-  /* ── FAQ toggle ──────────────────────────────────────────────────────── */
-  const toggleFaq = useCallback((i: number) => setOpenFaq((prev) => (prev === i ? null : i)), [])
+      // Counter animation
+      gsap.utils.toArray<HTMLElement>('.gs-counter').forEach((el) => {
+        const target = parseInt(el.dataset.target || '0', 10)
+        const obj = { val: 0 }
+        gsap.to(obj, {
+          val: target,
+          duration: 2,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+          onUpdate: () => {
+            el.textContent = Math.round(obj.val).toLocaleString('it-IT')
+          },
+        })
+      })
+    },
+    { scope: containerRef }
+  )
 
   /* ═══════════════════════════════════════════════════════════════════════
      RENDER
      ═══════════════════════════════════════════════════════════════════════ */
-  return (
-    <div ref={pageRef} className="mi-page">
-      <style>{KEYFRAMES}</style>
 
-      {/* ════════════════════════════════════════════════════════════════════
-          MARQUEE TICKER BAR
-          ════════════════════════════════════════════════════════════════════ */}
-      <div className="mi-marquee-bar" style={{ position: 'relative', zIndex: 110 }}>
-        <div className="mi-marquee-track">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <span key={i} style={{
-              color: '#fff',
-              fontWeight: 800,
-              fontSize: TYPO.label,
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              paddingRight: '3rem',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-            }}>
-              {MARQUEE_TEXT}
-              <span style={{
-                display: 'inline-block',
-                width: 5,
-                height: 5,
-                borderRadius: '50%',
-                background: 'rgba(255,255,255,0.5)',
-              }} />
-            </span>
-          ))}
+  return (
+    <div ref={containerRef} className="font-['Inter',sans-serif]">
+      {/* ── 1. TOP BAR — ORANGE like ABTG pages ──────────────────────────── */}
+      <div className="bg-[#EF7B11] py-2.5 text-center text-sm font-bold uppercase tracking-wide text-white md:text-base">
+        <div className="mx-auto max-w-[1250px] px-5 md:px-10">
+          <span className="hidden sm:inline">
+            Evento online <strong>GRATUITO</strong> di 4 serate LIVE per chi
+            intende investire almeno 20.000&nbsp;&euro; nell&apos;immobiliare
+            &mdash;{' '}
+          </span>
+          <strong>27-30 Aprile ore 21</strong>
         </div>
       </div>
 
-      {/* ════════════════════════════════════════════════════════════════════
-          1. HERO SECTION
-          ════════════════════════════════════════════════════════════════════ */}
-      <section ref={heroRef} className="mi-hero-section" style={{
-        position: 'relative',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        padding: 'clamp(6rem, 14vh, 10rem) clamp(1.25rem, 5vw, 4rem)',
-        overflow: 'hidden',
-        background: `
-          radial-gradient(ellipse 80% 60% at 50% 100%, rgba(208,106,17,0.08) 0%, transparent 60%),
-          radial-gradient(ellipse 50% 40% at 20% 20%, rgba(50,177,92,0.03) 0%, transparent 50%),
-          linear-gradient(180deg, #FFFFFF 0%, #F3F4F6 100%)
-        `,
-      }}>
-        {/* Hero background image - glass skyscrapers */}
-        <img
-          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: 0.07,
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
+      {/* ── 2. LOGO BAR — light gray like ABTG ───────────────────────────── */}
+      <div className="bg-[#F5F5F7] py-4 text-center">
+        <Image
+          src="/images/missione-immobiliare/logo-abtg-color.webp"
+          alt="Alfio Bardolla Training Group"
+          width={280}
+          height={50}
+          className="mx-auto h-auto w-[200px] md:w-[280px]"
+          priority
         />
+      </div>
 
-        {/* Hero animated mesh background */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: `
-            radial-gradient(at 20% 80%, rgba(208,106,17,0.06) 0%, transparent 50%),
-            radial-gradient(at 80% 20%, rgba(50,177,92,0.03) 0%, transparent 50%),
-            radial-gradient(at 50% 50%, rgba(208,106,17,0.04) 0%, transparent 70%)
-          `,
-          pointerEvents: 'none',
-          zIndex: 0,
-        }} />
-
-        {/* Noise texture */}
-        <div className="mi-noise" />
-
-        {/* Grid lines overlay */}
-        <div className="mi-grid-overlay" />
-
-        {/* Floating orbs */}
-        <div className="mi-orb mi-orb-1" />
-        <div className="mi-orb mi-orb-2" />
-        <div className="mi-orb mi-orb-3" />
-
-        {/* Hero content */}
-        <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '65rem' }}>
-
-          {/* Badge */}
-          <div data-mi-badge style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.5rem 1.5rem',
-            border: '1px solid rgba(208,106,17,0.4)',
-            borderRadius: '100px',
-            background: 'rgba(208,106,17,0.08)',
-            fontSize: TYPO.label,
-            fontWeight: 700,
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: '#D06A11',
-            marginBottom: 'clamp(2rem, 4vw, 3rem)',
-            backdropFilter: 'blur(8px)',
-            opacity: 0,
-            visibility: 'hidden' as const,
-          }}>
-            <span style={{
-              display: 'inline-block',
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              background: '#D06A11',
-              boxShadow: '0 0 12px rgba(208,106,17,0.6)',
-            }} />
-            WORKSHOP GRATUITO &mdash; 4 GIORNI
-          </div>
-
-          {/* Headline: MISSIONE */}
-          <div className="mi-headline-wrap" style={{ overflow: 'hidden', lineHeight: 1 }}>
-            <div data-mi-headline className="mi-hero-title" style={{
-              fontSize: TYPO.hero,
-              fontWeight: 900,
-              textTransform: 'uppercase',
-              letterSpacing: '-0.04em',
-              lineHeight: 0.95,
-              color: '#1A1A2E',
-              opacity: 0,
-              visibility: 'hidden' as const,
-              willChange: 'transform',
-            }}>
-              MISSIONE
-            </div>
-          </div>
-
-          {/* Headline: IMMOBILIARE */}
-          <div className="mi-headline-wrap" style={{ overflow: 'hidden', lineHeight: 1 }}>
-            <div data-mi-headline className="mi-hero-title" style={{
-              fontSize: TYPO.hero,
-              fontWeight: 900,
-              textTransform: 'uppercase',
-              letterSpacing: '-0.04em',
-              lineHeight: 0.95,
-              color: '#D06A11',
-              opacity: 0,
-              visibility: 'hidden' as const,
-              willChange: 'transform',
-            }}>
-              IMMOBILIARE
-            </div>
-          </div>
-
-          {/* Subheadline */}
-          <p data-mi-sub style={{
-            marginTop: 'clamp(1.5rem, 3vw, 2.5rem)',
-            fontSize: TYPO.body,
-            lineHeight: 1.75,
-            color: 'rgba(26, 26, 46, 0.65)',
-            maxWidth: '42rem',
-            opacity: 0,
-            visibility: 'hidden' as const,
-          }}>
-            4 giorni di workshop intensivo con Alfio Bardolla e il suo team per mettere in piedi
-            la tua prima operazione immobiliare &mdash; anche se parti da zero.
-          </p>
-
-          {/* CTA */}
-          <div style={{
-            marginTop: 'clamp(2rem, 4vw, 3rem)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1rem',
-          }}>
-            <a data-mi-cta href="#candidati" className="mi-cta mi-cta-mobile-full" style={{
-              fontSize: TYPO.body,
-              opacity: 0,
-              visibility: 'hidden' as const,
-            }}>
-              CANDIDATI ORA &mdash; POSTI LIMITATI
-            </a>
-
-            <a href="#programma" data-mi-cta style={{
-              color: 'rgba(26, 26, 46, 0.5)',
-              textDecoration: 'none',
-              fontSize: TYPO.body,
-              fontWeight: 500,
-              letterSpacing: '0.02em',
-              opacity: 0,
-              visibility: 'hidden' as const,
-              background: 'none',
-              border: 'none',
-              boxShadow: 'none',
-              padding: '0.5rem 1rem',
-              transition: 'color 0.2s',
-            }}
-              onMouseEnter={e => { e.currentTarget.style.color = '#D06A11' }}
-              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(26, 26, 46, 0.5)' }}
-            >
-              Scopri il Programma &darr;
-            </a>
-          </div>
-
-          {/* Trust indicators */}
-          <div className="mi-trust-row" style={{
-            marginTop: 'clamp(3rem, 6vw, 5rem)',
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: 'clamp(1.5rem, 3vw, 3rem)',
-          }}>
-            {['GRATUITO', '500 POSTI MAX', '4 GIORNI INTENSIVI'].map((text, i) => (
-              <span key={i} data-mi-trust style={{
-                fontSize: TYPO.label,
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: 'rgba(26, 26, 46, 0.4)',
-                opacity: 0,
-                visibility: 'hidden' as const,
-              }}>
-                &#10003; {text}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          SVG WAVE SEPARATOR (hero → stats)
-          ════════════════════════════════════════════════════════════════════ */}
-      <svg className="mi-wave-svg" style={{ display: 'block', width: '100%', height: 'auto', marginTop: -1 }} viewBox="0 0 1440 60" preserveAspectRatio="none">
-        <path d="M0,40 C360,10 720,60 1080,25 C1260,12 1380,30 1440,20 L1440,60 L0,60Z" fill="#FFFFFF" />
-      </svg>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          2. SOCIAL PROOF BAR
-          ════════════════════════════════════════════════════════════════════ */}
-      <section ref={socialRef} style={{
-        background: '#FFFFFF',
-        borderTop: '1px solid rgba(208,106,17,0.1)',
-        borderBottom: '1px solid rgba(208,106,17,0.1)',
-        padding: 'clamp(4rem, 10vw, 8rem) clamp(1.25rem, 5vw, 4rem)',
-      }}>
-        <div className="mi-stats-row" data-mi-reveal style={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          gap: 0,
-          maxWidth: '70rem',
-          margin: '0 auto',
-        }}>
-          {[
-            { target: '500000', suffix: '+', label: 'Persone Formate' },
-            { target: '15', suffix: '+', label: 'Anni di Esperienza' },
-            { target: '4.8', suffix: '/5', label: 'Trustpilot', decimal: true },
-            { target: '1200', suffix: '+', label: 'Operazioni Immobiliari' },
-          ].map((stat, i) => (
-            <div key={i} className="mi-stat-cell" style={{
-              flex: '1 1 0',
-              minWidth: 140,
-              textAlign: 'center',
-              padding: 'clamp(2rem, 4vw, 3rem) clamp(1rem, 2vw, 2rem)',
-              borderRight: i < 3 ? '1px solid rgba(208,106,17,0.1)' : 'none',
-            }}>
-              <div
-                data-mi-counter
-                data-mi-target={stat.target}
-                data-mi-suffix={stat.suffix}
-                {...(stat.decimal ? { 'data-mi-decimal': 'true' } : {})}
-                style={{
-                  fontSize: TYPO.sectionTitle,
-                  fontWeight: 900,
-                  color: '#D06A11',
-                  lineHeight: 1.1,
-                  textShadow: '0 0 40px rgba(208,106,17,0.3)',
-                }}
-              >
-                0
-              </div>
-              <div style={{
-                fontSize: TYPO.label,
-                fontWeight: 500,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                color: 'rgba(26, 26, 46, 0.4)',
-                marginTop: '0.5rem',
-              }}>
-                {stat.label}
-              </div>
-            </div>
-          ))}
+      {/* ── 3. HERO SECTION — dark bg with overlay like ABTG pages ─────── */}
+      <section className="relative overflow-hidden bg-[#1e293b]">
+        {/* Background image with dark overlay */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/missione-immobiliare/hero-bg.webp"
+            alt=""
+            fill
+            className="object-cover opacity-30"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1e293b]/80 via-[#1e293b]/60 to-[#1e293b]/90" />
         </div>
 
-        {/* Media pills */}
-        <div data-mi-reveal style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 'clamp(0.75rem, 1.5vw, 1.5rem)',
-          padding: 'clamp(1.5rem, 3vw, 2.5rem) 1rem 0',
-          maxWidth: '60rem',
-          margin: '0 auto',
-        }}>
-          <span style={{
-            fontSize: TYPO.label,
-            fontWeight: 500,
-            color: 'rgba(26, 26, 46, 0.35)',
-            letterSpacing: '0.05em',
-            textTransform: 'uppercase',
-          }}>
-            Visto su:
-          </span>
-          {MEDIA_PILLS.map((m) => (
-            <span key={m} style={{
-              padding: '0.35rem 1rem',
-              border: '1px solid rgba(208,106,17,0.15)',
-              borderRadius: '100px',
-              fontSize: TYPO.label,
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              color: 'rgba(26, 26, 46, 0.4)',
-              textTransform: 'uppercase',
-            }}>
-              {m}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          HR Divider
-          ════════════════════════════════════════════════════════════════════ */}
-      <hr style={{
-        border: 'none',
-        height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(208,106,17,0.15), transparent)',
-        margin: 0,
-      }} />
-
-      {/* ════════════════════════════════════════════════════════════════════
-          3. BENEFITS GRID
-          ════════════════════════════════════════════════════════════════════ */}
-      <section ref={benefitsRef} id="programma" style={{
-        background: `
-          radial-gradient(ellipse 40% 30% at 80% 20%, rgba(208,106,17,0.05) 0%, transparent 50%),
-          #F3F4F6
-        `,
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        {/* Decorative floating real estate images (desktop only) */}
-        <img
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80"
-          alt=""
-          aria-hidden="true"
-          className="mi-benefits-deco"
-          style={{
-            position: 'absolute',
-            top: '8%',
-            right: '-3%',
-            width: '280px',
-            height: '200px',
-            objectFit: 'cover',
-            borderRadius: '1rem',
-            opacity: 0.09,
-            transform: 'rotate(4deg)',
-            filter: 'blur(1.5px)',
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-        <img
-          src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
-          alt=""
-          aria-hidden="true"
-          className="mi-benefits-deco"
-          style={{
-            position: 'absolute',
-            bottom: '12%',
-            left: '-2%',
-            width: '240px',
-            height: '170px',
-            objectFit: 'cover',
-            borderRadius: '1rem',
-            opacity: 0.08,
-            transform: 'rotate(-3deg)',
-            filter: 'blur(1.5px)',
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-        <img
-          src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80"
-          alt=""
-          aria-hidden="true"
-          className="mi-benefits-deco"
-          style={{
-            position: 'absolute',
-            top: '55%',
-            right: '5%',
-            width: '200px',
-            height: '150px',
-            objectFit: 'cover',
-            borderRadius: '1rem',
-            opacity: 0.07,
-            transform: 'rotate(-2deg)',
-            filter: 'blur(2px)',
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-        <div className="mi-noise" />
-        <div className="mi-section-inner" style={{
-          padding: 'clamp(5rem, 12vw, 10rem) clamp(1.25rem, 5vw, 4rem)',
-          maxWidth: '80rem',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 2,
-        }}>
-          <div data-mi-reveal>
-            <p style={{
-              fontSize: TYPO.label,
-              fontWeight: 700,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: '#D06A11',
-              marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
-            }}>
-              IL PROGRAMMA
-            </p>
-            <h2 style={{
-              fontSize: TYPO.sectionTitle,
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
-              color: '#1A1A2E',
-              marginBottom: 'clamp(1rem, 2.5vw, 2rem)',
-            }}>
-              Cosa Imparerai in 4 Giorni
-            </h2>
-            <p style={{
-              fontSize: TYPO.body,
-              lineHeight: 1.7,
-              color: 'rgba(26, 26, 46, 0.65)',
-              maxWidth: '40rem',
-            }}>
-              Un percorso pratico, non teoria. Alla fine avrai il tuo piano operativo.
-            </p>
-          </div>
-
-          <div className="mi-grid-3" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
-            {BENEFITS.map((b, i) => (
-              <div key={i} data-mi-benefit className="mi-glass" style={{ opacity: 0 }}>
-                <div style={{
-                  marginBottom: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '3.25rem',
-                  height: '3.25rem',
-                  borderRadius: '0.75rem',
-                  background: 'rgba(208, 106, 17, 0.1)',
-                  border: '1px solid rgba(208, 106, 17, 0.15)',
-                }}>
-                  {b.icon}
-                </div>
-                <div style={{
-                  fontSize: TYPO.cardTitle,
-                  fontWeight: 700,
-                  color: '#1A1A2E',
-                  marginBottom: '0.5rem',
-                }}>
-                  {b.title}
-                </div>
-                <div style={{
-                  fontSize: TYPO.body,
-                  lineHeight: 1.65,
-                  color: 'rgba(26, 26, 46, 0.65)',
-                }}>
-                  {b.desc}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          SVG WAVE SEPARATOR
-          ════════════════════════════════════════════════════════════════════ */}
-      <svg className="mi-wave-svg" style={{ display: 'block', width: '100%', height: 'auto', marginTop: -1 }} viewBox="0 0 1440 60" preserveAspectRatio="none">
-        <path d="M0,20 C180,50 540,5 900,35 C1100,48 1320,15 1440,30 L1440,60 L0,60Z" fill="#FFFFFF" />
-      </svg>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          4. SPEAKER BIO
-          ════════════════════════════════════════════════════════════════════ */}
-      <section ref={speakerRef} style={{
-        background: `
-          radial-gradient(ellipse 50% 40% at 20% 50%, rgba(208,106,17,0.06) 0%, transparent 50%),
-          #FFFFFF
-        `,
-        position: 'relative',
-      }}>
-        <div className="mi-noise" />
-        <div style={{
-          padding: 'clamp(5rem, 12vw, 10rem) clamp(1.25rem, 5vw, 4rem)',
-          maxWidth: '80rem',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 2,
-        }}>
-          <div className="mi-speaker-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1.2fr',
-            gap: 'clamp(2rem, 5vw, 5rem)',
-            alignItems: 'center',
-          }}>
-            {/* Speaker photo */}
-            <div data-mi-speaker-img className="mi-speaker-photo" style={{
-              position: 'relative',
-              aspectRatio: '3/4',
-              background: 'linear-gradient(135deg, rgba(208,106,17,0.15) 0%, rgba(208,106,17,0.03) 100%)',
-              borderRadius: '1.25rem',
-              overflow: 'hidden',
-              border: '1px solid rgba(208, 106, 17, 0.2)',
-              opacity: 0,
-              visibility: 'hidden' as const,
-            }}>
-              <img
-                src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=80"
-                alt="Speaker on stage - Alfio Bardolla"
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-              />
-              {/* Decorative corner accent */}
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                width: '5rem',
-                height: '5rem',
-                background: 'linear-gradient(135deg, rgba(208,106,17,0.4) 0%, transparent 60%)',
-                borderRadius: '0 1.25rem 0 0',
-                zIndex: 1,
-              }} />
-              {/* Bottom glow */}
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: '40%',
-                background: 'linear-gradient(to top, rgba(208,106,17,0.25) 0%, transparent 100%)',
-                pointerEvents: 'none',
-                zIndex: 1,
-              }} />
-            </div>
-
-            {/* Text content */}
-            <div data-mi-speaker-text style={{ opacity: 0, visibility: 'hidden' as const }}>
-              <p style={{
-                fontSize: TYPO.label,
-                fontWeight: 700,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: '#D06A11',
-                marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
-              }}>
-                LO SPEAKER
-              </p>
-              <h2 style={{
-                fontSize: TYPO.sectionTitle,
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: '-0.03em',
-                color: '#1A1A2E',
-                marginBottom: '0.5rem',
-              }}>
-                Alfio Bardolla
-              </h2>
-              <p style={{
-                fontSize: TYPO.body,
-                color: 'rgba(26, 26, 46, 0.5)',
-                fontWeight: 500,
-                marginBottom: 'clamp(1.5rem, 2.5vw, 2rem)',
-              }}>
-                Imprenditore, investitore, autore best-seller
-              </p>
-              <p style={{
-                fontSize: TYPO.body,
-                lineHeight: 1.75,
-                color: 'rgba(26, 26, 46, 0.65)',
-                marginBottom: 'clamp(1.5rem, 2.5vw, 2rem)',
-              }}>
-                Fondatore di ABTG S.p.A., unica azienda di formazione finanziaria quotata in Borsa Italiana.
-                Ha formato oltre 500.000 persone sui temi dell&apos;investimento immobiliare, della
-                gestione patrimoniale e della liberta&apos; finanziaria.
-              </p>
-
-              {[
-                'Fondatore ABTG S.p.A. \u2014 quotata in Borsa',
-                'Autore di 9 best-seller sul denaro e gli investimenti',
-                '15+ anni di esperienza nel real estate',
-                '1.200+ operazioni immobiliari seguite con il team',
-              ].map((cred, i) => (
-                <div key={i} style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '0.75rem',
-                  marginTop: '0.75rem',
-                  fontSize: TYPO.body,
-                  lineHeight: 1.5,
-                  color: 'rgba(26, 26, 46, 0.75)',
-                }}>
-                  <span style={{
-                    flexShrink: 0,
-                    color: '#D06A11',
-                    fontSize: '1.1rem',
-                    lineHeight: 1.5,
-                  }}>&#10003;</span>
-                  <span>{cred}</span>
+        <div className="relative mx-auto max-w-[1250px] px-5 py-16 md:px-10 md:py-24">
+          {/* Trustpilot-style rating */}
+          <div className="gs-fade-up mb-8 flex flex-wrap items-center justify-center gap-3">
+            <span className="text-sm font-semibold text-white">Eccezionale</span>
+            <div className="flex gap-0.5">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex h-[25px] w-[25px] items-center justify-center bg-[#00B67A]">
+                  <Star className="h-3.5 w-3.5 fill-white text-white" />
                 </div>
               ))}
             </div>
+            <span className="text-xs text-white/70">
+              Valutata 4.8 su 5 sulla base di 1400 recensioni su Trustpilot
+            </span>
           </div>
-        </div>
-      </section>
 
-      {/* ════════════════════════════════════════════════════════════════════
-          HR Divider
-          ════════════════════════════════════════════════════════════════════ */}
-      <hr style={{
-        border: 'none',
-        height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(208,106,17,0.15), transparent)',
-        margin: 0,
-      }} />
-
-      {/* ════════════════════════════════════════════════════════════════════
-          5. EVENT AGENDA (Timeline)
-          ════════════════════════════════════════════════════════════════════ */}
-      <section ref={agendaRef} style={{
-        background: '#F3F4F6',
-        position: 'relative',
-      }}>
-        <div className="mi-noise" />
-        <div style={{
-          padding: 'clamp(5rem, 12vw, 10rem) clamp(1.25rem, 5vw, 4rem)',
-          maxWidth: '80rem',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 2,
-        }}>
-          <div data-mi-reveal>
-            <p style={{
-              fontSize: TYPO.label,
-              fontWeight: 700,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: '#D06A11',
-              marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
-            }}>
-              L&apos;AGENDA
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="gs-fade-up text-base leading-relaxed text-white/80 md:text-lg">
+              Scopri come centinaia di persone comuni stanno realizzando le loro
+              prime operazioni immobiliari sopra i{' '}
+              <strong className="text-white">
+                30.000&nbsp;&euro; di profitto
+              </strong>{' '}
+              nel 2026 &mdash; anche se non l&apos;hai mai fatto o non &egrave;
+              andata bene in passato:
             </p>
-            <h2 style={{
-              fontSize: TYPO.sectionTitle,
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
-              color: '#1A1A2E',
-              marginBottom: 'clamp(1rem, 2.5vw, 2rem)',
-            }}>
-              4 Giorni che Cambieranno il Tuo Approccio
-            </h2>
-          </div>
 
-          <div style={{
-            marginTop: 'clamp(2.5rem, 5vw, 4rem)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'clamp(1.5rem, 3vw, 2.5rem)',
-          }}>
-            {AGENDA.map((item, i) => (
-              <div
-                key={i}
-                data-mi-agenda
-                className="mi-agenda-item"
-                style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: 'clamp(1.25rem, 2.5vw, 2rem)',
-                  position: 'relative',
-                  opacity: 0,
-                  visibility: 'hidden' as const,
-                }}
-              >
-                {/* Vertical connector line */}
-                {i < AGENDA.length - 1 && (
-                  <div style={{
-                    position: 'absolute',
-                    left: 'calc(clamp(3.5rem, 6vw, 4.5rem) / 2 - 1px)',
-                    top: 'clamp(3.5rem, 6vw, 4.5rem)',
-                    bottom: 'calc(-1 * clamp(1.5rem, 3vw, 2.5rem))',
-                    width: 2,
-                    background: 'linear-gradient(to bottom, rgba(208, 106, 17, 0.3), rgba(208, 106, 17, 0.05))',
-                  }} />
-                )}
+            {/* Title with orange badge */}
+            <h1 className="gs-fade-up mt-8">
+              <span className="inline-block rounded-md bg-[#EF7B11] px-3 py-1.5 font-['Plus_Jakarta_Sans',sans-serif] text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">
+                MISSIONE IMMOBILIARE
+              </span>
+            </h1>
 
-                {/* Day circle with pulse */}
-                <div className="mi-agenda-circle" style={{
-                  flexShrink: 0,
-                  width: 'clamp(3.5rem, 6vw, 4.5rem)',
-                  height: 'clamp(3.5rem, 6vw, 4.5rem)',
-                  borderRadius: '50%',
-                  background: 'rgba(208, 106, 17, 0.1)',
-                  border: '2px solid rgba(208, 106, 17, 0.4)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: TYPO.cardTitle,
-                  fontWeight: 800,
-                  color: '#D06A11',
-                  animation: 'mi-pulse-dot 3s ease-out infinite',
-                  position: 'relative',
-                  zIndex: 1,
-                }}>
-                  {item.day}
-                </div>
-
-                {/* Content */}
-                <div style={{ flex: 1, paddingTop: '0.5rem' }}>
-                  <div style={{
-                    fontSize: TYPO.cardTitle,
-                    fontWeight: 700,
-                    color: '#1A1A2E',
-                    marginBottom: '0.35rem',
-                  }}>
-                    {item.title}
-                  </div>
-                  <div style={{
-                    fontSize: TYPO.body,
-                    lineHeight: 1.65,
-                    color: 'rgba(26, 26, 46, 0.6)',
-                  }}>
-                    {item.desc}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          SVG WAVE SEPARATOR (reversed)
-          ════════════════════════════════════════════════════════════════════ */}
-      <svg className="mi-wave-svg" style={{ display: 'block', width: '100%', height: 'auto', marginTop: -1 }} viewBox="0 0 1440 60" preserveAspectRatio="none">
-        <path d="M0,30 C120,48 360,5 720,40 C900,52 1200,10 1440,25 L1440,60 L0,60Z" fill="#FFFFFF" />
-      </svg>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          6. TESTIMONIALS
-          ════════════════════════════════════════════════════════════════════ */}
-      <section ref={testimonialsRef} style={{
-        background: `
-          radial-gradient(ellipse 40% 30% at 60% 80%, rgba(50,177,92,0.03) 0%, transparent 50%),
-          #FFFFFF
-        `,
-        position: 'relative',
-      }}>
-        <div className="mi-noise" />
-        <div style={{
-          padding: 'clamp(5rem, 12vw, 10rem) clamp(1.25rem, 5vw, 4rem)',
-          maxWidth: '80rem',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 2,
-        }}>
-          <div data-mi-reveal>
-            <p style={{
-              fontSize: TYPO.label,
-              fontWeight: 700,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: '#D06A11',
-              marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
-            }}>
-              TESTIMONIANZE
+            <p className="gs-fade-up mt-6 text-lg leading-relaxed text-white/80 md:text-xl">
+              Il metodo operativo che ti permette di fare operazioni
+              immobiliari con profitto &mdash; anche partendo da zero &mdash;
+              grazie al sistema &ldquo;Prevendi&rdquo; che riduce al minimo
+              il rischio di invenduto
             </p>
-            <h2 style={{
-              fontSize: TYPO.sectionTitle,
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
-              color: '#1A1A2E',
-              marginBottom: 'clamp(1rem, 2.5vw, 2rem)',
-            }}>
-              Risultati Reali di Persone Reali
-            </h2>
-          </div>
 
-          <div className="mi-grid-2" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} data-mi-testimonial className="mi-glass mi-testimonial-card" style={{
-                position: 'relative',
-                opacity: 0,
-                willChange: 'transform, opacity',
-              }}>
-                {/* Decorative quote mark */}
-                <div className="mi-quote-mark" style={{
-                  position: 'absolute',
-                  top: '1rem',
-                  right: '1.5rem',
-                  fontSize: 'clamp(3rem, 5vw, 4.5rem)',
-                  fontFamily: 'Georgia, serif',
-                  color: 'rgba(208, 106, 17, 0.08)',
-                  lineHeight: 1,
-                  pointerEvents: 'none',
-                  userSelect: 'none',
-                }}>
-                  &ldquo;
-                </div>
-
-                {/* Stars */}
-                <div style={{
-                  color: '#D06A11',
-                  fontSize: '1rem',
-                  letterSpacing: '0.15em',
-                  marginBottom: '1rem',
-                }}>
-                  &#9733;&#9733;&#9733;&#9733;&#9733;
-                </div>
-
-                {/* Quote */}
-                <p style={{
-                  fontSize: TYPO.body,
-                  lineHeight: 1.7,
-                  color: 'rgba(26, 26, 46, 0.75)',
-                  fontStyle: 'italic',
-                  marginBottom: '1.25rem',
-                }}>
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-
-                {/* Author */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                }}>
-                  {/* Avatar initials */}
-                  <div style={{
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '50%',
-                    background: '#D06A11',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#fff',
-                    fontWeight: 700,
-                    fontSize: '0.875rem',
-                    letterSpacing: '0.02em',
-                    flexShrink: 0,
-                  }}>
-                    {t.name.split(' ').map(w => w[0]).join('')}
-                  </div>
-                  <div>
-                    <div style={{
-                      fontSize: TYPO.body,
-                      fontWeight: 600,
-                      color: '#1A1A2E',
-                    }}>
-                      {t.name}
-                    </div>
-                    <div style={{
-                      fontSize: TYPO.label,
-                      color: 'rgba(26, 26, 46, 0.4)',
-                      marginTop: '0.15rem',
-                    }}>
-                      {t.role}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          HR Divider
-          ════════════════════════════════════════════════════════════════════ */}
-      <hr style={{
-        border: 'none',
-        height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(208,106,17,0.15), transparent)',
-        margin: 0,
-      }} />
-
-      {/* ════════════════════════════════════════════════════════════════════
-          GALLERY MINI-SECTION
-          ════════════════════════════════════════════════════════════════════ */}
-      <section style={{
-        background: '#F3F4F6',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div className="mi-noise" />
-        <div className="mi-section-inner" data-mi-reveal style={{
-          padding: 'clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem)',
-          maxWidth: '80rem',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 2,
-        }}>
-          <p style={{
-            fontSize: TYPO.label,
-            fontWeight: 600,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: 'rgba(26, 26, 46, 0.4)',
-            textAlign: 'center',
-            marginBottom: 'clamp(1.25rem, 2.5vw, 2rem)',
-          }}>
-            Le opportunita&apos; sono ovunque in Italia
-          </p>
-          <div className="mi-gallery-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 'clamp(0.75rem, 1.5vw, 1.25rem)',
-          }}>
-            {[
-              { src: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80', alt: 'Villa moderna con piscina' },
-              { src: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80', alt: 'Appartamento moderno luminoso' },
-              { src: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80', alt: 'Casa elegante con giardino' },
-              { src: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80', alt: 'Edificio residenziale di lusso' },
-            ].map((img, i) => (
-              <div key={i} className="mi-gallery-item" style={{
-                borderRadius: '1rem',
-                overflow: 'hidden',
-                aspectRatio: '16/10',
-                position: 'relative',
-                border: '1px solid rgba(208, 106, 17, 0.1)',
-              }}>
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                    transition: 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)' }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)' }}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          HR Divider (gallery → FAQ)
-          ════════════════════════════════════════════════════════════════════ */}
-      <hr style={{
-        border: 'none',
-        height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(208,106,17,0.15), transparent)',
-        margin: 0,
-      }} />
-
-      {/* ════════════════════════════════════════════════════════════════════
-          7. FAQ ACCORDION
-          ════════════════════════════════════════════════════════════════════ */}
-      <section style={{
-        background: '#F3F4F6',
-        position: 'relative',
-      }}>
-        <div className="mi-noise" />
-        <div style={{
-          padding: 'clamp(5rem, 12vw, 10rem) clamp(1.25rem, 5vw, 4rem)',
-          maxWidth: '80rem',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 2,
-        }}>
-          <div data-mi-reveal>
-            <p style={{
-              fontSize: TYPO.label,
-              fontWeight: 700,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: '#D06A11',
-              marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
-            }}>
-              DOMANDE FREQUENTI
-            </p>
-            <h2 style={{
-              fontSize: TYPO.sectionTitle,
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
-              color: '#1A1A2E',
-              marginBottom: 'clamp(1rem, 2.5vw, 2rem)',
-            }}>
-              Hai Domande? Abbiamo Risposte.
-            </h2>
-          </div>
-
-          <div style={{
-            marginTop: 'clamp(2.5rem, 5vw, 4rem)',
-            maxWidth: '50rem',
-          }}>
-            {FAQ_DATA.map((faq, i) => (
-              <div key={i} data-mi-reveal style={{
-                borderBottom: '1px solid rgba(208,106,17,0.08)',
-              }}>
-                <button
-                  className="mi-faq-q"
-                  onClick={() => toggleFaq(i)}
-                  aria-expanded={openFaq === i}
-                  data-active={openFaq === i ? 'true' : 'false'}
-                  style={{
-                    fontSize: TYPO.body,
-                    color: openFaq === i ? '#D06A11' : '#1A1A2E',
-                  }}
+            {/* Checkmarks */}
+            <div className="gs-stagger-parent mt-10 space-y-4 text-left md:mx-auto md:max-w-2xl">
+              {[
+                'Dal 2017 unica scuola di educazione finanziaria quotata in Borsa in Italia',
+                'Oltre 1.200 operazioni immobiliari documentate da studenti e clienti',
+                "Metodo proprietario 'Prevendi' per ridurre al minimo il rischio di immobili invenduti",
+                'Durata media delle operazioni: 120 giorni',
+              ].map((text) => (
+                <div
+                  key={text}
+                  className="gs-stagger-child flex items-start gap-3"
                 >
-                  <span>{faq.q}</span>
-                  <span style={{
-                    flexShrink: 0,
-                    width: '1.5rem',
-                    height: '1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.25rem',
-                    fontWeight: 300,
-                    color: openFaq === i ? '#D06A11' : 'rgba(26, 26, 46, 0.35)',
-                    transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.2s',
-                    transform: openFaq === i ? 'rotate(45deg)' : 'rotate(0deg)',
-                  }}>
-                    +
+                  <CheckCircle className="mt-0.5 h-6 w-6 shrink-0 text-[#31B15C]" />
+                  <span className="text-base text-white/90 md:text-lg">
+                    {text}
                   </span>
-                </button>
-                <div className="mi-faq-answer" data-open={openFaq === i ? 'true' : 'false'}>
-                  <div style={{
-                    padding: '0 0 clamp(1.25rem, 2vw, 1.75rem) 0',
-                    fontSize: TYPO.body,
-                    lineHeight: 1.7,
-                    color: 'rgba(26, 26, 46, 0.6)',
-                  }}>
-                    {faq.a}
-                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              ))}
+            </div>
 
-      {/* ════════════════════════════════════════════════════════════════════
-          HR Divider
-          ════════════════════════════════════════════════════════════════════ */}
-      <hr style={{
-        border: 'none',
-        height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(208,106,17,0.15), transparent)',
-        margin: 0,
-      }} />
-
-      {/* ════════════════════════════════════════════════════════════════════
-          8. COUNTDOWN + CTA
-          ════════════════════════════════════════════════════════════════════ */}
-      <section ref={countdownRef} style={{
-        background: `
-          radial-gradient(ellipse 60% 50% at 50% 50%, rgba(208,106,17,0.06) 0%, transparent 60%),
-          #FFFFFF
-        `,
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        {/* Subtle background real estate image */}
-        <img
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: 0.04,
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-        <div className="mi-noise" />
-        <div style={{
-          padding: 'clamp(5rem, 12vw, 10rem) clamp(1.25rem, 5vw, 4rem)',
-          maxWidth: '80rem',
-          margin: '0 auto',
-          textAlign: 'center',
-          position: 'relative',
-          zIndex: 2,
-        }}>
-          <div data-mi-reveal>
-            <p style={{
-              fontSize: TYPO.label,
-              fontWeight: 700,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: '#D06A11',
-              marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
-              textAlign: 'center',
-            }}>
-              IL TEMPO SCORRE
-            </p>
-            <h2 style={{
-              fontSize: TYPO.sectionTitle,
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
-              color: '#1A1A2E',
-              textAlign: 'center',
-            }}>
-              Non Rimandare. Agisci Ora.
-            </h2>
-          </div>
-
-          {/* Countdown boxes */}
-          <div className="mi-countdown-row" style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: 'clamp(1rem, 2.5vw, 2rem)',
-            margin: 'clamp(2rem, 4vw, 3rem) 0',
-          }}>
-            {[
-              { value: countdown.days, label: 'GIORNI' },
-              { value: countdown.hours, label: 'ORE' },
-              { value: countdown.minutes, label: 'MINUTI' },
-              { value: countdown.seconds, label: 'SECONDI' },
-            ].map((c, i) => (
-              <div key={i} data-mi-cd className="mi-countdown-cell" style={{
-                textAlign: 'center',
-                padding: 'clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 2.5vw, 2rem)',
-                background: 'rgba(208, 106, 17, 0.06)',
-                border: '1px solid rgba(208, 106, 17, 0.15)',
-                borderRadius: '1rem',
-                backdropFilter: 'blur(8px)',
-                minWidth: 'clamp(4.5rem, 9vw, 7rem)',
-                opacity: 0,
-                visibility: 'hidden' as const,
-              }}>
-                <div style={{
-                  fontSize: TYPO.sectionTitle,
-                  fontWeight: 900,
-                  color: '#D06A11',
-                  lineHeight: 1.1,
-                  fontVariantNumeric: 'tabular-nums',
-                  textShadow: '0 0 40px rgba(208,106,17,0.3)',
-                }}>
-                  {String(c.value).padStart(2, '0')}
-                </div>
-                <div style={{
-                  fontSize: TYPO.label,
-                  fontWeight: 600,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(26, 26, 46, 0.4)',
-                  marginTop: '0.35rem',
-                }}>
-                  {c.label}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p style={{
-            fontSize: TYPO.body,
-            color: 'rgba(26, 26, 46, 0.6)',
-            marginBottom: 'clamp(1.5rem, 3vw, 2.5rem)',
-          }}>
-            Solo <strong style={{ color: '#D06A11' }}>500 posti</strong> disponibili. La candidatura e&apos; gratuita.
-          </p>
-
-          <a href="#candidati" className="mi-cta" style={{ fontSize: TYPO.body }}>
-            CANDIDATI ORA &mdash; E&apos; GRATUITO
-          </a>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          SVG WAVE SEPARATOR
-          ════════════════════════════════════════════════════════════════════ */}
-      <svg className="mi-wave-svg" style={{ display: 'block', width: '100%', height: 'auto', marginTop: -1 }} viewBox="0 0 1440 60" preserveAspectRatio="none">
-        <path d="M0,35 C240,55 480,10 720,30 C960,50 1200,15 1440,40 L1440,60 L0,60Z" fill="#F3F4F6" />
-      </svg>
-
-      {/* ════════════════════════════════════════════════════════════════════
-          9. REGISTRATION FORM
-          ════════════════════════════════════════════════════════════════════ */}
-      <section ref={formRef} id="candidati" style={{
-        background: `
-          radial-gradient(ellipse 40% 40% at 70% 30%, rgba(50,177,92,0.03) 0%, transparent 50%),
-          #F3F4F6
-        `,
-        position: 'relative',
-      }}>
-        <div className="mi-noise" />
-        <div style={{
-          padding: 'clamp(5rem, 12vw, 10rem) clamp(1.25rem, 5vw, 4rem)',
-          maxWidth: '80rem',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 2,
-        }}>
-          <div data-mi-form className="mi-form-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 'clamp(2rem, 5vw, 5rem)',
-            alignItems: 'start',
-            opacity: 0,
-            visibility: 'hidden' as const,
-          }}>
-            {/* Form side */}
-            <div>
-              <p style={{
-                fontSize: TYPO.label,
-                fontWeight: 700,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: '#D06A11',
-                marginBottom: 'clamp(0.75rem, 1.5vw, 1.25rem)',
-              }}>
-                CANDIDATURA
+            {/* CTA */}
+            <div className="gs-fade-up mt-10">
+              <CTAButton />
+              <p className="mt-4 text-sm text-white/60">
+                (Partecipa da casa dal 27 al 30 Aprile)
               </p>
-              <h2 style={{
-                fontSize: TYPO.sectionTitle,
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: '-0.03em',
-                color: '#1A1A2E',
-                marginBottom: 'clamp(1rem, 2.5vw, 2rem)',
-              }}>
-                Prenota il Tuo Posto
-              </h2>
-
-              <form onSubmit={(e) => e.preventDefault()} style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 'clamp(0.75rem, 1.5vw, 1rem)',
-              }}>
-                <input
-                  className="mi-input"
-                  type="text"
-                  placeholder="Nome e Cognome"
-                  style={{ fontSize: TYPO.body }}
-                />
-                <input
-                  className="mi-input"
-                  type="email"
-                  placeholder="Email"
-                  style={{ fontSize: TYPO.body }}
-                />
-                <input
-                  className="mi-input"
-                  type="tel"
-                  placeholder="Telefono"
-                  style={{ fontSize: TYPO.body }}
-                />
-                <button type="submit" className="mi-cta" style={{
-                  width: '100%',
-                  marginTop: '0.5rem',
-                  fontSize: TYPO.body,
-                }}>
-                  CANDIDATI ORA &mdash; POSTI LIMITATI
-                </button>
-                <p style={{
-                  fontSize: TYPO.small,
-                  color: 'rgba(26, 26, 46, 0.35)',
-                  lineHeight: 1.5,
-                  marginTop: '0.5rem',
-                }}>
-                  Inviando il form accetti di essere contattato per la chiamata di profilazione gratuita.
-                </p>
-              </form>
             </div>
 
-            {/* Benefits side */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(1.25rem, 2.5vw, 2rem)' }}>
-              <div className="mi-glass" style={{
-                background: 'rgba(208, 106, 17, 0.04)',
-                border: '1px solid rgba(208, 106, 17, 0.12)',
-              }}>
-                <h3 style={{
-                  fontSize: TYPO.cardTitle,
-                  fontWeight: 700,
-                  color: '#1A1A2E',
-                  marginBottom: '1rem',
-                }}>
-                  Cosa Ottieni:
-                </h3>
-                {[
-                  '4 giorni di workshop intensivo GRATUITO',
-                  'Accesso alla community esclusiva',
-                  'Materiale didattico completo',
-                  'Piano d\'azione personalizzato',
-                  'Sessioni Q&A con Alfio e il team',
-                  'Certificato di partecipazione',
-                ].map((item, i) => (
-                  <div key={i} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    marginTop: '0.75rem',
-                    fontSize: TYPO.body,
-                    color: 'rgba(26, 26, 46, 0.75)',
-                  }}>
-                    <span style={{ color: '#32B15C', fontSize: '1rem', flexShrink: 0 }}>&#10003;</span>
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mi-glass" style={{
-                background: 'rgba(50, 177, 92, 0.04)',
-                border: '1px solid rgba(50, 177, 92, 0.12)',
-                textAlign: 'center',
-              }}>
-                <div style={{
-                  fontSize: TYPO.label,
-                  fontWeight: 700,
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
-                  color: '#32B15C',
-                  marginBottom: '0.5rem',
-                }}>
-                  VALORE TOTALE
-                </div>
-                <div style={{
-                  fontSize: TYPO.sectionTitle,
-                  fontWeight: 900,
-                  color: '#1A1A2E',
-                  lineHeight: 1.1,
-                }}>
-                  <span style={{ textDecoration: 'line-through', color: 'rgba(26, 26, 46, 0.3)', fontSize: TYPO.cardTitle }}>1.497&euro;</span>
-                  {' '}
-                  GRATIS
-                </div>
-                <p style={{
-                  fontSize: TYPO.small,
-                  color: 'rgba(26, 26, 46, 0.4)',
-                  marginTop: '0.5rem',
-                }}>
-                  Solo per i primi 500 candidati selezionati
-                </p>
-              </div>
-            </div>
+            {/* Disclaimer */}
+            <p className="gs-fade-up mt-6 text-xs italic text-white/50">
+              I risultati degli studenti dipendono da molteplici fattori
+              individuali e non sono garantiti. I casi presentati sono
+              documentati, ma non rappresentano una promessa di guadagno.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════════════
-          10. FLOATING BAR
-          ════════════════════════════════════════════════════════════════════ */}
-      <div ref={floatingBarRef} className="mi-floating-bar" style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 'clamp(1rem, 3vw, 2.5rem)',
-        padding: '0.85rem clamp(1.25rem, 3vw, 2rem)',
-        paddingBottom: 'calc(0.85rem + env(safe-area-inset-bottom, 0px))',
-        background: 'rgba(255,255,255,0.95)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        borderTop: '1px solid rgba(208,106,17,0.15)',
-        boxShadow: '0 -4px 20px rgba(0,0,0,0.08)',
-        transform: 'translateY(60px)',
-        opacity: 0,
-        visibility: 'hidden' as const,
-      }}>
-        <span className="mi-floating-text" style={{
-          fontSize: TYPO.small,
-          fontWeight: 600,
-          color: 'rgba(26, 26, 46, 0.7)',
-          letterSpacing: '0.05em',
-        }}>
-          Solo <strong style={{ color: '#D06A11' }}>500 posti</strong> &mdash; Workshop Gratuito
-        </span>
-        <a href="#candidati" className="mi-cta" style={{
-          padding: '0.75rem 2rem',
-          fontSize: TYPO.small,
-        }}>
-          CANDIDATI ORA
-        </a>
+      {/* ── 4. MEDIA LOGOS BAR — "Visto Su" carousel ──────────────────────── */}
+      <div className="bg-white py-6 md:py-8">
+        <div className="mx-auto max-w-[1250px] overflow-hidden px-5 md:px-10">
+          <div className="flex items-center justify-center gap-8 overflow-x-auto md:gap-12">
+            {mediaLogos.map((logo) => (
+              <Image
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                width={120}
+                height={40}
+                className="h-[30px] w-auto shrink-0 object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0 md:h-[40px]"
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* ════════════════════════════════════════════════════════════════════
-          11. FOOTER
-          ════════════════════════════════════════════════════════════════════ */}
-      <footer className="mi-footer" style={{
-        background: '#1A1A2E',
-        borderTop: '1px solid rgba(208,106,17,0.08)',
-        padding: 'clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem)',
-        textAlign: 'center',
-        position: 'relative',
-      }}>
-        <div className="mi-noise" />
-        <div style={{ position: 'relative', zIndex: 2 }}>
-          <div style={{
-            fontSize: TYPO.cardTitle,
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: '-0.02em',
-            marginBottom: '0.5rem',
-          }}>
-            <span style={{ color: 'rgba(245,245,245,0.9)' }}>MISSIONE </span>
-            <span style={{ color: '#D06A11' }}>IMMOBILIARE</span>
-          </div>
-          <p style={{
-            fontSize: TYPO.small,
-            color: 'rgba(245,245,245,0.35)',
-            marginBottom: '1.5rem',
-          }}>
-            Un evento di Alfio Bardolla Training Group S.p.A.
+      {/* ── 5. RESULTS / TESTIMONIALS ─────────────────────────────────────── */}
+      <Section bg="surface">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="gs-fade-up font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            I risultati nell&apos;immobiliare degli studenti di{' '}
+            <span className="text-[#E57713]">Alfio Bardolla Training Group</span>
+          </h2>
+
+          <p className="gs-fade-up mt-4 text-lg text-[#67768e]">
+            Operazioni reali, risultati documentati. Guarda le testimonianze di
+            chi ha applicato il metodo.
           </p>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            gap: '1.5rem',
-            marginBottom: '1.5rem',
-          }}>
-            {['Privacy Policy', 'Termini e Condizioni', 'Cookie Policy'].map((link, i) => (
-              <a key={i} href="#" style={{
-                fontSize: TYPO.small,
-                color: 'rgba(245,245,245,0.4)',
-                textDecoration: 'none',
-                transition: 'color 0.2s',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.color = '#D06A11' }}
-                onMouseLeave={e => { e.currentTarget.style.color = 'rgba(245,245,245,0.4)' }}
+
+          {/* Stats */}
+          <div className="gs-stagger-parent mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {[
+              { value: 1200, suffix: '+', label: 'Operazioni documentate' },
+              { value: 30000, suffix: '€+', label: 'Profitto medio per operazione' },
+              { value: 120, suffix: ' gg', label: 'Durata media operazione' },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="gs-stagger-child rounded-2xl bg-white p-8 shadow-sm"
               >
-                {link}
-              </a>
+                <p className="font-['Plus_Jakarta_Sans',sans-serif] text-4xl font-extrabold text-[#E57713]">
+                  <span
+                    className="gs-counter counter-value"
+                    data-target={stat.value}
+                  >
+                    0
+                  </span>
+                  {stat.suffix}
+                </p>
+                <p className="mt-2 text-sm font-medium text-[#67768e]">
+                  {stat.label}
+                </p>
+              </div>
             ))}
           </div>
-          <p style={{
-            fontSize: TYPO.label,
-            color: 'rgba(245,245,245,0.2)',
-          }}>
-            &copy; {new Date().getFullYear()} ABTG S.p.A. &mdash; Tutti i diritti riservati
+
+          {/* Video testimonials grid */}
+          <div className="gs-stagger-parent mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {[
+              { img: '/images/missione-immobiliare/coach-1.jpg', label: 'Testimonianza studente #1' },
+              { img: '/images/missione-immobiliare/coach-2.jpg', label: 'Testimonianza studente #2' },
+              { img: '/images/missione-immobiliare/coach-3.png', label: 'Testimonianza studente #3' },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="gs-stagger-child group relative aspect-video overflow-hidden rounded-2xl bg-[#1e293b]/10"
+              >
+                <Image
+                  src={item.img}
+                  alt={item.label}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors group-hover:bg-black/30">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#EF7B11] text-white shadow-lg transition-transform group-hover:scale-110">
+                    <Play className="ml-1 h-7 w-7" />
+                  </div>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                  <p className="text-sm font-semibold text-white">
+                    {item.label}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="gs-fade-up mt-12">
+            <CTAButton />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 6. "PER CHI E'" — icon list like ABTG ─────────────────────────── */}
+      <Section bg="white">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="gs-fade-up text-center font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            <span className="text-[#E57713]">Per chi &egrave;</span> Missione Immobiliare
+          </h2>
+
+          <p className="gs-fade-up mt-4 text-center text-lg text-[#67768e]">
+            Questo evento &egrave; pensato per te se:
+          </p>
+
+          <div className="gs-stagger-parent mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {[
+              {
+                icon: <Search className="h-5 w-5 text-white" />,
+                text: 'Vuoi iniziare a investire nell\'immobiliare ma non sai da dove partire, e hai bisogno di un metodo chiaro',
+              },
+              {
+                icon: <TrendingUp className="h-5 w-5 text-white" />,
+                text: 'Hai già fatto qualche operazione ma senza un sistema replicabile e vuoi risultati costanti',
+              },
+              {
+                icon: <ShieldCheck className="h-5 w-5 text-white" />,
+                text: 'Vuoi ridurre il rischio di invenduto e avere la sicurezza di un metodo collaudato prima di comprare',
+              },
+              {
+                icon: <Building2 className="h-5 w-5 text-white" />,
+                text: 'Cerchi un modo per costruire un\'attività immobiliare che generi cashflow prevedibile',
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="gs-stagger-child flex items-start gap-4 rounded-xl border border-[#e5e7eb] bg-white p-5 shadow-sm transition-transform hover:-translate-y-0.5"
+              >
+                <OrangeIconBox>{item.icon}</OrangeIconBox>
+                <span className="text-base leading-relaxed text-[#1e293b]">
+                  {item.text}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="gs-fade-up mt-12 text-center">
+            <CTAButton />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 7. COMPARISON TABLE ───────────────────────────────────────────── */}
+      <Section bg="surface">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="gs-fade-up text-center font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            <span className="text-[#E57713]">Prima vs Dopo</span> Missione Immobiliare
+          </h2>
+
+          <p className="gs-fade-up mt-4 text-center text-lg text-[#67768e]">
+            Ecco cosa cambia quando hai un metodo collaudato
+          </p>
+
+          {/* Table header */}
+          <div className="gs-fade-up mt-12 hidden grid-cols-2 gap-4 md:grid">
+            <div className="rounded-t-xl bg-[#fef2f2] px-6 py-3 text-center font-['Plus_Jakarta_Sans',sans-serif] text-lg font-bold text-[#dc2626]">
+              Prima di Missione Immobiliare
+            </div>
+            <div className="rounded-t-xl bg-[#f0fdf4] px-6 py-3 text-center font-['Plus_Jakarta_Sans',sans-serif] text-lg font-bold text-[#31B15C]">
+              Dopo Missione Immobiliare
+            </div>
+          </div>
+
+          {/* Table rows */}
+          <div className="mt-4 space-y-3 md:mt-0 md:space-y-0">
+            {comparisonRows.map((row, i) => (
+              <div
+                key={i}
+                className="gs-table-row grid grid-cols-1 gap-3 rounded-xl border border-[#e5e7eb] bg-white p-4 md:grid-cols-2 md:gap-4 md:rounded-none md:border-x md:border-b md:border-t-0 md:p-0"
+              >
+                {/* Before */}
+                <div className="flex items-start gap-3 rounded-lg bg-[#fef2f2] p-4 md:rounded-none md:px-6 md:py-5">
+                  <X className="mt-0.5 h-5 w-5 shrink-0 text-[#dc2626]" />
+                  <span className="text-sm text-[#1e293b] md:text-base">
+                    {row.before}
+                  </span>
+                </div>
+                {/* After */}
+                <div className="flex items-start gap-3 rounded-lg bg-[#f0fdf4] p-4 md:rounded-none md:px-6 md:py-5">
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-[#31B15C]" />
+                  <span className="text-sm text-[#1e293b] md:text-base">
+                    {row.after}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="gs-fade-up mt-12 text-center">
+            <CTAButton />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 8. "IN QUALE FASE TI TROVI?" ──────────────────────────────────── */}
+      <Section bg="white">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="gs-fade-up text-center font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            In quale di queste <span className="text-[#E57713]">3 fasi</span> del tuo percorso immobiliare ti trovi?
+          </h2>
+
+          <div className="gs-stagger-parent mt-12 space-y-8">
+            {phases.map((phase) => (
+              <div
+                key={phase.num}
+                className="gs-stagger-child rounded-2xl border border-[#e5e7eb] bg-white p-6 shadow-sm md:p-8"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#E57712]">
+                    <span className="font-['Plus_Jakarta_Sans',sans-serif] text-xl font-bold text-white">
+                      {phase.num}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-['Plus_Jakarta_Sans',sans-serif] text-xl font-bold text-[#1e293b]">
+                      {phase.title}
+                    </h3>
+                    <p className="mt-2 text-base leading-relaxed text-[#67768e]">
+                      {phase.text}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="gs-fade-up mt-12 rounded-2xl border-l-4 border-[#EF7B11] bg-[#F5F5F7] p-6 md:p-8">
+            <p className="text-lg leading-relaxed text-[#1e293b]">
+              <strong>Il problema non &egrave;</strong> la tua fase di
+              partenza. Il problema &egrave; non avere un metodo che ti guidi
+              dalla fase in cui sei fino alla prossima operazione con profitto.
+              La maggior parte dei corsi ti d&agrave; teoria. Noi ti diamo{' '}
+              <strong>un sistema operativo</strong>.
+            </p>
+            <p className="mt-4 text-lg font-semibold text-[#E57713]">
+              Missione Immobiliare &egrave; stato costruito per colmare
+              esattamente questo vuoto.
+            </p>
+          </div>
+
+          <div className="gs-fade-up mt-12 text-center">
+            <CTAButton />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 9. 4 PILLARS — METODO PREVENDI ────────────────────────────────── */}
+      <Section bg="surface">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="gs-fade-up text-center font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            <span className="text-[#E57713]">Cosa ti pu&ograve; offrire</span> Missione Immobiliare
+          </h2>
+
+          <p className="gs-fade-up mx-auto mt-6 max-w-3xl text-center text-lg leading-relaxed text-[#67768e]">
+            La maggior parte delle persone segue la sequenza sbagliata:
+            compra un immobile, lo ristruttura, lo mette in vendita e{' '}
+            <em>spera</em> che qualcuno lo compri. Il Metodo Prevendi ribalta
+            questa logica. Ecco i 4 pilastri:
+          </p>
+
+          <div className="gs-stagger-parent mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {pillars.map((pillar, i) => {
+              const Icon = pillar.icon
+              return (
+                <div
+                  key={i}
+                  className="gs-stagger-child rounded-2xl border border-[#e5e7eb] bg-white p-6 shadow-sm transition-shadow hover:shadow-md md:p-8"
+                >
+                  <OrangeIconBox>
+                    <Icon className="h-5 w-5 text-white" />
+                  </OrangeIconBox>
+                  <h3 className="mt-4 font-['Plus_Jakarta_Sans',sans-serif] text-xl font-bold text-[#1e293b]">
+                    {pillar.title}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-[#67768e]">
+                    {pillar.desc}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="gs-fade-up mt-12 text-center">
+            <CTAButton />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 10. SPEAKERS ──────────────────────────────────────────────────── */}
+      <Section bg="white">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="gs-fade-up text-center font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            I <span className="text-[#E57713]">Coach</span> che ti guideranno durante Missione Immobiliare
+          </h2>
+
+          <div className="gs-stagger-parent mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {speakers.map((speaker, i) => (
+              <div
+                key={i}
+                className="gs-stagger-child rounded-2xl border border-[#e5e7eb] bg-white p-6 shadow-sm md:p-8"
+              >
+                <div className="flex items-center gap-4">
+                  {/* Photo placeholder */}
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#E57712]/10">
+                    <Users className="h-8 w-8 text-[#E57712]" />
+                  </div>
+                  <div>
+                    <h3 className="font-['Plus_Jakarta_Sans',sans-serif] text-xl font-bold text-[#1e293b]">
+                      {speaker.name}
+                    </h3>
+                    <p className="text-sm font-medium text-[#E57713]">
+                      {speaker.role}
+                    </p>
+                  </div>
+                </div>
+                <ul className="mt-5 space-y-2">
+                  {speaker.credentials.map((cred, j) => (
+                    <li key={j} className="flex items-start gap-2">
+                      <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#31B15C]" />
+                      <span className="text-sm text-[#67768e]">{cred}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="gs-fade-up mt-12 text-center">
+            <CTAButton />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 11. "FINESTRA 2026" ───────────────────────────────────────────── */}
+      <Section bg="surface">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="gs-fade-up text-center font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            Perch&eacute; il <span className="text-[#E57713]">2026</span> &egrave; una finestra che si apre raramente,
+            e si chiude in fretta
+          </h2>
+
+          <div className="gs-fade-up mt-8 space-y-6 text-lg leading-relaxed text-[#67768e]">
+            <p>
+              I cicli immobiliari durano in media 7-10 anni. Chi entra nella
+              fase giusta moltiplica i risultati. Chi aspetta troppo si ritrova
+              a comprare caro e vendere a sconto.
+            </p>
+            <p>
+              Nel 2026 si stanno allineando diversi fattori:{' '}
+              <strong className="text-[#1e293b]">
+                i tassi di interesse stanno scendendo
+              </strong>
+              , la domanda di immobili residenziali &egrave; in crescita, e
+              molti proprietari hanno bisogno di liquidit&agrave;. Questo crea
+              un ambiente ideale per chi sa individuare le opportunit&agrave;
+              giuste.
+            </p>
+            <p>
+              Ma questa finestra non rester&agrave; aperta per sempre. Man
+              mano che i prezzi salgono e la competizione aumenta, i margini si
+              riducono. Chi agisce adesso ha un vantaggio concreto rispetto a
+              chi aspetter&agrave; ancora.
+            </p>
+          </div>
+
+          <div className="gs-stagger-parent mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {[
+              {
+                icon: TrendingUp,
+                label: 'Tassi in discesa',
+                sub: 'Mutui pi\u00f9 accessibili',
+              },
+              {
+                icon: Building2,
+                label: 'Domanda in crescita',
+                sub: 'Mercato residenziale attivo',
+              },
+              {
+                icon: Clock,
+                label: 'Finestra limitata',
+                sub: 'I margini si riducono nel tempo',
+              },
+            ].map((item, i) => {
+              const Icon = item.icon
+              return (
+                <div
+                  key={i}
+                  className="gs-stagger-child rounded-2xl border border-[#e5e7eb] bg-white p-6 text-center shadow-sm"
+                >
+                  <OrangeIconBox>
+                    <Icon className="h-5 w-5 text-white" />
+                  </OrangeIconBox>
+                  <p className="mt-3 font-['Plus_Jakarta_Sans',sans-serif] text-lg font-bold text-[#1e293b]">
+                    {item.label}
+                  </p>
+                  <p className="mt-1 text-sm text-[#67768e]">{item.sub}</p>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="gs-fade-up mt-12 text-center">
+            <CTAButton />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 12. BONUS SECTION ─────────────────────────────────────────────── */}
+      <Section bg="white">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="gs-fade-up text-center font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            Ecco i <span className="text-[#E57713]">BONUS</span> che ricevi partecipando:
+          </h2>
+
+          <div className="gs-stagger-parent mt-10 space-y-6">
+            <div className="gs-stagger-child rounded-2xl border border-[#e5e7eb] bg-white p-6 shadow-sm md:p-8">
+              <h3 className="font-['Plus_Jakarta_Sans',sans-serif] text-xl font-bold text-[#1e293b]">
+                <span className="text-[#E57713]">BONUS #1</span>: Videoguida &ldquo;La tua prima operazione da 30k&rdquo;
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-[#67768e]">
+                Una videoguida pratica che ti mostra passo dopo passo come
+                impostare la tua prima operazione immobiliare con il Metodo
+                Prevendi. Dalla ricerca dell&apos;immobile alla vendita.
+              </p>
+            </div>
+
+            <div className="gs-stagger-child rounded-2xl border border-[#e5e7eb] bg-white p-6 shadow-sm md:p-8">
+              <h3 className="font-['Plus_Jakarta_Sans',sans-serif] text-xl font-bold text-[#1e293b]">
+                <span className="text-[#E57713]">BONUS #2</span>: Accesso alla community esclusiva
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-[#67768e]">
+                Entra nel gruppo riservato ai partecipanti di Missione Immobiliare.
+                Confrontati con altri investitori, condividi esperienze e ricevi
+                supporto durante il tuo percorso.
+              </p>
+            </div>
+
+            <div className="gs-stagger-child rounded-2xl border border-[#e5e7eb] bg-white p-6 shadow-sm md:p-8">
+              <h3 className="font-['Plus_Jakarta_Sans',sans-serif] text-xl font-bold text-[#1e293b]">
+                <span className="text-[#E57713]">BONUS #3</span>: Checklist operativa completa
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-[#67768e]">
+                La checklist che i nostri coach usano per ogni operazione:
+                dalla due diligence alla chiusura del rogito. Uno strumento
+                pratico che puoi usare subito.
+              </p>
+            </div>
+          </div>
+
+          <div className="gs-fade-up mt-12 text-center">
+            <CTAButton />
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 13. CONSULENZA PERSONALIZZATA ──────────────────────────────────── */}
+      <Section bg="surface">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="gs-fade-up font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold text-[#1e293b] md:text-4xl">
+            Vuoi scoprire se questo percorso fa per te, e ottenere una
+            valutazione personalizzata{' '}
+            <span className="text-[#E57713]">basata sulla tua situazione attuale</span>?
+          </h2>
+
+          <p className="gs-fade-up mt-6 text-lg leading-relaxed text-[#67768e]">
+            Compila il form qui sotto per iscriverti gratuitamente a Missione
+            Immobiliare. Dopo l&apos;iscrizione, un nostro consulente ti
+            contatter&agrave; per capire la tua situazione e consigliarti il
+            percorso migliore.
+          </p>
+
+          <div className="gs-fade-up mt-8">
+            <CTAButton>
+              RICHIEDI MAGGIORI INFORMAZIONI
+            </CTAButton>
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 14. COME FUNZIONA + FORM ──────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-[#1e293b] py-16 md:py-24" id="hs-form-missione">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/missione-immobiliare/hero-bg.webp"
+            alt=""
+            fill
+            className="object-cover opacity-10"
+          />
+        </div>
+        <div className="relative mx-auto max-w-4xl px-5 text-center text-white md:px-10">
+          <h2 className="gs-fade-up font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold md:text-4xl">
+            Come funziona e come accedere a Missione Immobiliare
+          </h2>
+
+          <p className="gs-fade-up mt-6 text-lg leading-relaxed text-white/80">
+            Missione Immobiliare &egrave; un evento online gratuito di{' '}
+            <strong className="text-white">4 serate LIVE</strong>, dove ti
+            mostriamo passo dopo passo come funziona il Metodo Prevendi e come
+            puoi applicarlo alla tua prossima operazione immobiliare.
+          </p>
+
+          <p className="gs-fade-up mt-4 text-lg leading-relaxed text-white/80">
+            Ogni serata dura circa 90 minuti, con contenuti pratici,
+            casi studio reali e sessioni di Q&amp;A con gli esperti.
+          </p>
+
+          {/* Event details */}
+          <div className="gs-fade-up mt-8 flex flex-wrap items-center justify-center gap-4 md:gap-6">
+            <div className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3">
+              <Calendar className="h-5 w-5 text-[#EF7B11]" />
+              <span className="text-base font-semibold">
+                27, 28, 29 e 30 Aprile
+              </span>
+            </div>
+            <div className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3">
+              <Clock className="h-5 w-5 text-[#EF7B11]" />
+              <span className="text-base font-semibold">Ore 21:00</span>
+            </div>
+          </div>
+
+          {/* Requisito */}
+          <div className="gs-fade-up mt-8 rounded-2xl border border-[#EF7B11]/30 bg-white/10 p-6 text-left backdrop-blur-sm">
+            <p className="text-base leading-relaxed text-white/90">
+              <strong className="text-[#EF7B11]">REQUISITO:</strong> Missione
+              Immobiliare &egrave; pensato per chi intende investire almeno{' '}
+              <strong>20.000&nbsp;&euro;</strong> nell&apos;immobiliare nei
+              prossimi 12 mesi. Se stai cercando un modo per iniziare o
+              migliorare le tue operazioni immobiliari con un metodo
+              collaudato, questo workshop &egrave; per te.
+            </p>
+          </div>
+
+          {/* HubSpot Form Placeholder */}
+          <div className="gs-fade-up mt-12 rounded-2xl bg-white p-6 shadow-2xl md:p-10">
+            <h3 className="font-['Plus_Jakarta_Sans',sans-serif] text-2xl font-bold text-[#1e293b]">
+              Iscriviti gratuitamente
+            </h3>
+            <p className="mt-2 text-sm text-[#67768e]">
+              Compila il form per riservare il tuo posto
+            </p>
+
+            {/* Mock form fields */}
+            <div className="mt-6 space-y-4 text-left">
+              <div>
+                <label className="mb-1 block text-sm font-medium text-[#1e293b]">
+                  Nome *
+                </label>
+                <input
+                  type="text"
+                  placeholder="Il tuo nome"
+                  className="w-full rounded-lg border border-[#e5e7eb] px-4 py-3 text-base text-[#1e293b] outline-none transition-colors focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-[#1e293b]">
+                  Cognome *
+                </label>
+                <input
+                  type="text"
+                  placeholder="Il tuo cognome"
+                  className="w-full rounded-lg border border-[#e5e7eb] px-4 py-3 text-base text-[#1e293b] outline-none transition-colors focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-[#1e293b]">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  placeholder="La tua email"
+                  className="w-full rounded-lg border border-[#e5e7eb] px-4 py-3 text-base text-[#1e293b] outline-none transition-colors focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-[#1e293b]">
+                  Telefono *
+                </label>
+                <input
+                  type="tel"
+                  placeholder="Il tuo numero di telefono"
+                  className="w-full rounded-lg border border-[#e5e7eb] px-4 py-3 text-base text-[#1e293b] outline-none transition-colors focus:border-[#EF7B11] focus:ring-2 focus:ring-[#EF7B11]/20"
+                />
+              </div>
+              <CTAButton className="!mt-6 w-full">
+                ISCRIVIMI A MISSIONE IMMOBILIARE
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 15. FOOTER ────────────────────────────────────────────────────── */}
+      <footer className="bg-[#1e293b] py-12 text-white/70">
+        <div className="mx-auto max-w-[1250px] px-5 md:px-10">
+          {/* Logo */}
+          <div className="text-center">
+            <Image
+              src="/images/missione-immobiliare/logo-abtg-color.webp"
+              alt="Alfio Bardolla Training Group"
+              width={200}
+              height={36}
+              className="mx-auto h-auto w-[180px] brightness-0 invert"
+            />
+          </div>
+
+          <div className="mt-8 text-center text-sm leading-relaxed">
+            <p className="font-semibold text-white">
+              Alfio Bardolla Training Group S.p.A.
+            </p>
+            <p className="mt-1">
+              Via Giovanni Giolitti 1, 20123 Milano (MI) &mdash; P.IVA
+              09565880969
+            </p>
+            <p className="mt-1">
+              Societ&agrave; quotata su Euronext Growth Milan (ticker: ABTG)
+            </p>
+          </div>
+
+          <hr className="my-8 border-white/10" />
+
+          {/* Links */}
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs md:gap-6">
+            <a href="#" className="transition-colors hover:text-white">
+              Privacy Policy
+            </a>
+            <a href="#" className="transition-colors hover:text-white">
+              Cookie Policy
+            </a>
+            <a href="#" className="transition-colors hover:text-white">
+              Termini e Condizioni
+            </a>
+            <a href="#" className="transition-colors hover:text-white">
+              Contatti
+            </a>
+          </div>
+
+          <hr className="my-8 border-white/10" />
+
+          {/* Disclaimers */}
+          <div className="space-y-4 text-center text-xs leading-relaxed text-white/50">
+            <p>
+              <strong>Disclaimer Facebook:</strong> Questo sito non fa parte di
+              Facebook o Facebook Inc. Inoltre, questo sito NON &egrave;
+              approvato da Facebook in alcun modo. FACEBOOK &egrave; un marchio
+              registrato di FACEBOOK Inc.
+            </p>
+            <p>
+              <strong>Disclaimer sui risultati:</strong> I risultati
+              individuali possono variare. I casi studio e le testimonianze
+              presentate in questa pagina non rappresentano una garanzia di
+              risultati futuri. Ogni investimento immobiliare comporta dei
+              rischi. Ti consigliamo di consultare un consulente finanziario
+              prima di prendere qualsiasi decisione di investimento.
+            </p>
+          </div>
+
+          <p className="mt-8 text-center text-xs text-white/30">
+            &copy; {new Date().getFullYear()} Alfio Bardolla Training Group
+            S.p.A. Tutti i diritti riservati.
           </p>
         </div>
       </footer>

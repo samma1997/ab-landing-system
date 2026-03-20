@@ -106,7 +106,7 @@ export function BenefitsAnimated({ data }: { data: BenefitsBlock }) {
             gsap.to(el, {
               y: -8,
               scale: 1.02,
-              boxShadow: '0 20px 40px rgba(215, 110, 17, 0.15)',
+              boxShadow: '0 20px 40px rgba(6, 0, 151, 0.12)',
               duration: 0.3,
               ease: 'power2.out',
             })

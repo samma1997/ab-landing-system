@@ -5,19 +5,19 @@ import type { CTAButton } from "@/types/blocks";
 
 const variants = {
   primary:
-    "bg-primary text-white hover:bg-primary-dark shadow-lg shadow-primary/25 hover:shadow-primary/40",
+    "bg-accent text-secondary hover:brightness-110 shadow-lg shadow-accent/25 hover:shadow-accent/40",
   secondary:
-    "bg-secondary text-white hover:bg-secondary-light",
+    "bg-primary text-white hover:bg-primary-dark shadow-lg shadow-primary/25",
   outline:
-    "border-2 border-primary text-primary hover:bg-primary hover:text-white",
+    "border-2 border-white text-white hover:bg-white hover:text-secondary",
   ghost:
     "text-primary hover:bg-primary/10",
 };
 
 const sizes = {
-  sm: "px-4 py-2 text-sm",
-  md: "px-6 py-3 text-base",
-  lg: "px-8 py-4 text-lg",
+  sm: "px-5 py-2.5 text-sm",
+  md: "px-8 py-3.5 text-base",
+  lg: "px-10 py-5 text-lg",
 };
 
 interface ButtonProps extends CTAButton {
@@ -41,7 +41,7 @@ export function Button({
   fullWidth,
 }: ButtonProps) {
   const classes = clsx(
-    "inline-flex items-center justify-center font-bold rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer",
+    "inline-flex items-center justify-center font-semibold rounded-full transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer",
     variants[variant],
     sizes[size],
     fullWidth && "w-full",

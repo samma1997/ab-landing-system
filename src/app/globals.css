@@ -1,26 +1,42 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #D76E11;
-  --color-primary-light: #E8923E;
-  --color-primary-dark: #B55A0A;
-  --color-secondary: #1A1A2E;
-  --color-secondary-light: #16213E;
-  --color-accent: #F5A623;
-  --color-surface: #FAFAFA;
+  /* ABTG Brand Colors — extracted from lp.alfiobardolla.com */
+  --color-primary: #060097;
+  --color-primary-light: #2d2abf;
+  --color-primary-dark: #04006b;
+  --color-secondary: #1e293b;
+  --color-secondary-light: #334155;
+  --color-accent: #ffcd57;
+  --color-accent-dark: #e6b84d;
+  --color-purple: #c10fff;
+  --color-purple-light: #d94fff;
+  --color-surface: #F2F5F7;
   --color-surface-dark: #111827;
+  --color-lavender: #f9f6fe;
+  --color-orange: #EF7B11;
+  --color-orange-dark: #E57712;
+  --color-orange-hover: #d96a0e;
   --color-success: #10B981;
   --color-danger: #EF4444;
+  --color-green-cta: #22c55e;
+  --color-green-cta-dark: #16a34a;
+  --color-trustpilot: #00B67A;
   --color-background: #ffffff;
-  --color-foreground: #171717;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-foreground: #1e293b;
+  --color-muted: #67768e;
+  --font-heading: var(--font-plus-jakarta);
+  --font-body: var(--font-inter);
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), 'Plus Jakarta Sans', sans-serif;
 }
 
 /* Smooth scroll */
@@ -38,8 +54,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: #c1c1c1;
   border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }
 
 /* HubSpot form overrides */
@@ -52,19 +72,22 @@ html {
 }
 
 .hs-form .hs-button {
-  background-color: var(--color-primary) !important;
+  background-color: var(--color-accent) !important;
+  color: var(--color-secondary) !important;
   border: none !important;
-  padding: 14px 32px !important;
-  border-radius: 8px !important;
+  padding: 18px 40px !important;
+  border-radius: 50px !important;
   font-size: 18px !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   cursor: pointer !important;
   width: 100% !important;
-  transition: background-color 0.2s !important;
+  transition: all 0.3s ease !important;
+  font-family: var(--font-heading), 'Plus Jakarta Sans', sans-serif !important;
 }
 
 .hs-form .hs-button:hover {
-  background-color: var(--color-primary-dark) !important;
+  background-color: var(--color-accent-dark) !important;
+  transform: scale(1.02) !important;
 }
 
 /* GSAP animation utilities */
@@ -82,8 +105,8 @@ html {
 
 /* Pulse glow animation for CTA */
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(215, 110, 17, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(215, 110, 17, 0.6); }
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 205, 87, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 205, 87, 0.6); }
 }
 
 .pulse-glow {

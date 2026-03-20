@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+	<html lang="it-IT">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Accedi &lsaquo; Formazione ABTG &#8212; WordPress</title>
+	<meta name='robots' content='max-image-preview:large, noindex, noarchive' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="jquery-migrate-js-after">
+/* <![CDATA[ */
+jQuery(document).ready(function(){ jQuery( "#pass1" ).data( "reveal", 0 ); });
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-content/themes/buddyboss-theme-child/assets/js/customLogin.js?ver=70409534787" id="custom-login-js-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-content/plugins/buddyboss-platform/bp-core/js/vendor/magnific-popup.js?ver=2.7.50" id="bp-nouveau-magnific-popup-js"></script>
+<link rel='stylesheet' id='woosb-blocks-css' href='https://formazione.alfiobardolla.com/wp-content/plugins/woo-product-bundle/assets/css/blocks.css?ver=8.4.7' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css' href='https://formazione.alfiobardolla.com/wp-includes/css/dashicons.min.css?ver=6.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='buttons-css' href='https://formazione.alfiobardolla.com/wp-includes/css/buttons.min.css?ver=6.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='forms-css' href='https://formazione.alfiobardolla.com/wp-admin/css/forms.min.css?ver=6.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='l10n-css' href='https://formazione.alfiobardolla.com/wp-admin/css/l10n.min.css?ver=6.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='login-css' href='https://formazione.alfiobardolla.com/wp-admin/css/login.min.css?ver=6.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='custom-login-css' href='https://formazione.alfiobardolla.com/wp-content/themes/buddyboss-theme-child/assets/css/login.css?ver=70409534787' type='text/css' media='all' />
+<link rel='stylesheet' id='buddyboss-theme-login-css' href='https://formazione.alfiobardolla.com/wp-content/themes/buddyboss-theme/assets/css/login.min.css?ver=2.7.00' type='text/css' media='all' />
+<link rel='stylesheet' id='buddyboss-theme-fonts-css' href='https://formazione.alfiobardolla.com/wp-content/themes/buddyboss-theme/assets/fonts/fonts.css?ver=2.7.00' type='text/css' media='all' />
+<link rel='stylesheet' id='buddyboss-theme-login-magnific-popup-css' href='https://formazione.alfiobardolla.com/wp-content/themes/buddyboss-theme/assets/css/vendors/magnific-popup.min.css?ver=2.7.00' type='text/css' media='all' />
+<link rel='stylesheet' id='bp-nouveau-icons-map-css' href='https://formazione.alfiobardolla.com/wp-content/plugins/buddyboss-platform/bp-templates/bp-nouveau/icons/css/icons-map.min.css?ver=2.7.50' type='text/css' media='screen' />
+<link rel='stylesheet' id='bp-nouveau-bb-icons-css' href='https://formazione.alfiobardolla.com/wp-content/plugins/buddyboss-platform/bp-templates/bp-nouveau/icons/css/bb-icons.min.css?ver=1.0.5' type='text/css' media='screen' />
+<link rel='stylesheet' id='bp-nouveau-css' href='https://formazione.alfiobardolla.com/wp-content/plugins/buddyboss-platform/bp-templates/bp-nouveau/css/buddypress.min.css?ver=2.7.50' type='text/css' media='screen' />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Open%20Sans:600,500&#038;display=swap&#038;ver=1758011731" /><script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="a9616bc16f610bcf536b2d4a-|49"></script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open%20Sans:600,500&#038;display=swap&#038;ver=1758011731" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open%20Sans:600,500&#038;display=swap&#038;ver=1758011731" /></noscript><link rel='stylesheet' id='wc-stripe-blocks-checkout-style-css' href='https://formazione.alfiobardolla.com/wp-content/plugins/woocommerce-gateway-stripe/build/upe-blocks.css?ver=7bd858abef745f506c75' type='text/css' media='all' />
+		<script type="a9616bc16f610bcf536b2d4a-text/javascript">
+			jQuery( document ).ready( function () {
+				if ( jQuery('.popup-modal-register').length ) {
+					jQuery('.popup-modal-register').magnificPopup({
+						type: 'inline',
+						preloader: false,
+						fixedContentPos: true,
+						modal: true
+					});
+					jQuery('.popup-modal-dismiss').click(function (e) {
+						e.preventDefault();
+						$.magnificPopup.close();
+					});
+				}
+				if ( jQuery('.popup-modal-login').length ) {
+					jQuery('.popup-modal-login').magnificPopup({
+                        type: 'inline',
+    					preloader: false,
+                        fixedBgPos: true,
+    					fixedContentPos: true
+					});
+					jQuery('.popup-modal-dismiss').click(function (e) {
+						e.preventDefault();
+						$.magnificPopup.close();
+					});
+				}
+			});
+		</script>
+			<meta name='referrer' content='strict-origin-when-cross-origin' />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" href="https://formazione.alfiobardolla.com/wp-content/uploads/2020/12/cropped-cropped-logo-abtg-pagina-login-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://formazione.alfiobardolla.com/wp-content/uploads/2020/12/cropped-cropped-logo-abtg-pagina-login-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://formazione.alfiobardolla.com/wp-content/uploads/2020/12/cropped-cropped-logo-abtg-pagina-login-180x180.png" />
+<meta name="msapplication-TileImage" content="https://formazione.alfiobardolla.com/wp-content/uploads/2020/12/cropped-cropped-logo-abtg-pagina-login-270x270.png" />
+<style id="buddyboss_theme_options-dynamic-css" title="dynamic-css" class="redux-options-output">.site-header .site-title{font-family:"Open Sans";font-weight:600;font-style:normal;font-size:32px;font-display:swap;}body{font-family:"Open Sans";font-weight:normal;font-style:normal;font-size:16px;font-display:swap;}h1{font-family:"Open Sans";font-weight:normal;font-style:normal;font-size:34px;font-display:swap;}h2{font-family:"Open Sans";font-weight:normal;font-style:normal;font-size:24px;font-display:swap;}h3{font-family:"Open Sans";font-weight:normal;font-style:normal;font-size:20px;font-display:swap;}h4{font-family:"Open Sans";font-weight:normal;font-style:normal;font-size:18px;font-display:swap;}h5{font-family:"Open Sans";font-weight:normal;font-style:normal;font-size:16px;font-display:swap;}h6{font-family:"Open Sans";font-weight:500;font-style:normal;font-size:12px;font-display:swap;}</style>	<script type="a9616bc16f610bcf536b2d4a-text/javascript">
+		jQuery( document ).ready( function () {
+			jQuery( '#loginform label[for="user_login"]' ).attr( 'id', 'user_label' );
+			jQuery( '#loginform label[for="user_pass"]' ).attr( 'id', 'pass_label' );
+			jQuery( '#registerform label[for="user_login"]' ).attr( 'id', 'user_label_register' );
+			jQuery( '#registerform label[for="user_email"]' ).attr( 'id', 'email_label_register' );
+			jQuery( '#lostpasswordform label[for="user_login"]' ).attr( 'id', 'user_label_lost' );
+
+			var $label_user_login = jQuery( 'label#user_label' );
+			$label_user_login.html( $label_user_login.find( 'input' ) );
+
+			var $label_user_pass = jQuery( 'label#pass_label' );
+			$label_user_pass.html( $label_user_pass.find( 'input' ) );
+
+			var $label_user_register = jQuery( 'label#user_label_register' );
+			$label_user_register.html( $label_user_register.find( 'input' ) );
+
+			var $label_email_register = jQuery( 'label#email_label_register' );
+			$label_email_register.html( $label_email_register.find( 'input' ) );
+
+			var $label_user_lost = jQuery( 'label#user_label_lost' );
+			$label_user_lost.html( $label_user_lost.find( 'input' ) );
+
+			var loginform_user_login = 'Email Address';
+			var loginform_user_pass = 'Password';
+
+			jQuery( '#loginform #user_login' ).attr( 'placeholder', jQuery( '<div/>' ).html( loginform_user_login ).text() );
+			jQuery( '#loginform #user_pass' ).attr( 'placeholder', jQuery( '<div/>' ).html( loginform_user_pass ).text() );
+
+			var registerform_user_login = 'Username';
+			var registerform_user_email = 'Email';
+
+			jQuery( '#registerform #user_login' ).attr( 'placeholder', jQuery( '<div/>' ).html( registerform_user_login ).text() );
+			jQuery( '#registerform #user_email' ).attr( 'placeholder', jQuery( '<div/>' ).html( registerform_user_email ).text() );
+
+			var lostpasswordform_user_login = 'Email Address';
+			var resetpassform_pass1 = 'Add new password';
+			var resetpassform_pass2 = 'Retype new password';
+
+			jQuery( '#lostpasswordform #user_login' ).attr( 'placeholder', jQuery( '<div/>' ).html( lostpasswordform_user_login ).text() );
+			jQuery( '#resetpassform #pass1' ).attr( 'placeholder', jQuery( '<div/>' ).html( resetpassform_pass1 ).text() );
+			jQuery( '#resetpassform #bs-pass2' ).attr( 'placeholder', jQuery( '<div/>' ).html( resetpassform_pass2 ).text() );
+
+            jQuery( '.login.bb-login p.message.reset-pass' ).text( "Reset Password" );
+            jQuery( '.login.login-action-lostpassword.bb-login #login > p.message' ).html( '<div>Forgot your password?</div><p class="message">Please enter your email address. You will receive an email with instructions on how to reset your password.</p>' );
+
+            jQuery( '.login.login-action-lostpassword.bb-login #lostpasswordform input#wp-submit' ).attr( 'value', 'Request reset link' );
+            jQuery( '.login.login-action-rp.bb-login #resetpassform input#wp-submit' ).attr( 'value', 'Save' );
+            if(!jQuery('#resetpassform').length) {
+                jQuery( '.login.login-action-resetpass.bb-login p#backtoblog' ).prepend( "<span class='bs-pass-update-msg'>Password has been updated</span>" );
+            }
+
+            var $signIn = jQuery( '.login.login-action-lostpassword.bb-login #login > p#nav > a' ).first().addClass( 'bs-sign-in' ).text( `Back to sign in` );
+            jQuery( 'form#lostpasswordform' ).append( $signIn );
+
+			jQuery( '.login #loginform label#pass_label' ).append( "<span class='label-switch'></span>" );
+
+			var $forgetMeNot = jQuery( '.login.bb-login p.forgetmenot' );
+			var $lostMeNot = jQuery( '.login.bb-login p.lostmenot' );
+			jQuery( $lostMeNot ).before( $forgetMeNot );
+
+			jQuery( document ).on( 'click', '.login .label-switch', function ( e ) {
+				var $this = jQuery( this );
+				var $input = $this.closest( 'label' ).find( 'input#user_pass' );
+				$this.toggleClass( "bb-eye" );
+				if ( $this.hasClass( 'bb-eye' ) ) {
+					$input.attr( "type", "text" );
+				} else {
+					$input.attr( "type", "password" );
+				}
+			} );
+
+			var signinCheckboxes = function() {
+				// Checkbox Styling
+				jQuery('input[type=checkbox]#rememberme').each(function() {
+					var $this = jQuery(this);
+					$this.addClass('checkbox');
+					jQuery('<span class="checkbox"></span>').insertAfter($this);
+					if ($this.is(':checked')) {
+						$this.next('span.checkbox').addClass('on');
+					};
+					$this.fadeTo(0,0);
+					$this.change(function(){
+						$this.next('span.checkbox').toggleClass('on');
+					});
+				});
+			};
+			signinCheckboxes();
+
+			var weakPasswordCheckboxes = function() {
+				// Checkbox Styling
+				jQuery('input[type=checkbox]#pw-weak').each(function() {
+					var $this = jQuery(this);
+					$this.addClass('checkbox');
+					jQuery('<span class="checkbox"></span>').insertAfter($this);
+					if ($this.is(':checked')) {
+						$this.next('span.checkbox').addClass('on');
+					};
+					$this.fadeTo(0,0);
+					$this.change(function(){
+						$this.next('span.checkbox').toggleClass('on');
+					});
+				});
+			};
+			weakPasswordCheckboxes();
+
+			var loginLogoImage = function() {
+				jQuery('.login.bb-login #login > h1 > a').each(function() {
+					var $this = jQuery(this);
+					var bg = $this.css('background-image');
+					bgLogo = bg.replace('url(','').replace(')','').replace(/\"/gi, "");
+												$this.append( '<img class="bs-cs-login-logo private-on" src="' + bgLogo + '" />' );
+							jQuery('#login h1 a img').unwrap();
+											});
+			};
+
+			var loginLogoTitle = function() {
+				jQuery('.login.bb-login #login > h1 > a').each(function() {
+					var $this = jQuery(this);
+												$this.addClass('bb-login-title').append( '<span class="bs-cs-login-title private-on">Formazione ABTG</span>' );
+							jQuery('#login h1 a span').unwrap();
+							
+				});
+			};
+							loginLogoImage();
+			
+			var loginHeight = function() {
+
+				jQuery( 'body.login.login-split-page #login' ).each(function() {
+					var $loginH = jQuery( 'body.login.login-split-page #login' ).height();
+					var $winH = jQuery( window ).height();
+
+					if ( $loginH > $winH ) {
+						jQuery( 'body.login.login-split-page' ).addClass('login-exh');
+					} else {
+						jQuery( 'body.login.login-split-page' ).removeClass('login-exh');
+					}
+				});
+			};
+			loginHeight();
+
+			// Re-position WP Language Switcher below Login Form
+			var langSwitchPosition = function() {
+				var languageSwitch = jQuery( '.language-switcher' );
+				jQuery( 'body.login.login-split-page #login' ).append( languageSwitch );
+			}
+
+			langSwitchPosition();
+
+			var resetTogglePw = function() {
+
+				jQuery( document ).on( 'click', '.button-reset-hide-pw', function ( e ) {
+					var $this = jQuery( this );
+					var $input = $this.closest( '.user-bs-pass2-wrap' ).find( 'input#bs-pass2' );
+					var $icon = $this.find( 'i' );
+					
+					if ( $input.prop( 'type' ) === 'password' ) {
+						$input.prop( 'type', 'text' );
+						$icon.addClass( 'bb-icon-eye-slash' ).removeClass( 'bb-icon-eye' );
+					} else {
+						$input.prop( 'type', 'password' );
+						$icon.addClass( 'bb-icon-eye' ).removeClass( 'bb-icon-eye-slash' );
+					}
+				} );
+			};
+			resetTogglePw();
+
+			if( jQuery( '#login .bs-cs-login-logo' ).length ) {
+				jQuery( '.bs-cs-login-logo' ).load( function() {
+					loginHeight();
+					langSwitchPosition();
+				});
+			}
+
+			jQuery( window ).on( 'resize', function () {
+				loginHeight();
+				langSwitchPosition();
+			} );
+
+		} )
+	</script>
+	<div class="login-split"><div class="login-split__entry"></div><div class="split-overlay"></div></div><style>  :root{
+  --bb-primary-color: #EF7B10;
+  --bb-primary-color-rgb: 239, 123, 16;
+  --bb-body-background-color: #FFFFFF;
+  --bb-content-background-color: #FFFFFF;
+  --bb-content-alternate-background-color: #FBFBFC;
+  --bb-content-border-color: #E7E9EC;
+  --bb-content-border-color-rgb: 231, 233, 236;
+  --bb-cover-image-background-color: #607387;
+  --bb-headings-color: #122B46;
+  --bb-body-text-color: #4D5C6D;
+  --bb-alternate-text-color: #A3A5A9;
+  --bb-alternate-text-color-rgb: 163, 165, 169;
+
+  --bb-primary-button-background-regular: #EF7B10;
+  --bb-primary-button-background-hover: #EFA25B;
+  --bb-primary-button-border-regular: #EF7B10;
+  --bb-primary-button-border-hover: #EFA25B;
+  --bb-primary-button-border-hover-rgb: 239, 162, 91;
+  --bb-primary-button-text-regular: #FFFFFF;
+  --bb-primary-button-text-regular-rgb: 255, 255, 255;
+  --bb-primary-button-text-hover: #FFFFFF;
+  --bb-primary-button-text-hover-rgb: 255, 255, 255;
+  --bb-secondary-button-background-regular: #F2F4F5;
+  --bb-secondary-button-background-hover: #EFA25B;
+  --bb-secondary-button-border-regular: #F2F4F5;
+  --bb-secondary-button-border-hover: #EFA25B;
+  --bb-secondary-button-border-hover-rgb: 239, 162, 91;
+  --bb-secondary-button-text-regular: #1E2132;
+  --bb-secondary-button-text-hover: #FFFFFF;
+
+  --bb-admin-screen-bgr-color: #FAFBFD;
+  --bb-admin-screen-txt-color: #122B46;
+  --bb-login-register-link-color-regular: #5A5A5A;
+  --bb-login-register-link-color-hover: #EF7B10;
+  --bb-login-register-button-background-color-regular: #EF7B10;
+  --bb-login-register-button-background-color-hover: #EF7B10;
+  --bb-login-register-button-border-color-regular: #EF7B10;
+  --bb-login-register-button-border-color-hover: #EF7B10;
+  --bb-login-register-button-text-color-regular: #FFFFFF;
+  --bb-login-register-button-text-color-hover: #FFFFFF;
+
+  --bb-default-notice-color: #EF7B10;
+  --bb-default-notice-color-rgb: 239, 123, 16;
+  --bb-success-color: #1CD991;
+  --bb-success-color-rgb: 28, 217, 145;
+  --bb-warning-color: #F7BA45;
+  --bb-warning-color-rgb: 247, 186, 69;
+  --bb-danger-color: #EF3E46;
+  --bb-danger-color-rgb: 239, 62, 70;
+
+  --bb-login-custom-heading-color: #FFFFFF;
+
+  --bb-button-radius: 100px;
+
+  
+      --bb-block-radius: 10px;
+    --bb-block-radius-inner: 6px;
+    --bb-input-radius: 6px;
+    --bb-checkbox-radius: 5.4px;
+    --bb-primary-button-focus-shadow: 0px 0px 0px 2px rgba(var(--bb-primary-button-border-hover-rgb), 0.1);
+    --bb-secondary-button-focus-shadow: 0px 0px 0px 2px rgba(var(--bb-secondary-button-border-hover-rgb), 0.1);
+    --bb-outline-button-focus-shadow: 0px 0px 0px 2px rgba(var(--bb-content-border-color-rgb), 0.1);
+    --bb-input-focus-shadow: 0px 0px 0px 2px rgba(var(--bb-primary-color-rgb), 0.1);
+    --bb-input-focus-border-color: var(--bb-primary-color);
+    }
+        body, body.rtl {
+      font-family: Open Sans      }
+          h1, .rtl h1 {
+      font-family: Open Sans      }
+          h2, .rtl h2 {
+      font-family: Open Sans      }
+        .login h1 a {
+    background-image: url(https://formazione.alfiobardolla.com/wp-content/uploads/2020/11/LOGO_def_tracc-1-768x137-1.png);
+    background-size: contain;
+    width:145px;    }
+
+    .login #login h1 img.bs-cs-login-logo.private-on {
+    width:145px;    }
+      .login-split {
+    background-image: url(https://formazione.alfiobardolla.com/wp-content/uploads/2020/11/ab-mobile.jpg);
+    background-size: cover;
+    background-position: 50% 50%;
+    }
+      .login.bb-login #pass-strength-result.short,
+    .login.bb-login #pass-strength-result.bad {
+    background-color: #EF3E46;
+    border-color: #EF3E46;
+    }
+      .login.bb-login #pass-strength-result.strong {
+    background-color: #1CD991;
+    border-color: #1CD991;
+    }
+      .login.bb-login #pass-strength-result.good {
+    background-color: #F7BA45;
+    border-color: #F7BA45;
+    }
+  </style>	<script type="a9616bc16f610bcf536b2d4a-text/javascript">sessionStorage.removeItem( 'ONESIGNAL_HTTP_PROMPT_SHOWN' );</script>
+		</head>
+	<body class="login no-js login-action-login wp-core-ui  locale-it-it login-split-page bb-login bb-template-v2">
+	<script type="a9616bc16f610bcf536b2d4a-text/javascript">
+/* <![CDATA[ */
+document.body.className = document.body.className.replace('no-js','js');
+/* ]]> */
+</script>
+
+				<h1 class="screen-reader-text">Accedi</h1>
+			<div id="login">
+		<h1 role="presentation" class="wp-login-logo"><a href="#"></a></h1>
+	<div class="login-heading"><h2>Sign in</h2></div>
+<div id="login_error" class="notice notice-error"><p>Per favore fai login per accedere all'area riservata.</p></div>
+		<form name="loginform" id="loginform" action="https://formazione.alfiobardolla.com/wp-login.php" method="post">
+			<p>
+				<label for="user_login">Indirizzo email</label>
+				<input type="text" name="log" id="user_login" aria-describedby="login_error" class="input" value="" size="20" autocapitalize="off" autocomplete="username" required="required" />
+			</p>
+
+			<div class="user-pass-wrap">
+				<label for="user_pass">Password</label>
+				<div class="wp-pwd">
+					<input type="password" name="pwd" id="user_pass" aria-describedby="login_error" class="input password-input" value="" size="20" autocomplete="current-password" spellcheck="false" required="required" />
+					<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="Mostra password">
+						<span class="dashicons dashicons-visibility" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+						<p class="lostmenot"><a href="https://formazione.alfiobardolla.com/wp-login.php?action=lostpassword">Forgot Password?</a></p>
+						<p class="forgetmenot"><input name="rememberme" type="checkbox" id="rememberme" value="forever"  /> <label for="rememberme">Ricordami</label></p>
+			<p class="submit">
+				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="Accedi" />
+									<input type="hidden" name="redirect_to" value="https://formazione.alfiobardolla.com/wp-content/uploads/2024/04/ABTG-Alfio-Bardolla.webp" />
+									<input type="hidden" name="testcookie" value="1" />
+			</p>
+		</form>
+
+					<p id="nav">
+				<a rel="nofollow" class="wp-login-register" href="https://formazione.alfiobardolla.com/register/">Registrati</a> | <a class="wp-login-lost-password" href="https://formazione.alfiobardolla.com/wp-login.php?action=lostpassword">Password dimenticata?</a>			</p>
+			<script type="a9616bc16f610bcf536b2d4a-text/javascript">
+/* <![CDATA[ */
+function wp_attempt_focus() {setTimeout( function() {try {d = document.getElementById( "user_login" );d.focus(); d.select();} catch( er ) {}}, 200);}
+wp_attempt_focus();
+if ( typeof wpOnload === 'function' ) { wpOnload() }
+/* ]]> */
+</script>
+		<p id="backtoblog">
+			<a href="https://formazione.alfiobardolla.com/">&larr; Torna a Formazione ABTG</a>		</p>
+		<div class="privacy-policy-page-link"><a class="privacy-link popup-modal-login popup-privacy" href="#privacy-modal">Privacy Policy</a><div id="privacy-modal" class="mfp-hide login-popup bb-modal"><h1>Privacy Policy</h1><h1><strong>INFORMATIVA PRIVACY</strong></h1>
+<p>ai sensi degli artt. 13 e 14 Regolamento UE 2016/679</p>
+<p>Gentile Interessato,</p>
+<p>Alfio Bardolla Training Group S.p.A. considera di fondamentale importanza la tutela dei dati personali dei propri clienti e utenti, effettivi e/o potenziali.</p>
+<p>Con il presente documento (di seguito, l’“Informativa”), intendiamo rinnovarti il nostro impegno per garantire che il trattamento dei dati personali effettuato con qualsiasi modalità, sia automatizzata che manuale, avvenga nel pieno rispetto delle tutele e dei diritti riconosciuti dal Regolamento (UE) 2016/679 (di seguito, “GDPR” o “Regolamento”) e dalle ulteriori norme applicabili in tema di protezione dei dati personali.</p>
+<p>Con il termine dati personali si fa riferimento alla definizione contenuta nell’art. 4 co. 1 del Regolamento, ossia “qualsiasi informazione riguardante una persona fisica identificata o identificabile; si considera identificabile la persona fisica che può essere identificata, direttamente o indirettamente, con particolare riferimento a un identificativo come il nome, un numero di identificazione, dati relativi all’ubicazione, un identificativo online o a uno o più elementi caratteristici della sua identità fisica, fisiologica, genetica, psichica, economica, culturale o sociale” (di seguito, i “Dati Personali”).</p>
+<p>Il Regolamento prevede che, prima di procedere al trattamento di Dati Personali – con tale termine dovendosi intendere, secondo la relativa definizione contenuta nell’art. 4 co. 2 del Regolamento, “qualsiasi operazione o insieme di operazioni, compiute con o senza l’ausilio di processi automatizzati e applicate a dati personali o insiemi di dati personali, come la raccolta, la registrazione, l’organizzazione, la strutturazione, la conservazione, l’adattamento o la modifica, l’estrazione, la consultazione, l’uso, la comunicazione mediante trasmissione, diffusione o qualsiasi altra forma di messa a disposizione, il raffronto o l’interconnessione, la limitazione, la cancellazione o la distruzione” (di seguito, il “Trattamento”) – è necessario che la persona a cui tali Dati Personali appartengono sia informata circa i motivi per i quali tali dati sono richiesti ed in che modo verranno utilizzati.</p>
+<p>A tal proposito, la presente Informativa – redatta sulla base del principio di trasparenza e inclusiva di tutti gli elementi richiesti dall’art. 13 del Regolamento – ha lo scopo di fornirti in maniera semplice ed intuitiva tutte le informazioni utili e necessarie affinché tu possa conferire i tuoi Dati Personali in modo consapevole ed informato e, in qualsiasi momento, esercitare i tuoi diritti.</p>
+<h3><strong>A. IL TITOLARE DEL TRATTAMENTO</strong></h3>
+<p>La società che tratterà i tuoi Dati Personali per le finalità di cui alla Sezione C dell’Informativa e che, quindi, rivestirà il ruolo di titolare del trattamento secondo la relativa definizione contenuta nell’art. 4 co. 7 del Regolamento, ossia “la persona fisica o giuridica, l’autorità pubblica, il servizio o altro organismo che, singolarmente o insieme ad altri, determina le finalità e i mezzi del trattamento di dati personali” è:</p>
+<ul>
+<li>Alfio Bardolla Training Group S.p.A. (di seguito, il “Titolare”), con sede legale in Via Ripamonti n. 89, 20141 – Milano (di seguito, la “Sede”).</li>
+</ul>
+<h3><strong>B. CONTATTI DEL RESPONSABILE DELLA PROTEZIONE DEI DATI PERSONALI</strong></h3>
+<p>Al fine di agevolare i rapporti tra te, quale soggetto interessato, ossia la “persona fisica identificata o identificabile” cui si riferiscono i Dati Personali ai sensi dell’art. 4 co. 1 del Regolamento (di seguito, l’“Interessato”) ed il Titolare, il Regolamento ha previsto, in alcuni specifici casi, la nomina di una figura di controllo e supporto che, tra i vari compiti affidati, agisca anche come punto di contatto con l’Interessato.</p>
+<p>Il Titolare ha adottato tale figura di “responsabile della protezione dei dati”, c.d. “Data Protection Officer”, individuando e nominando, a norma dell’art. 37 del Regolamento, SAPG Legal Tech S.r.l. (di seguito, il “DPO”).</p>
+<p>Il DPO, ai sensi e per gli effetti di cui all’art. 39 del Regolamento, è chiamato a svolgere, inter alia, le seguenti attività:</p>
+<ul>
+<li>informare e fornire consulenza al Titolare nonché ai dipendenti che eseguono le operazioni di Trattamento in merito agli obblighi derivanti dal Regolamento o da altre disposizioni dell’Unione o degli Stati membri relative alla protezione dei Dati Personali;</li>
+<li>monitorare e vigilare l’osservanza del Regolamento, delle normative applicabili in materia di protezione dei Dati Personali nonché delle policy e procedure adottate dal Titolare;</li>
+<li>fornire supporto nei riscontri all’Interessato;</li>
+<li>cooperare con l’Autorità Garante per la Protezione dei Dati Personali competente.</li>
+</ul>
+<p>Come previsto dall’art. 38 del Regolamento, potrai liberamente contattare il DPO per tutte le questioni relative al Trattamento dei tuoi Dati Personali e/o nel caso volessi esercitare i tuoi diritti come previsti dalla Sezione G della presente Informativa, inviando una comunicazione scritta all’indirizzo di posta elettronica <a href="dpo.privacy@sapglegal.com"><span class="__cf_email__" data-cfemail="96f2e6f9b8e6e4ffe0f7f5efd6e5f7e6f1faf3f1f7fab8f5f9fb">[email&#160;protected]</span></a>.</p>
+<h3><strong>C. FINALITÀ E BASE GIURIDICA DEL TRATTAMENTO</strong></h3>
+<p>Il Titolare, al fine di consentire la tua registrazione al proprio sito internet www.alfiobardolla.com (di seguito, il “Sito”) – nelle sezioni in cui è prevista la possibilità di registrarsi e/o l’invio di richieste di informazioni utilizzando i moduli di contatto e/o l’iscrizione al servizio di newsletter – raccoglie alcuni tuoi Dati Personali nonché dati di navigazione (anche mediante i cookie) in conformità con la Cookie Policy presente nel Sito e disponibile al <a href="https://formazione.alfiobardolla.com/absite/cookie-policy/">seguente link</a>.</p>
+<p>Il Trattamento dei tuoi Dati Personali sarà condotto dal Titolare per consentirti, quindi, di entrare in contatto con l’azienda, inviare richieste di informazioni, scaricare risorse gratuite, acquistare corsi e prodotti nonché usufruire di tutti gli altri servizi di volta in volta offerti dal Sito nel quale stai navigando.</p>
+<p>Per consentire al Titolare di effettuare le attività di Trattamento per le finalità di cui sopra, sarà necessario il conferimento dei Dati Personali contrassegnati dal simbolo [*].</p>
+<p>Tale Trattamento sarà lecito in forza dell’art. 6, comma 1, lettera b) del Regolamento.</p>
+<p>In mancanza del conferimento di anche uno solo dei dati contrassegnati, non sarà possibile procedere al Trattamento dei tuoi Dati Personali e, di conseguenza, non sarà possibile fornirti le informazioni e i servizi richiesti.</p>
+<p>I Dati Personali che ti saranno richiesti per il perseguimento delle finalità di cui sopra, saranno quelli riportati nel modulo di registrazione e/o di contatto e/o di acquisto ossia, a titolo esemplificativo e non esaustivo: nome, cognome, indirizzo di posta elettronica, indirizzo di spedizione, numeri telefonici di utenze fisse e/o mobili.</p>
+<p>Non sono trattati Dati Personali relativi alla tua salute e, in generale, categorie particolari di dati personali di cui all’art. 9 del Regolamento.</p>
+<p>Oltre alle finalità di cui sopra, i tuoi Dati Personali potranno essere trattati per attività promozionali dei prodotti e servizi erogati dal Titolare, al fine di fornirti un servizio migliore, promuovere prodotti e servizi di tuo interesse venduti e/o erogati da ABTG.</p>
+<p>Relativamente a tale finalità di marketing diretto, è opportuno precisare che, in virtù dell’art. 6 co. 1 lett. f) del Regolamento e dell’art. 130 co. 4 Codice Privacy (c.d. soft spam exception), il Titolare potrà svolgere tale attività basandosi sul suo interesse legittimo, a prescindere da un tuo consenso esplicito e comunque sino ad una tua opposizione o limitazione (ai sensi di quanto previsto alla Sezione F lett. d) ed f) dell’Informativa) a tale Trattamento, come meglio esplicitato nel Considerando 47 del Regolamento, nel quale viene “considerato legittimo interesse del titolare trattare dati personali per finalità di marketing diretto”.</p>
+<p>Ciò sarà possibile a seguito delle valutazioni effettuate dal Titolare in merito all’eventuale e possibile prevalenza dei tuoi interessi, diritti e libertà fondamentali che richiedono la protezione dei Dati Personali sul proprio interesse legittimo ad inviare comunicazioni di marketing diretto.</p>
+<p>Peraltro, potrai opporti lecitamente ed in ogni momento alla ricezione di comunicazioni promozionali, senza che ciò pregiudichi in alcun modo il trattamento per le altre finalità.</p>
+<p>Le modalità di contatto finalizzate alle attività di marketing diretto potranno essere sia di tipo automatizzato sia di tipo tradizionale (prevedendo in alcuni casi chiamate da parte dei nostri operatori, in base alle tue specifiche richieste). In ogni caso, come nel seguito meglio precisato nella Sezione F della presente Informativa, potrai opporti anche in modo parziale (ad esempio acconsentendo alle sole modalità di contatto tradizionali).</p>
+<h3><strong>D. SOGGETTI A CUI POTRANNO ESSERE COMUNICATI I TUOI DATI PERSONALI</strong></h3>
+<p>I tuoi Dati Personali potranno essere comunicati a specifici soggetti considerati destinatari di tali Dati Personali. Infatti, l’art. 4 co. 9 del Regolamento definisce Destinatario di un Dato Personale “la persona fisica o giuridica, l’autorità pubblica, il servizio o un altro organismo che riceve comunicazione di dati personali, che si tratti o meno di terzi” (di seguito, i “Destinatari”).</p>
+<p>In tale ottica, al fine di svolgere correttamente tutte le attività di Trattamento necessarie a perseguire le finalità di cui alla presente Informativa, i seguenti Destinatari potranno trovarsi nella condizione di trattare i tuoi Dati Personali:</p>
+<ul>
+<li>soggetti terzi che svolgono parte delle attività di Trattamento e/o attività connesse e strumentali alle stesse per conto del Titolare. Tali soggetti sono stati nominati Responsabili del trattamento ai sensi dell’art. 28 GDPR, dovendosi intendere singolarmente con tale locuzione, a norma dell’art. 4 co. 8 del Regolamento, “la persona fisica o giuridica, l’autorità pubblica, il servizio o altro organismo che tratta Dati Personali per conto del Titolare del Trattamento” (di seguito, il “Responsabile del Trattamento”);</li>
+<li>singoli individui, dipendenti e/o collaboratori del Titolare, a cui sono state affidate specifiche e/o più attività di Trattamento sui tuoi Dati Personali. A tali individui sono state impartite specifiche istruzioni in tema di sicurezza e corretto utilizzo dei Dati Personali – anche attraverso apposita attività di formazione – e vengono definiti, a norma dell’art. 4 co. 10 del Regolamento, “persone autorizzate al trattamento dei Dati Personali sotto l’autorità diretta del Titolare o del Responsabile del Trattamento” (di seguito, le “Persone Autorizzate”).</li>
+</ul>
+<p>Ove richiesto per legge o per prevenire o reprimere la commissione di un reato, i tuoi Dati Personali potranno essere comunicati ad enti pubblici o all’autorità giudiziaria senza che questi vengano definiti come Destinatari. Infatti, a norma dell’art. 4 co. 9 del Regolamento, “le autorità pubbliche che possono ricevere comunicazione di Dati Personali nell’ambito di una specifica indagine conformemente al diritto dell’Unione o degli Stati membri non sono considerate Destinatari”.</p>
+<h3><strong>E. TEMPO DI TRATTAMENTO</strong></h3>
+<p>Uno dei principi applicabili al Trattamento dei tuoi Dati Personali concerne la limitazione del periodo di conservazione, disciplinata all’art. 5, co. 1 lett. e) del Regolamento che recita “i Dati Personali sono conservati in una forma che consenta l’identificazione degli Interessati per un arco di tempo non superiore al conseguimento delle finalità per le quali sono trattati; i Dati Personali possono essere conservati per periodi più lunghi a condizione che siano trattati esclusivamente a fini di archiviazione nel pubblico interesse, di ricerca scientifica o storica o a fini statistici, conformemente all’art. 89(1), fatta salva l’attuazione di misure tecniche e organizzative adeguate richieste dal presente Regolamento a tutela dei diritti e delle libertà dell’Interessato”.</p>
+<p>Alla luce di tale principio, i tuoi Dati Personali saranno trattati dal Titolare limitatamente a quanto necessario per il perseguimento della finalità di cui alla Sezione C dell’Informativa.</p>
+<p>In particolare, i tuoi Dati Personali saranno trattati per un periodo di tempo pari al minimo necessario, come indicato dal Considerando 39 del Regolamento, ossia fino alla cessazione dei rapporti in essere tra te ed il Titolare relativamente alle tue richieste di informazioni, fatto salvo il legittimo interesse del Titolare di cui al Considerando 47 del Regolamento nonché un ulteriore periodo di conservazione che potrà essere imposto da norme di legge come anche previsto dal Considerando 65 del Regolamento.</p>
+<h3><strong>F. DIRITTI</strong></h3>
+<p>Come previsto dall’art. 15 del Regolamento, potrai accedere ai tuoi Dati Personali, chiederne la rettifica e l’aggiornamento, se incompleti o erronei, chiederne la cancellazione qualora la raccolta sia avvenuta in violazione di una legge o regolamento, nonché opporti al Trattamento per motivi legittimi e specifici. In particolare, ti riportiamo di seguito tutti i tuoi diritti che potrai esercitare, in qualsiasi momento, nei confronti del Titolare: <strong>a. DIRITTO DI ACCESSO</strong> Avrai il diritto, a norma dell’art. 15 co. 1 del Regolamento, di ottenere dal Titolare la conferma che sia o meno in corso un Trattamento dei tuoi Dati Personali e, in tal caso, di ottenere l’accesso a tali Dati Personali ed alle seguenti informazioni: a) le finalità del Trattamento; b) le categorie di Dati Personali in questione; c) i Destinatari o le categorie di Destinatari a cui i tuoi Dati Personali sono stati o saranno comunicati, in particolare se Destinatari di paesi terzi o organizzazioni internazionali; d) quando possibile, il periodo di conservazione dei Dati Personali previsto oppure, se non è possibile, i criteri utilizzati per determinare tale periodo; e) l’esistenza del diritto dell’Interessato di chiedere al Titolare del Trattamento la rettifica o la cancellazione dei Dati Personali o la limitazione del Trattamento dei Dati Personali che lo riguardano o di opporsi al loro Trattamento; f) il diritto di proporre reclamo a un’autorità di controllo; g) qualora i Dati Personali non siano raccolti presso l’Interessato, tutte le informazioni disponibili sulla loro origine; h) l’esistenza di un processo decisionale automatizzato, compresa la profilazione di cui all’art. 22 commi 1 e 4 del Regolamento e, almeno in tali casi, informazioni significative sulla logica utilizzata nonché l’importanza e le conseguenze previste di tale Trattamento per l’Interessato. Tutte queste informazioni potrai rinvenirle all’interno della presente Informativa che sarà sempre a tua disposizione all’interno della sezione Privacy Policy del Sito. <strong>b. DIRITTO DI RETTIFICA</strong> Potrai ottenere, a norma dell’art. 16 del Regolamento, la rettifica dei tuoi Dati Personali che risultino inesatti. Tenuto conto delle finalità del Trattamento, inoltre, potrai ottenere l’integrazione dei tuoi Dati Personali che risultino incompleti, anche fornendo una dichiarazione integrativa. <strong>c. DIRITTO ALLA CANCELLAZIONE</strong> Potrai ottenere, a norma dell’art. 17 co. 1 del Regolamento, la cancellazione dei tuoi Dati Personali senza ingiustificato ritardo ed il Titolare avrà l’obbligo di cancellare i tuoi Dati Personali, qualora sussista anche solo uno dei seguenti motivi: a) i Dati Personali non sono più necessari rispetto alle finalità per le quali sono stati raccolti o altrimenti trattati; b) ti sei opposto al Trattamento ai sensi dell’art. 21 co. 1 o 2 del Regolamento e non sussiste più alcun motivo legittimo prevalente per procedere al Trattamento dei tuoi Dati Personali; c) i tuoi Dati Personali sono stati trattati illecitamente; d) risulta necessario cancellare i tuoi Dati Personali per adempiere ad un obbligo di legge previsto da una norma comunitaria o di diritto interno. In alcuni casi, come previsto dall’art. 17 co. 3 del Regolamento, il Titolare è legittimato a non provvedere alla cancellazione dei tuoi Dati Personali qualora il loro Trattamento sia necessario, ad esempio, per l’esercizio del diritto alla libertà di espressione e di informazione, per l’adempimento di un obbligo di legge, per motivi di interesse pubblico, per fini di archiviazione nel pubblico interesse, di ricerca scientifica o storica o a fini statistici, per l’accertamento, l’esercizio o la difesa di un diritto in sede giudiziaria. <strong>d. DIRITTO DI LIMITAZIONE DEL TRATTAMENTO</strong> Potrai ottenere la limitazione del Trattamento, a norma dell’art. 18 del Regolamento, nel caso in cui ricorra una delle seguenti ipotesi: a) hai contestato l’esattezza dei tuoi Dati Personali (la limitazione si protrarrà per il periodo necessario al Titolare per verificare l’esattezza di tali Dati Personali); b) il Trattamento è illecito ma ti sei opposto alla cancellazione dei tuoi Dati Personali chiedendone, invece, che ne sia limitato l’utilizzo; c) benché il Titolare non ne abbia più bisogno ai fini del Trattamento, i tuoi Dati Personali servono per l’accertamento, l’esercizio o la difesa di un diritto in sede giudiziaria; d) ti sei opposto al Trattamento ai sensi dell’art. 21 co. 1 del Regolamento e sei in attesa della verifica in merito all’eventuale prevalenza dei motivi legittimi del Titolare rispetto ai tuoi. In caso di limitazione del Trattamento, i tuoi Dati Personali saranno trattati, salvo che per la conservazione, soltanto con il tuo consenso o per l’accertamento, l’esercizio o la difesa di un diritto in sede giudiziaria oppure per tutelare i diritti di un’altra persona fisica o giuridica o per motivi di interesse pubblico rilevante. Ti informeremo, in ogni caso, prima che tale limitazione venga revocata. <strong>e. DIRITTO ALLA PORTABILITÀ DEI DATI</strong> Potrai, in qualsiasi momento, richiedere e ricevere, a norma dell’art. 20 co. 1 del Regolamento, tutti i tuoi Dati Personali trattati dal Titolare in un formato strutturato, di uso comune e leggibile oppure richiederne la trasmissione ad altro Titolare del Trattamento senza impedimenti. In questo caso, sarà tua cura fornirci tutti gli estremi esatti del nuovo Titolare del Trattamento a cui intendi trasferire i tuoi Dati Personali, fornendoci autorizzazione scritta. <strong>f. DIRITTO DI OPPOSIZIONE</strong> A norma dell’art. 21 co. 2 del Regolamento e come anche ribadito dal Considerando 70, potrai opporti, in qualsiasi momento, al Trattamento dei tuoi Dati Personali qualora questi vengano trattati per finalità di marketing diretto. <strong>g. DIRITTO DI PROPORRE UN RECLAMO ALL’AUTORITÀ DI CONTROLLO</strong> Fatto salvo il tuo diritto di ricorrere in ogni altra sede amministrativa o giurisdizionale, qualora ritenessi che il Trattamento dei tuoi Dati Personali condotto dal Titolare avvenga in violazione del Regolamento e/o della normativa applicabile, potrai proporre reclamo all’Autorità Garante per la Protezione dei Dati Personali competente. Per esercitare tutti i tuoi diritti come sopra identificati, ti basterà contattare il Titolare nelle seguenti modalità:</p>
+<ul>
+<li>inviando una e-mail alla casella di posta elettronica del DPO <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ec889c83c29c9e859a8d8f95ac9f8d9c8b80898b8d80c28f8381">[email&#160;protected]</a>;</li>
+<li>inviando una mail al Titolare alla casella <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dab3b4bcb59abbb6bcb3b5b8bba8beb5b6b6bbf4b9b5b7">[email&#160;protected]</a> ovvero una raccomandata alla Sede del Titolare.</li>
+</ul>
+<h3><strong>H. LUOGHI DEL TRATTAMENTO</strong></h3>
+<p>I tuoi Dati Personali saranno trattati dal Titolare all’interno del territorio dell’Unione Europea.</p>
+<p>Qualora per questioni di natura tecnica e/o operativa si renda necessario avvalersi di soggetti ubicati al di fuori dell’Unione Europea, ti informiamo sin d’ora che tali soggetti saranno nominati Responsabili del Trattamento ai sensi e per gli effetti di cui all’art. 28 del Regolamento ed il trasferimento dei tuoi Dati Personali a tali soggetti, limitatamente allo svolgimento di specifiche attività di Trattamento, sarà regolato in conformità a quanto previsto dal capo V del Regolamento.</p>
+<p>Saranno quindi adottate tutte le cautele necessarie al fine di garantire la più totale protezione dei tuoi Dati Personali basando tale trasferimento: a) su decisioni di adeguatezza dei paesi terzi destinatari espresse dalla Commissione Europea; b) su garanzie adeguate espresse dal soggetto terzo destinatario ai sensi dell’articolo 46 del Regolamento; c) sull’adozione di norme vincolanti d’impresa, c.d. binding corporate rules; d) adottando clausole contrattuali standard approvate dalla Commissione Europea.</p>
+<p>In ogni caso potrai richiedere maggiori dettagli al Titolare qualora i tuoi Dati Personali siano stati trattati al di fuori dell’Unione Europea richiedendo evidenza delle specifiche garanzie adottate.</p>
+<button title="Close (Esc)" type="button" class="mfp-close">×</button></div></div>	</div>
+				<div class="language-switcher">
+				<form id="language-switcher" method="get">
+
+					<label for="language-switcher-locales">
+						<span class="dashicons dashicons-translation" aria-hidden="true"></span>
+						<span class="screen-reader-text">
+							Lingua						</span>
+					</label>
+
+					<select name="wp_lang" id="language-switcher-locales"><option value="en_US" lang="en" data-installed="1">English (United States)</option>
+<option value="it_IT" lang="it" selected='selected' data-installed="1">Italiano</option></select>
+					
+											<input type="hidden" name="redirect_to" value="https://formazione.alfiobardolla.com/wp-content/uploads/2024/04/ABTG-Alfio-Bardolla.webp" />
+					
+											<input type="hidden" name="action" value="bpnoaccess" />
+					
+						<input type="submit" class="button" value="Cambia">
+
+					</form>
+				</div>
+			
+	  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="a9616bc16f610bcf536b2d4a-text/javascript">
+      document.addEventListener("DOMContentLoaded", function() {
+          const loginButton = document.querySelector('#wp-submit');
+          const customLink = document.createElement('p');
+          customLink.style.textAlign = 'center';
+          // customLink.innerHTML = '<a id="abtgLoginLinkRegister" href="https://formazione.alfiobardolla.com/register/">Non hai un account? <span>Registrati</span></a>';
+          customLink.innerHTML = '<div id="abtgLoginLinkRegister"><span>Non hai un account? </span><a href="https://formazione.alfiobardolla.com/register/">Registrati</a></div><div id="abtgLoginSeparator"></div>';
+
+          loginButton.parentNode.insertBefore(customLink, loginButton.nextSibling);
+      });
+  </script>
+  <script type="a9616bc16f610bcf536b2d4a-text/javascript">
+/* <![CDATA[ */
+document.querySelector('form').classList.add('shake');
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6" id="wp-hooks-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="heartbeat-js-extra">
+/* <![CDATA[ */
+var heartbeatSettings = {"ajaxurl":"\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/heartbeat.min.js?ver=6.8.5" id="heartbeat-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3" id="jquery-ui-core-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/jquery/ui/menu.min.js?ver=1.13.3" id="jquery-ui-menu-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/dist/dom-ready.min.js?ver=f77871ff7694fffea381" id="wp-dom-ready-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="wp-i18n-js-after">
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="wp-a11y-js-translations">
+/* <![CDATA[ */
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", {"translation-revision-date":"2025-11-21 12:08:40+0000","generator":"GlotPress\/4.0.3","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"it"},"Notifications":["Notifiche"]}},"comment":{"reference":"wp-includes\/js\/dist\/a11y.js"}} );
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/dist/a11y.min.js?ver=3156534cc54473497e14" id="wp-a11y-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/jquery/ui/autocomplete.min.js?ver=1.13.3" id="jquery-ui-autocomplete-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/clipboard.min.js?ver=2.0.11" id="clipboard-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="zxcvbn-async-js-extra">
+/* <![CDATA[ */
+var _zxcvbnSettings = {"src":"https:\/\/formazione.alfiobardolla.com\/wp-includes\/js\/zxcvbn.min.js"};
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/zxcvbn-async.min.js?ver=1.0" id="zxcvbn-async-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="password-strength-meter-js-extra">
+/* <![CDATA[ */
+var pwsL10n = {"unknown":"Efficacia della password sconosciuta","short":"Molto debole","bad":"Debole","good":"Media","strong":"Forte","mismatch":"Mancata corrispondenza"};
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="password-strength-meter-js-translations">
+/* <![CDATA[ */
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", {"translation-revision-date":"2025-11-16 09:37:17+0000","generator":"GlotPress\/4.0.3","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"it"},"%1$s is deprecated since version %2$s! Use %3$s instead. Please consider writing more inclusive code.":["%1$s \u00e8 deprecata sin dalla versione %2$s! Usa %3$s al suo posto. Prova a scrivere del codice pi\u00f9 inclusivo."]}},"comment":{"reference":"wp-admin\/js\/password-strength-meter.js"}} );
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-admin/js/password-strength-meter.min.js?ver=6.8.5" id="password-strength-meter-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/underscore.min.js?ver=1.13.7" id="underscore-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="wp-util-js-extra">
+/* <![CDATA[ */
+var _wpUtilSettings = {"ajax":{"url":"\/wp-admin\/admin-ajax.php"}};
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-includes/js/wp-util.min.js?ver=6.8.5" id="wp-util-js"></script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="user-profile-js-extra">
+/* <![CDATA[ */
+var userProfileL10n = {"user_id":"0","nonce":"9eafd792f4"};
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" id="user-profile-js-translations">
+/* <![CDATA[ */
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", {"translation-revision-date":"2025-11-16 09:37:17+0000","generator":"GlotPress\/4.0.3","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"it"},"Your new password has not been saved.":["La tua nuova password non \u00e8 stata salvata."],"Application password has been copied to your clipboard.":["La password dell'applicazione \u00e8 stata copiata negli appunti."],"Hide":["Nascondi"],"Show":["Visualizza"],"Show password":["Mostra password"],"Hide password":["Nascondi password"],"Confirm use of weak password":["Conferma l'uso di una password debole"],"The changes you made will be lost if you navigate away from this page.":["Se abbandoni questa pagina i cambiamenti effettuati verranno persi."]}},"comment":{"reference":"wp-admin\/js\/user-profile.js"}} );
+/* ]]> */
+</script>
+<script type="a9616bc16f610bcf536b2d4a-text/javascript" src="https://formazione.alfiobardolla.com/wp-admin/js/user-profile.min.js?ver=6.8.5" id="user-profile-js"></script>
+	<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="a9616bc16f610bcf536b2d4a-|49" defer></script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ded956a1fe3cd75',t:'MTc3MzkzNDkxMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+	</html>
+	
