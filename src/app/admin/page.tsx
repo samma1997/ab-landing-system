@@ -79,12 +79,10 @@ const BLOCK_PROPS_MAP: Record<string, string[]> = {
   'cta-divider': ['ctaText', 'text', 'ctaHref', 'variant', 'size', 'id'],
   'footer-abtg': ['companyName', 'companyAddress', 'companyVat', 'logo', 'links', 'socialLinks', 'disclaimers', 'copyrightYear', 'id'],
   'horizontal-scroll-cards': ['title', 'titleHighlight', 'subtitle', 'cards', 'bgColor', 'cardWidth', 'gap', 'id'],
-  'stacking-cards': ['preTitle', 'title', 'titleHighlight', 'subtitle', 'cards', 'bgColor', 'id'],
 }
 
 const BLOCK_DEMO_LINKS: Record<string, string> = {
   'horizontal-scroll-cards': `${BASE_PATH}/test-horizontal`,
-  'stacking-cards': `${BASE_PATH}/test-stacking`,
 }
 
 const CATEGORY_DISPLAY: Record<BlockCategory, { label: string; color: string; bg: string }> = {
@@ -772,31 +770,6 @@ function BlockMiniPreview({ blockId, dark }: { blockId: string; dark: boolean })
           </div>
         ))}
         <div className={`text-[10px] ${base}`}>&#8594;</div>
-      </div>
-    ),
-    'stacking-cards': (
-      <div className={`flex h-full items-end justify-center gap-2 p-4 pb-6 ${dark ? 'bg-[#0A0A0F]' : 'bg-gray-100'}`}>
-        {[
-          { rot: -8, x: -20, y: 0 },
-          { rot: -4, x: -6, y: -10 },
-          { rot: 0, x: 8, y: -15 },
-          { rot: 4, x: 22, y: -8 },
-          { rot: 8, x: 36, y: 2 },
-        ].map((c, i) => (
-          <div
-            key={i}
-            className={`absolute h-24 w-16 rounded-lg border shadow-lg ${dark ? 'border-[#C9A84C]/20 bg-[#111118]' : 'border-gray-200 bg-white'}`}
-            style={{ transform: `rotate(${c.rot}deg) translateX(${c.x}px) translateY(${c.y}px)`, zIndex: 5 - Math.abs(i - 2) }}
-          >
-            <div className="flex h-full flex-col items-center justify-center gap-1 p-1.5">
-              <div className="h-4 w-4 rounded" style={{ background: 'linear-gradient(135deg, #C9A84C, #E8C96B)' }}>
-                <span className="flex h-full items-center justify-center text-[7px] font-black text-[#0A0A0F]">{String(i + 1).padStart(2, '0')}</span>
-              </div>
-              <div className={`h-1.5 w-10 rounded ${dark ? 'bg-white/10' : 'bg-gray-200'}`} />
-              <div className={`h-1 w-8 rounded ${dark ? 'bg-white/5' : 'bg-gray-100'}`} />
-            </div>
-          </div>
-        ))}
       </div>
     ),
     'footer-abtg': (
