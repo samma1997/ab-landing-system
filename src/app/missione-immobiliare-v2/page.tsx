@@ -30,23 +30,24 @@ import clsx from 'clsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const BP = process.env.NEXT_PUBLIC_BASE_PATH || ''
+const BASE_PATH = '/ab-landing-system'
+function img(path: string) { return `${BASE_PATH}${path}` }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    CONSTANTS — exact from scraped ABTG pages
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 const MEDIA_LOGOS = [
-  { src: `${BP}/images/missione-immobiliare/imgi_12_Rai1.webp`, alt: 'Rai 1' },
-  { src: `${BP}/images/missione-immobiliare/imgi_35_Corriere-della-sera.webp`, alt: 'Corriere della Sera' },
-  { src: `${BP}/images/missione-immobiliare/imgi_15_Sole-24-ore.webp`, alt: 'Il Sole 24 Ore' },
-  { src: `${BP}/images/missione-immobiliare/imgi_37_Huffpost.webp`, alt: 'HuffPost' },
-  { src: `${BP}/images/missione-immobiliare/imgi_17_La7.webp`, alt: 'La7' },
-  { src: `${BP}/images/missione-immobiliare/imgi_16_GQ.webp`, alt: 'GQ' },
-  { src: `${BP}/images/missione-immobiliare/imgi_13_Messaggero.webp`, alt: 'Il Messaggero' },
-  { src: `${BP}/images/missione-immobiliare/imgi_19_Gazzetta-dello-sport.webp`, alt: 'Gazzetta dello Sport' },
-  { src: `${BP}/images/missione-immobiliare/imgi_20_Il-Giornale.webp`, alt: 'Il Giornale' },
-  { src: `${BP}/images/missione-immobiliare/imgi_21_Il-secolo-XIX.webp`, alt: 'Il Secolo XIX' },
+  { src: img('/images/missione-immobiliare/imgi_12_Rai1.webp'), alt: 'Rai 1' },
+  { src: img('/images/missione-immobiliare/imgi_35_Corriere-della-sera.webp'), alt: 'Corriere della Sera' },
+  { src: img('/images/missione-immobiliare/imgi_15_Sole-24-ore.webp'), alt: 'Il Sole 24 Ore' },
+  { src: img('/images/missione-immobiliare/imgi_37_Huffpost.webp'), alt: 'HuffPost' },
+  { src: img('/images/missione-immobiliare/imgi_17_La7.webp'), alt: 'La7' },
+  { src: img('/images/missione-immobiliare/imgi_16_GQ.webp'), alt: 'GQ' },
+  { src: img('/images/missione-immobiliare/imgi_13_Messaggero.webp'), alt: 'Il Messaggero' },
+  { src: img('/images/missione-immobiliare/imgi_19_Gazzetta-dello-sport.webp'), alt: 'Gazzetta dello Sport' },
+  { src: img('/images/missione-immobiliare/imgi_20_Il-Giornale.webp'), alt: 'Il Giornale' },
+  { src: img('/images/missione-immobiliare/imgi_21_Il-secolo-XIX.webp'), alt: 'Il Secolo XIX' },
 ]
 
 const CHECKMARKS = [
@@ -115,28 +116,28 @@ const SPEAKERS = [
   {
     name: 'Alfio Bardolla',
     role: 'Fondatore ABTG',
-    img: `${BP}/images/missione-immobiliare/speaker-alfio-bardolla.jpg`,
+    img: '/images/missione-immobiliare/speaker-alfio-bardolla.jpg',
     initials: 'AB',
     bio: 'Fondatore di Alfio Bardolla Training Group, la prima societa di formazione finanziaria quotata in Borsa in Italia. Autore bestseller e imprenditore seriale, ha formato oltre 50.000 persone negli ultimi 20 anni.',
   },
   {
     name: 'Saverio Rodriguez',
     role: 'Imprenditore, fondatore di Vivi Salute',
-    img: `${BP}/images/missione-immobiliare/speaker-saverio-rodriguez.jpg`,
+    img: '/images/missione-immobiliare/speaker-saverio-rodriguez.jpg',
     initials: 'SR',
     bio: 'Non e un formatore: e un imprenditore socio di ABTG. Ha fondato Vivi Salute, il primo network odontoiatrico italiano: 170 strutture convenzionate, 56 citta, oltre 200.000 pazienti.',
   },
   {
     name: 'Alberto Colombo',
     role: 'Coach ABTG — Stralci e Aste',
-    img: `${BP}/images/missione-immobiliare/speaker-alberto-colombo.jpg`,
+    img: '/images/missione-immobiliare/speaker-alberto-colombo.jpg',
     initials: 'AC',
     bio: 'Specializzato in stralci e aste giudiziarie: le forme di acquisto immobiliare con il maggiore potenziale di sconto sul valore di mercato. Non porta teoria: porta operazioni reali con numeri verificabili.',
   },
   {
     name: 'Avv. Fracassi Stefano',
     role: 'Avvocato Immobiliarista',
-    img: `${BP}/images/missione-immobiliare/speaker-fracassi-stefano.jpg`,
+    img: '/images/missione-immobiliare/speaker-fracassi-stefano.jpg',
     initials: 'FS',
     bio: 'Socio fondatore di AFBN Studio Legale, specializzazione esclusiva nel diritto immobiliare. Spiega cosa deve contenere un contratto per proteggerti davvero e cosa lo trasforma in una trappola.',
   },
@@ -272,7 +273,7 @@ export default function MissioneImmobiliareV2Page() {
           ════════════════════════════════════════════════════════════════════════ */}
       <div className="bg-[#F5F5F7] flex items-center justify-center py-3 px-4">
         <Image
-          src={`${BP}/images/missione-immobiliare/Alfio-Bardolla-Training-Group-Logo-Color-1.webp`}
+          src={img("/images/missione-immobiliare/Alfio-Bardolla-Training-Group-Logo-Color-1.webp")}
           alt="Alfio Bardolla Training Group"
           width={250}
           height={44}
@@ -288,7 +289,7 @@ export default function MissioneImmobiliareV2Page() {
         {/* Full background image like commodity page */}
         <div className="absolute inset-0">
           <Image
-            src={`${BP}/images/missione-immobiliare/ChatGPT-Image-Feb-27-2026-10_48_00-PM-1024x683.webp`}
+            src={img("/images/missione-immobiliare/ChatGPT-Image-Feb-27-2026-10_48_00-PM-1024x683.webp")}
             alt=""
             fill
             className="object-cover"
@@ -830,7 +831,7 @@ export default function MissioneImmobiliareV2Page() {
         <div className="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center mb-8">
             <Image
-              src={`${BP}/images/missione-immobiliare/Alfio-Bardolla-Training-Group-Logo-Color-1.webp`}
+              src={img("/images/missione-immobiliare/Alfio-Bardolla-Training-Group-Logo-Color-1.webp")}
               alt="ABTG"
               width={200}
               height={35}
