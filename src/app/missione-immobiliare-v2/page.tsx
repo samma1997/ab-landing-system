@@ -116,28 +116,28 @@ const SPEAKERS = [
   {
     name: 'Alfio Bardolla',
     role: 'Fondatore ABTG',
-    img: '/images/missione-immobiliare/speaker-alfio-bardolla.jpg',
+    img: '',
     initials: 'AB',
     bio: 'Fondatore di Alfio Bardolla Training Group, la prima societa di formazione finanziaria quotata in Borsa in Italia. Autore bestseller e imprenditore seriale, ha formato oltre 50.000 persone negli ultimi 20 anni.',
   },
   {
     name: 'Saverio Rodriguez',
     role: 'Imprenditore, fondatore di Vivi Salute',
-    img: '/images/missione-immobiliare/speaker-saverio-rodriguez.jpg',
+    img: '',
     initials: 'SR',
     bio: 'Non e un formatore: e un imprenditore socio di ABTG. Ha fondato Vivi Salute, il primo network odontoiatrico italiano: 170 strutture convenzionate, 56 citta, oltre 200.000 pazienti.',
   },
   {
     name: 'Alberto Colombo',
     role: 'Coach ABTG — Stralci e Aste',
-    img: '/images/missione-immobiliare/speaker-alberto-colombo.jpg',
+    img: '',
     initials: 'AC',
     bio: 'Specializzato in stralci e aste giudiziarie: le forme di acquisto immobiliare con il maggiore potenziale di sconto sul valore di mercato. Non porta teoria: porta operazioni reali con numeri verificabili.',
   },
   {
     name: 'Avv. Fracassi Stefano',
     role: 'Avvocato Immobiliarista',
-    img: '/images/missione-immobiliare/speaker-fracassi-stefano.jpg',
+    img: '',
     initials: 'FS',
     bio: 'Socio fondatore di AFBN Studio Legale, specializzazione esclusiva nel diritto immobiliare. Spiega cosa deve contenere un contratto per proteggerti davvero e cosa lo trasforma in una trappola.',
   },
@@ -839,20 +839,33 @@ export default function MissioneImmobiliareV2Page() {
             />
           </div>
 
-          <div className="text-center space-y-4">
-            <p className="text-white/50 text-xs leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Alfio Bardolla Training Group S.p.A. - P.IVA 08009280960 - Sede legale: Via Famagosta 75, 20142 Milano (MI) - Capitale sociale: euro 1.000.000 i.v.
-              Societa quotata su Euronext Growth Milan.
+          {/* Links */}
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8">
+            <a href="https://lp.alfiobardolla.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Privacy Policy</a>
+            <a href="https://lp.alfiobardolla.com/cookie-policy/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Cookie Policy</a>
+            <a href="https://lp.alfiobardolla.com/condizioni-di-vendita/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Condizioni di Vendita</a>
+            <a href="https://lp.alfiobardolla.com/disclaimer/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white text-sm transition-colors">Disclaimer</a>
+          </div>
+
+          <div className="text-center space-y-3">
+            <p className="text-white/40 text-xs leading-relaxed">
+              Copyright &copy; 2026 Alfio Bardolla Training Group S.p.A.
             </p>
-            <p className="text-white/40 text-xs leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Disclaimer: I risultati presentati non costituiscono una garanzia di rendimenti futuri. Ogni investimento immobiliare comporta dei rischi.
-              Le testimonianze e i case study riportati rappresentano risultati individuali e non sono necessariamente rappresentativi di cio che tutti possono ottenere.
-              Prima di effettuare qualsiasi investimento, si consiglia di valutare attentamente la propria situazione finanziaria e di consultare un professionista qualificato.
+            <p className="text-white/40 text-xs leading-relaxed">
+              Via Pietrasanta, 14 &mdash; 20141 Milano (MI)
             </p>
-            <p className="text-white/30 text-xs mt-6" style={{ fontFamily: "'Inter', sans-serif" }}>
-              &copy; {new Date().getFullYear()} Alfio Bardolla Training Group S.p.A. — Tutti i diritti riservati.
+            <p className="text-white/40 text-xs leading-relaxed">
+              Capitale sociale 2.649.702,50 &euro; &mdash; P. IVA 08009280960
             </p>
           </div>
+
+          <hr className="my-8 border-white/10" />
+
+          <p className="text-white/30 text-xs leading-relaxed max-w-4xl mx-auto text-center">
+            Disclaimer: I risultati presentati non costituiscono una garanzia di rendimenti futuri. Ogni investimento immobiliare comporta dei rischi.
+            Le testimonianze e i case study riportati rappresentano risultati individuali e non sono necessariamente rappresentativi di cio che tutti possono ottenere.
+            Prima di effettuare qualsiasi investimento, si consiglia di valutare attentamente la propria situazione finanziaria e di consultare un professionista qualificato.
+          </p>
         </div>
       </footer>
     </div>
