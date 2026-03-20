@@ -45,7 +45,21 @@ import { gsap } from 'gsap'
 
 const BASE_PATH = '/ab-landing-system'
 
-type TabId = 'dashboard' | 'pagine' | 'blocchi' | 'animazioni' | 'preview'
+type TabId = 'dashboard' | 'pagine' | 'blocchi' | 'animazioni' | 'immagini' | 'preview'
+
+const GITHUB_REPO = 'samma1997/ab-landing-system'
+const GITHUB_BANK_PATH = 'public/images/bank'
+
+const IMAGE_CATEGORIES = [
+  { id: 'speakers', name: 'Speaker', icon: '🎤', desc: 'Foto speaker e coach (es. Alfio Bardolla, Rodriguez...)', naming: 'speaker-nome-cognome-WxH.jpg' },
+  { id: 'events', name: 'Eventi', icon: '🎪', desc: 'Foto eventi, palchi, sale, platee', naming: 'event-nome-evento-WxH.jpg' },
+  { id: 'immobiliare', name: 'Immobiliare', icon: '🏠', desc: 'Foto immobili, cantieri, ristrutturazioni, rendering', naming: 'immobiliare-descrizione-WxH.jpg' },
+  { id: 'trading', name: 'Trading', icon: '📈', desc: 'Schermate trading, grafici, piattaforme', naming: 'trading-descrizione-WxH.jpg' },
+  { id: 'backgrounds', name: 'Sfondi', icon: '🖼️', desc: 'Immagini di sfondo per hero sections', naming: 'bg-descrizione-WxH.jpg' },
+  { id: 'logos', name: 'Loghi', icon: '✦', desc: 'Loghi ABTG, partner, media (Rai, Corriere...)', naming: 'logo-nome-WxH.png' },
+  { id: 'testimonials', name: 'Testimonianze', icon: '💬', desc: 'Foto studenti, screenshot risultati', naming: 'testimonial-nome-WxH.jpg' },
+  { id: 'icons', name: 'Icone', icon: '◆', desc: 'Icone e illustrazioni personalizzate', naming: 'icon-descrizione-WxH.svg' },
+]
 
 // ────────────────────────────────────────────────────────
 // Block metadata for the gallery
@@ -146,6 +160,7 @@ export default function AdminDashboardPage() {
     pagine: 'Pagine',
     blocchi: 'Libreria Blocchi',
     animazioni: 'Animazioni GSAP',
+    immagini: 'Banca Immagini',
     preview: 'Preview Pagine',
   }
 
@@ -154,6 +169,7 @@ export default function AdminDashboardPage() {
     pagine: `${pages.length} pagin${pages.length === 1 ? 'a' : 'e'} nel registro`,
     blocchi: `${BLOCK_CATALOG.length} blocchi riutilizzabili nel design system`,
     animazioni: `${ANIMATIONS.length} animazioni GSAP disponibili`,
+    immagini: `${IMAGE_CATEGORIES.length} categorie \u2014 Carica le immagini su GitHub per renderle disponibili`,
     preview: 'Anteprima delle pagine registrate',
   }
 
@@ -214,6 +230,11 @@ export default function AdminDashboardPage() {
             Strumenti
           </p>
           <NavItem icon={Eye} label="Preview" active={activeTab === 'preview'} dark={dark} onClick={() => { setActiveTab('preview'); setSidebarOpen(false) }} />
+
+          <p className={`mb-2 mt-5 px-3 text-[10px] font-bold uppercase tracking-[0.15em] ${textMuted}`}>
+            Risorse
+          </p>
+          <NavItem icon={Globe} label="Banca Immagini" badge={String(IMAGE_CATEGORIES.length)} active={activeTab === 'immagini'} dark={dark} onClick={() => { setActiveTab('immagini'); setSidebarOpen(false) }} />
         </nav>
 
         {/* Theme toggle + version */}
@@ -333,6 +354,52 @@ export default function AdminDashboardPage() {
                 />
               ))}
             </div>
+          )}
+
+          {/* ── TAB: IMMAGINI ──────────────────────────────────── */}
+          {activeTab === 'immagini' && (
+            <>
+              {/* How-to banner */}
+              <div className={`mb-6 rounded-xl border p-5 ${dark ? 'border-[#EF7B11]/20 bg-[#EF7B11]/5' : 'border-orange-200 bg-orange-50'}`}>
+                <h3 className={`text-sm font-bold ${textPrimary}`}>Come caricare le immagini</h3>
+                <ol className={`mt-2 space-y-1 text-xs ${textSecondary}`}>
+                  <li>1. Clicca su <strong>&ldquo;Carica su GitHub&rdquo;</strong> nella categoria desiderata</li>
+                  <li>2. Su GitHub, clicca <strong>&ldquo;Add file &rarr; Upload files&rdquo;</strong></li>
+                  <li>3. Trascina le immagini e fai commit</li>
+                  <li>4. Le immagini saranno disponibili per le landing page</li>
+                </ol>
+                <p className={`mt-3 text-[11px] ${textMuted}`}>
+                  <strong>Formato nome:</strong> categoria-descrizione-LARGHEZZAxALTEZZA.jpg (es. speaker-alfio-bardolla-600x600.jpg)
+                </p>
+              </div>
+
+              {/* Category cards */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {IMAGE_CATEGORIES.map(cat => (
+                  <div key={cat.id} className={`rounded-xl border p-5 transition-shadow hover:shadow-md ${cardBg}`}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-2xl">{cat.icon}</span>
+                      <div>
+                        <h3 className={`text-sm font-bold ${textPrimary}`}>{cat.name}</h3>
+                      </div>
+                    </div>
+                    <p className={`text-xs mb-3 ${textSecondary}`}>{cat.desc}</p>
+                    <p className={`text-[10px] font-mono mb-4 ${textMuted}`}>{cat.naming}</p>
+                    <a
+                      href={`https://github.com/${GITHUB_REPO}/tree/main/${GITHUB_BANK_PATH}/${cat.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors ${
+                        dark ? 'border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white' : 'border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                      }`}
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" />
+                      Carica su GitHub
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
 
           {/* ── TAB: PREVIEW ──────────────────────────────────── */}
