@@ -50,7 +50,7 @@ export function StackingCards({
     const center = (total - 1) / 2
     const offset = i - center
     return {
-      x: offset * 300, // px from center — enough space to not overlap
+      x: offset * 180, // px from center
       rotation: offset * 4,
       y: Math.abs(offset) * 15,
     }
@@ -142,12 +142,12 @@ export function StackingCards({
       ref={sectionRef}
       id={id}
       className={`${bgClasses[bgColor]} relative`}
-      style={{ height: `${(total + 1) * 70}vh` }}
     >
-      {/* ═══ DESKTOP ═══ */}
+      {/* ═══ DESKTOP: scroll spacer + sticky ═══ */}
+      <div className="hidden lg:block" style={{ height: `${(total + 1) * 70}vh` }}>
       <div
         ref={stickyRef}
-        className="h-screen w-full overflow-hidden hidden lg:flex flex-col items-center justify-center"
+        className="h-screen w-full overflow-hidden flex flex-col items-center justify-center"
       >
         {/* Heading */}
         <div className="sc-heading text-center mb-10 px-4 relative z-10">
@@ -222,6 +222,7 @@ export function StackingCards({
             })}
           </div>
         </div>
+      </div>
       </div>
 
       {/* ═══ MOBILE: Carousel ═══ */}
