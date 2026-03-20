@@ -125,7 +125,7 @@ export function StackingCards({
   // Calculate card width and positions based on count
   // Cards overlap like dontboardme: each offset ~15-18% of viewport
   const total = cards.length
-  const cardWidthRem = total <= 3 ? 28 : total <= 4 ? 24 : 20
+  const cardWidthRem = total <= 3 ? 24 : total <= 4 ? 20 : 17
   const stepPercent = Math.min(18, 75 / Math.max(total - 1, 1))
   const startPercent = Math.max(2, 50 - (stepPercent * (total - 1)) / 2 - cardWidthRem * 0.5)
 
@@ -175,9 +175,9 @@ export function StackingCards({
               className="absolute"
               style={{
                 left: leftPos,
-                top: '3%',
+                top: '8%',
                 width: `${cardWidthRem}rem`,
-                height: '88%',
+                height: '72%',
                 zIndex: i + 1,
               }}
             >
