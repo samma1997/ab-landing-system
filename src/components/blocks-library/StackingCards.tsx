@@ -217,7 +217,7 @@ export function StackingCards({
                 </div>
 
                 {/* Number + description */}
-                <div className="px-6 pt-6 flex-1 flex flex-col">
+                <div className="px-6 pt-6 flex-1">
                   <p
                     className={`text-7xl xl:text-8xl font-black leading-none mb-3 ${
                       isDark ? 'text-white/70' : 'text-[#1e293b]/70'
@@ -232,33 +232,6 @@ export function StackingCards({
                   >
                     {card.description}
                   </p>
-                </div>
-
-                {/* Bottom colored area */}
-                <div
-                  className="h-[36%] flex items-center justify-center flex-shrink-0"
-                  style={{
-                    background: isDark
-                      ? 'rgba(239,123,17,0.06)'
-                      : CARD_ACCENTS[i % CARD_ACCENTS.length],
-                  }}
-                >
-                  {card.icon ? (
-                    typeof card.icon === 'string' ? (
-                      <span className="text-6xl">{card.icon}</span>
-                    ) : (
-                      card.icon
-                    )
-                  ) : (
-                    <span
-                      className="text-7xl xl:text-8xl font-black"
-                      style={{
-                        color: isDark ? 'rgba(239,123,17,0.15)' : 'rgba(30,41,59,0.08)',
-                      }}
-                    >
-                      {String(num).padStart(2, '0')}
-                    </span>
-                  )}
                 </div>
               </div>
             </div>
@@ -309,7 +282,7 @@ export function StackingCards({
                     style={{ width: '85%' }}
                   >
                     <div
-                      className={`rounded-2xl overflow-hidden h-[28rem] flex flex-col ${
+                      className={`rounded-2xl overflow-hidden h-[22rem] flex flex-col ${
                         isDark
                           ? 'bg-[#1a2332] border border-white/10'
                           : 'bg-[#F5F5F0] shadow-lg'
@@ -342,33 +315,6 @@ export function StackingCards({
                         >
                           {card.description}
                         </p>
-                      </div>
-
-                      {/* Bottom area */}
-                      <div
-                        className="h-[35%] flex items-center justify-center flex-shrink-0"
-                        style={{
-                          background: isDark
-                            ? 'rgba(239,123,17,0.06)'
-                            : CARD_ACCENTS[i % CARD_ACCENTS.length],
-                        }}
-                      >
-                        {card.icon ? (
-                          typeof card.icon === 'string' ? (
-                            <span className="text-5xl">{card.icon}</span>
-                          ) : (
-                            card.icon
-                          )
-                        ) : (
-                          <span
-                            className="text-6xl font-black"
-                            style={{
-                              color: isDark ? 'rgba(239,123,17,0.15)' : 'rgba(30,41,59,0.08)',
-                            }}
-                          >
-                            {String(num).padStart(2, '0')}
-                          </span>
-                        )}
                       </div>
                     </div>
                   </div>
