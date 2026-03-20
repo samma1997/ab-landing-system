@@ -28,7 +28,7 @@ const BASE_PATH = '/ab-landing-system'
 export default function AdminDashboardPage() {
   const pages = registryData.pages as PageRegistryEntry[]
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [dark, setDark] = useState(true)
+  const [dark, setDark] = useState(false)
   const [activeTab, setActiveTab] = useState<'dashboard' | 'pagine'>('dashboard')
 
   const bg = dark ? 'bg-[#0d0f14]' : 'bg-gray-50'
