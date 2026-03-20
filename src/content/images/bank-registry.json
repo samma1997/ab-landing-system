@@ -1,0 +1,58 @@
+{
+  "$schema": "../../lib/image-bank-schema.json",
+  "version": "1.0.0",
+  "lastUpdated": "2026-03-20T00:00:00Z",
+  "totalImages": 0,
+  "categories": {
+    "speakers": {
+      "description": "Foto dei formatori e speaker ABTG",
+      "namingPattern": "speaker-{name-slug}-{widthx height}.{ext}",
+      "recommendedSizes": ["600x600", "400x400", "800x1000"],
+      "preferredFormats": ["webp", "jpg"]
+    },
+    "events": {
+      "description": "Foto di eventi live, sale conferenze, pubblico",
+      "namingPattern": "event-{event-slug}-{descriptor}-{widthxheight}.{ext}",
+      "recommendedSizes": ["1200x630", "1920x1080", "800x600"],
+      "preferredFormats": ["webp", "jpg"]
+    },
+    "immobiliare": {
+      "description": "Immagini per campagne immobiliare (proprietà, planimetrie, lifestyle)",
+      "namingPattern": "immobiliare-{descriptor}-{widthxheight}.{ext}",
+      "recommendedSizes": ["1200x800", "800x600", "600x400"],
+      "preferredFormats": ["webp", "jpg"]
+    },
+    "trading": {
+      "description": "Immagini per campagne trading (grafici, monitor, lifestyle trader)",
+      "namingPattern": "trading-{descriptor}-{widthxheight}.{ext}",
+      "recommendedSizes": ["1200x800", "800x600"],
+      "preferredFormats": ["webp", "jpg"]
+    },
+    "backgrounds": {
+      "description": "Sfondi hero, sfondi sezione, texture",
+      "namingPattern": "bg-{descriptor}-{widthxheight}.{ext}",
+      "recommendedSizes": ["1920x1080", "1440x900", "2560x1440"],
+      "preferredFormats": ["webp", "jpg"]
+    },
+    "icons": {
+      "description": "Icone UI, bullet icons, badge icons",
+      "namingPattern": "icon-{descriptor}-{size}.{ext}",
+      "recommendedSizes": ["64x64", "128x128", "32x32"],
+      "preferredFormats": ["svg", "webp", "png"]
+    },
+    "logos": {
+      "description": "Logo ABTG varianti, loghi media press (Sole24Ore, MilanoFinanza, ecc.)",
+      "namingPattern": "logo-{brand-slug}-{variant}.{ext}",
+      "recommendedSizes": ["200x80", "400x160"],
+      "preferredFormats": ["svg", "webp", "png"]
+    },
+    "testimonials": {
+      "description": "Foto di studenti/clienti per testimonianze",
+      "namingPattern": "testimonial-{name-slug}-{widthxheight}.{ext}",
+      "recommendedSizes": ["200x200", "400x400"],
+      "preferredFormats": ["webp", "jpg"]
+    }
+  },
+  "images": [],
+  "usageLog": []
+}
