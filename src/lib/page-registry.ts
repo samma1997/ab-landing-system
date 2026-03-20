@@ -123,7 +123,7 @@ export function formatDateRelative(dateStr: string): string {
   const diffMs = now.getTime() - d.getTime()
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
-  if (diffDays === 0) return 'Oggi'
+  if (diffDays <= 0) return 'Oggi'
   if (diffDays === 1) return 'Ieri'
   if (diffDays < 7) return `${diffDays} giorni fa`
   if (diffDays < 30) return `${Math.floor(diffDays / 7)} settimane fa`

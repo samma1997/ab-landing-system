@@ -29,6 +29,7 @@ export default function AdminDashboardPage() {
   const pages = registryData.pages as PageRegistryEntry[]
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [dark, setDark] = useState(true)
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'pagine'>('dashboard')
 
   const bg = dark ? 'bg-[#0d0f14]' : 'bg-gray-50'
   const sidebarBg = dark ? 'bg-[#0a0c10] border-white/5' : 'bg-white border-gray-200'
@@ -79,8 +80,8 @@ export default function AdminDashboardPage() {
           <p className={`mb-2 px-3 text-[10px] font-bold uppercase tracking-[0.15em] ${textMuted}`}>
             Gestione
           </p>
-          <NavItem icon={LayoutDashboard} label="Dashboard" active dark={dark} />
-          <NavItem icon={FileText} label="Pagine" badge={String(pages.length)} dark={dark} />
+          <NavItem icon={LayoutDashboard} label="Dashboard" active={activeTab === 'dashboard'} dark={dark} onClick={() => { setActiveTab('dashboard'); setSidebarOpen(false) }} />
+          <NavItem icon={FileText} label="Pagine" badge={String(pages.length)} active={activeTab === 'pagine'} dark={dark} onClick={() => { setActiveTab('pagine'); setSidebarOpen(false) }} />
         </nav>
 
         {/* Theme toggle + version */}
@@ -123,14 +124,19 @@ export default function AdminDashboardPage() {
         <div className="p-4 sm:p-6 lg:p-8">
           {/* Header */}
           <div className="mb-6 sm:mb-8">
-            <h1 className={`text-xl sm:text-2xl font-bold ${textPrimary}`}>Landing Page Factory</h1>
+            <h1 className={`text-xl sm:text-2xl font-bold ${textPrimary}`}>
+              {activeTab === 'dashboard' ? 'Landing Page Factory' : 'Pagine'}
+            </h1>
             <p className={`mt-1 text-sm ${textSecondary}`}>
-              Alfio Bardolla Training Group &mdash; Gestione landing page
+              {activeTab === 'dashboard'
+                ? 'Alfio Bardolla Training Group \u2014 Gestione landing page'
+                : `${pages.length} pagin${pages.length === 1 ? 'a' : 'e'} nel registro`
+              }
             </p>
           </div>
 
-          {/* ── STATS ──────────────────────────────────────────────── */}
-          <div className="mb-6 sm:mb-8 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+          {/* ── STATS (solo in dashboard) ───────────────────────────── */}
+          {activeTab === 'dashboard' && <div className="mb-6 sm:mb-8 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
             <div className={`rounded-xl border p-4 sm:p-5 ${cardBg}`}>
               <div className="flex items-center gap-3">
                 <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${dark ? 'bg-emerald-400/10' : 'bg-emerald-50'}`}>
@@ -164,7 +170,7 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </div>}
 
           {/* ── PAGES ──────────────────────────────────────────────── */}
           <div className={`overflow-hidden rounded-xl border ${cardBg}`}>
@@ -289,11 +295,11 @@ export default function AdminDashboardPage() {
   )
 }
 
-function NavItem({ icon: Icon, label, badge, active = false, dark }: {
-  icon: React.ComponentType<{ className?: string }>; label: string; badge?: string; active?: boolean; dark: boolean
+function NavItem({ icon: Icon, label, badge, active = false, dark, onClick }: {
+  icon: React.ComponentType<{ className?: string }>; label: string; badge?: string; active?: boolean; dark: boolean; onClick?: () => void
 }) {
   return (
-    <button className={`mb-0.5 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
+    <button onClick={onClick} className={`mb-0.5 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
       active
         ? dark ? 'bg-white/[0.07] font-semibold text-white' : 'bg-gray-100 font-semibold text-gray-900'
         : dark ? 'text-white/50 hover:bg-white/[0.04] hover:text-white/70' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
