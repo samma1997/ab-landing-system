@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 300;
+  src: url(https://fonts.gstatic.com/s/lexenddeca/v25/K2FifZFYk-dHSE0UPPuwQ7CrD94i-NCKm-U4rs1wqxnG.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/lexenddeca/v25/K2FifZFYk-dHSE0UPPuwQ7CrD94i-NCKm-U48M1wqxnG.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.gstatic.com/s/lexenddeca/v25/K2FifZFYk-dHSE0UPPuwQ7CrD94i-NCKm-U4F8pwqxnG.ttf) format('truetype');
+}
