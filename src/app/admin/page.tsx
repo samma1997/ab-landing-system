@@ -79,10 +79,12 @@ const BLOCK_PROPS_MAP: Record<string, string[]> = {
   'cta-divider': ['ctaText', 'text', 'ctaHref', 'variant', 'size', 'id'],
   'footer-abtg': ['companyName', 'companyAddress', 'companyVat', 'logo', 'links', 'socialLinks', 'disclaimers', 'copyrightYear', 'id'],
   'horizontal-scroll-cards': ['title', 'titleHighlight', 'subtitle', 'cards', 'bgColor', 'cardWidth', 'gap', 'id'],
+  'stacking-cards': ['preTitle', 'title', 'titleHighlight', 'subtitle', 'cards', 'bgColor', 'id'],
 }
 
 const BLOCK_DEMO_LINKS: Record<string, string> = {
   'horizontal-scroll-cards': `${BASE_PATH}/test-horizontal`,
+  'stacking-cards': `${BASE_PATH}/test-stacking`,
 }
 
 const CATEGORY_DISPLAY: Record<BlockCategory, { label: string; color: string; bg: string }> = {
@@ -770,6 +772,23 @@ function BlockMiniPreview({ blockId, dark }: { blockId: string; dark: boolean })
           </div>
         ))}
         <div className={`text-[10px] ${base}`}>&#8594;</div>
+      </div>
+    ),
+    'stacking-cards': (
+      <div className={`relative flex h-full items-end justify-center gap-1 overflow-hidden p-4 pb-6 ${dark ? 'bg-[#15171d]' : 'bg-gray-100'}`}>
+        {[-8, -4, 0, 4, 8].map((rot, i) => (
+          <div
+            key={i}
+            className={`h-20 w-14 rounded-lg border ${dark ? 'border-white/10 bg-white/[0.04]' : 'border-gray-200 bg-white shadow-sm'}`}
+            style={{ transform: `rotate(${rot}deg) translateY(${Math.abs(rot) * 1.5}px)` }}
+          >
+            <div className="flex h-full flex-col items-center justify-center gap-1 p-1">
+              <div className="flex h-5 w-5 items-center justify-center rounded text-[7px] font-bold text-white" style={{ background: accent }}>{i + 1}</div>
+              <div className={`h-1 w-8 rounded ${dark ? 'bg-white/10' : 'bg-gray-200'}`} />
+              <div className={`h-1 w-6 rounded ${dark ? 'bg-white/5' : 'bg-gray-100'}`} />
+            </div>
+          </div>
+        ))}
       </div>
     ),
     'footer-abtg': (

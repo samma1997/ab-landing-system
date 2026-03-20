@@ -15,6 +15,7 @@ export { FormSection } from './FormSection'
 export { CTADivider } from './CTADivider'
 export { FooterABTG } from './FooterABTG'
 export { HorizontalScrollCards } from './HorizontalScrollCards'
+export { StackingCards } from './StackingCards'
 
 // Re-export types
 export type { HeroSplitProps, HeroSplitFormField } from './HeroSplit'
@@ -30,6 +31,7 @@ export type { FormSectionProps, FormField, EventDetail } from './FormSection'
 export type { CTADividerProps } from './CTADivider'
 export type { FooterABTGProps, FooterLink } from './FooterABTG'
 export type { HorizontalScrollCardsProps, HorizontalScrollCard } from './HorizontalScrollCards'
+export type { StackingCardsProps, StackingCard } from './StackingCards'
 
 // ────────────────────────────────────────────────────────
 // Block Catalog — used by page builder / factory system
@@ -48,6 +50,7 @@ import { FormSection } from './FormSection'
 import { CTADivider } from './CTADivider'
 import { FooterABTG } from './FooterABTG'
 import { HorizontalScrollCards } from './HorizontalScrollCards'
+import { StackingCards } from './StackingCards'
 
 export type BlockCategory = 'hero' | 'social-proof' | 'content' | 'conversion' | 'layout'
 
@@ -156,6 +159,14 @@ export const BLOCK_CATALOG: BlockCatalogEntry[] = [
     component: HorizontalScrollCards as unknown as React.ComponentType<Record<string, unknown>>,
     description:
       'Sezione con card grandi che scorrono orizzontalmente con pin ScrollTrigger. Supporta card con stat, citazioni e contenuti. Su mobile le card si impilano verticalmente.',
+  },
+  {
+    id: 'stacking-cards',
+    name: 'Stacking Cards',
+    category: 'content',
+    component: StackingCards as unknown as React.ComponentType<Record<string, unknown>>,
+    description:
+      'Card che salgono dal basso con effetto ventaglio durante lo scroll. Sezione sticky con pin GSAP ScrollTrigger, ideale per step di processo o fasi di un percorso.',
   },
   {
     id: 'footer-abtg',
