@@ -53,8 +53,8 @@ const MEDIA_LOGOS = [
 
 const CHECKMARKS = [
   'Dal 2017 unica scuola di educazione finanziaria quotata in Borsa in Italia',
-  'Oltre X operazioni immobiliari documentate da studenti e clienti',
-  'Metodo proprietario "Prevendi" per ridurre al minimo il rischio di immobili invenduti',
+  'Oltre 12.000 operazioni immobiliari documentate da studenti e clienti',
+  'Metodo proprietario per ridurre al minimo il rischio di immobili invenduti',
 ]
 
 const BEFORE_AFTER = [
@@ -118,10 +118,9 @@ const SPEAKERS = [
     img: '',
     initials: 'AB',
     bio: [
-      'Ha fondato ABTG nel 2008 dopo anni di operazioni immobiliari condotte in prima persona',
-      'Non insegna dall\'esterno: ogni operazione che cita l\'ha fatta con i suoi soldi e i suoi rischi',
-      'Ha portato ABTG alla quotazione in Borsa nel 2017 — prima e unica scuola di educazione finanziaria italiana su Euronext Growth Milan (ticker: ABTG)',
-      'I bilanci sono pubblici, i numeri sono verificabili: non e un guru con un profilo Instagram',
+      'Fondatore di ABTG (Alfio Bardolla Training Group), la piu grande scuola di educazione finanziaria in Europa (quotata in Borsa), con decine di migliaia di studenti formati in quasi 20 anni di attivita',
+      'Autore di 9 bestseller internazionali tradotti in multiple lingue, tra cui "I Soldi Fanno la Felicita" e "Il Metodo per Raggiungere la Liberta Finanziaria", venduti in centinaia di migliaia di copie',
+      'Imprenditore seriale di successo con un patrimonio costruito attraverso investimenti immobiliari, trading e business',
     ],
   },
   {
@@ -130,9 +129,20 @@ const SPEAKERS = [
     img: '',
     initials: 'SR',
     bio: [
-      'Non e un formatore: e un imprenditore socio di ABTG',
-      'Ha fondato Vivi Salute, il primo network odontoiatrico italiano: 170 strutture convenzionate, 56 citta, oltre 200.000 pazienti',
+      'Imprenditore socio di ABTG',
+      'Fondatore di Vivi Salute, il primo network odontoiatrico italiano: 170 strutture convenzionate, 56 citta, oltre 200.000 pazienti',
       'Oltre X operazioni immobiliari svolte, con un profitto complessivo di Y',
+    ],
+  },
+  {
+    name: 'Floriana Pagliano',
+    role: 'Responsabile Area Immobili ABTG',
+    img: '',
+    initials: 'FP',
+    bio: [
+      'Oltre 500 operazioni immobiliari completate con successo, spaziando da piccoli appartamenti a complessi residenziali milionari, con un track record di profitti costanti in ogni fase di mercato',
+      'Formatrice di centinaia di investitori immobiliari attraverso i corsi ABTG, specializzata nel trasformare piccoli operatori in grandi costruttori del loro territorio',
+      'Consulente strategica per investitori istituzionali e costruttori che vogliono ottimizzare tempi, costi e margini attraverso il suo sistema di negoziazione asimmetrica e networking fornitori',
     ],
   },
   {
@@ -269,7 +279,7 @@ export default function MissioneImmobiliareV2Page() {
           className="text-sm sm:text-base font-bold uppercase tracking-wide"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Evento online GRATUITO di 4 serate LIVE — 27-30 Aprile ore 21
+          Evento online GRATUITO di 4 serate LIVE per chi intende investire almeno 20.000 euro nell&apos;immobiliare — 27-30 Aprile ore 21
         </p>
       </div>
 
@@ -464,7 +474,7 @@ export default function MissioneImmobiliareV2Page() {
             className="gsap-fade-up text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-[#1e293b] mb-10 sm:mb-14"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
-            <span className="text-[#EF7B11]">Prima</span> vs <span className="text-green-500">Dopo</span> il Metodo Prevendi
+            <span className="text-[#EF7B11]">Prima</span> vs <span className="text-green-500">Dopo</span> Missione Immobiliare
           </h2>
 
           <div className="gsap-fade-up space-y-3 sm:space-y-4">
@@ -537,6 +547,18 @@ export default function MissioneImmobiliareV2Page() {
               </div>
             ))}
           </div>
+
+          <div className="gsap-fade-up max-w-4xl mx-auto mt-10 sm:mt-14 space-y-4">
+            <p className="text-[#1e293b] text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Il problema non &egrave; la tua mancanza di coraggio. Non &egrave; nemmeno il capitale.
+            </p>
+            <p className="text-[#1e293b] text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Il problema &egrave; che nessuno ti ha mai mostrato un&apos;operazione reale dall&apos;inizio alla fine, con i numeri veri, gli errori veri, i contratti veri. Tutto quello che trovi in giro &egrave; teoria, o &egrave; troppo generico per essere applicato, o viene da qualcuno che ti sta vendendo qualcosa senza averlo mai fatto davvero.
+            </p>
+            <p className="text-[#EF7B11] text-base sm:text-lg leading-relaxed font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Missione Immobiliare &egrave; stato costruito per colmare esattamente questo vuoto.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -546,6 +568,70 @@ export default function MissioneImmobiliareV2Page() {
       <section className="bg-white py-8 sm:py-12">
         <div className="max-w-[1250px] mx-auto px-4 text-center gsap-fade-up">
           <CTAButton>Richiedi il tuo posto gratuito</CTAButton>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════════════════
+          COSA SCOPRIRAI — 7 bullet points
+          ════════════════════════════════════════════════════════════════════════ */}
+      <section className="bg-[#F5F5F7] py-12 sm:py-16 lg:py-20">
+        <div className="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            className="gsap-fade-up text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-[#1e293b] mb-10 sm:mb-14"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            Cosa scoprirai al workshop <span className="text-[#EF7B11]">&ldquo;Missione Immobiliare&rdquo;</span>
+          </h2>
+
+          <div className="gsap-fade-up max-w-4xl mx-auto space-y-5">
+            {[
+              { emoji: '\u{1F4C9}', text: 'I 5 errori pi\u00f9 costosi che fanno le persone alle prime armi (comprare di pancia, ristrutturare per s\u00e9 invece che per il mercato, aspettare il prezzo massimo invece di vendere veloce. Alfio li smonta uno per uno con esempi reali)' },
+              { emoji: '\u{1F50D}', text: 'Perch\u00e9 il 2026 \u00e8 probabilmente il momento migliore degli ultimi vent\'anni per fare la tua prima operazione immobiliare (e cosa hanno in comune tassi bassi, immobili all\'asta post-2020 e la nuova legge sulle donazioni che la maggior parte degli investitori non ha ancora capito)' },
+              { emoji: '\u{1F9E0}', text: 'Il cambio di mentalit\u00e0 che separa chi guadagna da chi ci rimette (non \u00e8 motivazione, non \u00e8 coraggio. \u00c8 un modo diverso di leggere il mercato prima ancora di cercare un immobile)' },
+              { emoji: '\u{1F5FA}\uFE0F', text: 'Come identificare le zone ad alto potenziale in tutta Italia usando il software ABTG (vedrai una demo live che ti mostrer\u00e0 zone, dimensioni, target, analisi delle agenzie online. Grazie a questo software capisci in tempo reale se un mercato vale il tuo capitale o no)' },
+              { emoji: '\u{1F4B6}', text: 'Come trovare venditori motivati per risparmiare decine di migliaia di euro gi\u00e0 nell\'acquisto dell\'immobile' },
+              { emoji: '\u{1F4D1}', text: 'Come fare operazioni immobiliari usando anche i soldi degli altri, e come costruire la squadra giusta intorno a te fin dalla prima operazione' },
+              { emoji: '\u2696\uFE0F', text: 'I contratti che ti salvano dai problemi pi\u00f9 costosi (un avvocato specializzato ti mostra cosa deve contenere un contratto per proteggerti davvero, cosa \u00e8 cambiato nel 2026 con le nuove normative, e quali clausole trasformano un\'operazione buona in un problema legale)' },
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-4 bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+                <span className="text-2xl flex-shrink-0">{item.emoji}</span>
+                <p className="text-[#1e293b] text-sm sm:text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════════════════
+          INTRO PILASTRI
+          ════════════════════════════════════════════════════════════════════════ */}
+      <section className="bg-white py-12 sm:py-16 lg:py-20">
+        <div className="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            className="gsap-fade-up text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-[#1e293b] mb-6"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            Perch&eacute; gli investitori ABTG ottengono profitti che la maggior parte degli investitori <span className="text-[#EF7B11]">non riesce a replicare</span>
+          </h2>
+          <p className="gsap-fade-up text-center text-[#67768e] text-sm sm:text-base italic mb-8" style={{ fontFamily: "'Inter', sans-serif" }}>
+            (lo approfondiremo a Missione Immobiliare)
+          </p>
+          <div className="gsap-fade-up max-w-4xl mx-auto space-y-4">
+            <p className="text-[#1e293b] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+              La differenza non &egrave; il capitale di partenza. Non &egrave; la fortuna. Non &egrave; nemmeno la zona geografica.
+            </p>
+            <p className="text-[#1e293b] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+              &Egrave; il metodo, e l&apos;ordine in cui vengono prese le decisioni.
+            </p>
+            <p className="text-[#1e293b] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+              La maggior parte degli investitori segue questa sequenza: trova un immobile, lo compra, lo ristruttura, poi cerca di venderlo. Questo approccio porta a immobili fermi sul mercato per mesi, margini erosi dai costi di gestione e dal tempo, e rischio di invenduto che pesa su ogni operazione.
+            </p>
+            <p className="text-[#1e293b] text-base leading-relaxed font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Il <span className="text-[#EF7B11]">Metodo Prevendi</span> di Alfio Bardolla Training Group inverte questa logica lavorando su quattro pilastri:
+            </p>
+          </div>
         </div>
       </section>
 
@@ -586,7 +672,7 @@ export default function MissioneImmobiliareV2Page() {
             I <span className="text-[#E57713]">Coach</span> che ti guideranno durante Missione Immobiliare
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {SPEAKERS.map((speaker, i) => (
               <div
                 key={i}
@@ -652,37 +738,36 @@ export default function MissioneImmobiliareV2Page() {
               className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-white mb-6"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             >
-              La <span className="text-[#EF7B11]">Finestra 2026</span>: perche agire adesso
+              Perch&eacute; il <span className="text-[#EF7B11]">2026</span> &egrave; una finestra che si apre raramente, e si chiude in fretta
             </h2>
 
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 lg:p-10 border border-white/10">
-              <p className="text-white/90 text-base sm:text-lg leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Il mercato immobiliare italiano sta attraversando una fase di transizione unica. I tassi di interesse sono in discesa, i prezzi in molte zone non hanno ancora recuperato i livelli pre-crisi, e la domanda di immobili ristrutturati e efficienti dal punto di vista energetico e in forte crescita.
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 lg:p-10 border border-white/10 space-y-5">
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Quello che sta succedendo sul mercato immobiliare italiano in questo momento non &egrave; una crisi. &Egrave; una redistribuzione.
               </p>
-              <p className="text-white/90 text-base sm:text-lg leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Questa combinazione crea una <strong className="text-[#EF7B11]">finestra temporale limitata</strong> in cui e possibile acquistare a prezzi vantaggiosi e rivendere con margini significativi.
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Tutto quello che &egrave; successo negli ultimi anni (l&apos;aumento dei tassi, l&apos;inflazione, i costi dell&apos;energia, le difficolt&agrave; economiche del post-2020) impiega anni a tradursi in immobili che cambiano mano a prezzi scontati.
               </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mt-8">
-                {[
-                  { icon: TrendingUp, label: 'Tassi in discesa', value: 'Opportunita di acquisto' },
-                  { icon: Clock, label: 'Finestra limitata', value: '12-18 mesi stimati' },
-                  { icon: Target, label: 'Margini potenziali', value: '30.000+ euro per operazione' },
-                ].map((stat, i) => (
-                  <div key={i} className="text-center bg-white/5 rounded-xl p-4 sm:p-5 border border-white/10">
-                    <stat.icon className="w-8 h-8 text-[#EF7B11] mx-auto mb-2" />
-                    <p className="text-white font-bold text-sm sm:text-base" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      {stat.value}
-                    </p>
-                    <p className="text-white/60 text-xs sm:text-sm mt-1" style={{ fontFamily: "'Inter', sans-serif" }}>
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-white/70 text-sm mt-8 text-center italic" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Chi si muove per primo, in queste fasi, costruisce il vantaggio maggiore.
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Una procedura di pignoramento, in media, richiede circa sei anni per arrivare all&apos;asta. Quello che &egrave; successo nel 2020 arriva sul mercato adesso.
+              </p>
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Chi &egrave; preparato trova immobili a prezzi che non si vedevano da oltre un decennio. Chi aspetta che &ldquo;il momento sia giusto&rdquo; trova che qualcun altro lo ha gi&agrave; comprato.
+              </p>
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+                C&apos;&egrave; un secondo motivo per cui questo momento &egrave; diverso dagli altri.
+              </p>
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Fuori dalle grandi citt&agrave; come Milano e Roma il mercato immobiliare italiano &egrave; ancora accessibile.
+              </p>
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Ci sono centinaia di zone in tutta Italia con una combinazione precisa di caratteristiche:
+              </p>
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Densit&agrave; abitativa in crescita, infrastrutture in sviluppo, prezzi ancora bassi, domanda in aumento. Zone che chi investe professionalmente identifica mesi prima che diventino ovvie a tutti.
+              </p>
+              <p className="text-[#EF7B11] text-base sm:text-lg leading-relaxed font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Il Metodo Prevendi &egrave; stato costruito esattamente per trovare queste zone, e per entrare ed uscire prima che il mercato si accorga di loro.
               </p>
             </div>
           </div>
@@ -698,22 +783,24 @@ export default function MissioneImmobiliareV2Page() {
             className="gsap-fade-up text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-[#1e293b] mb-4"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
-            Vuoi scoprire se questo percorso fa per te e ottenere una valutazione personalizzata{' '}
-            <span className="text-[#E57713]">basata sulla tua situazione attuale</span>?
+            Come funziona e come accedere a{' '}
+            <span className="text-[#E57713]">Missione Immobiliare</span>
           </h2>
 
           <div className="gsap-fade-up max-w-2xl mx-auto mt-10 sm:mt-14">
             <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 lg:p-10 border border-gray-100">
-              {/* Event details */}
-              <div className="text-center mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-gray-100">
-                <p className="text-[#EF7B11] font-bold text-sm uppercase tracking-wider mb-2" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  Missione Immobiliare 2026
+              <div className="space-y-4 mb-8">
+                <p className="text-[#1e293b] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  L&apos;evento &egrave; gratuito e aperto a chi intende investire almeno 20.000 euro nell&apos;immobiliare, che tu abbia gi&agrave; fatto operazioni o stia valutando la prima.
                 </p>
-                <p className="text-[#1e293b] text-lg sm:text-xl font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  4 serate online gratuite
+                <p className="text-[#1e293b] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Compila i campi richiesti per riservare il tuo posto. Un nostro tutor ti contatter&agrave; per una breve call di selezione, per capire il tuo punto di partenza e assicurarsi che le quattro serate siano il percorso giusto per te in questo momento.
                 </p>
-                <p className="text-[#67768e] text-sm mt-1" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  27-30 Aprile 2026 | Ore 21:00 | Online da casa tua
+                <p className="text-[#1e293b] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  L&apos;evento si terr&agrave; in diretta per 4 serate consecutive: 27, 28, 29 e 30 Aprile alle ore 21. Troverai dimostrazioni pratiche del Metodo di ABTG su operazioni reali, una demo live del software di mappatura territoriale ABTG, e sessioni di domande e risposte con gli speaker.
+                </p>
+                <p className="text-[#1e293b] text-base leading-relaxed font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Tutto questo in maniera completamente <span className="text-[#EF7B11]">GRATUITA</span>.
                 </p>
               </div>
 
@@ -721,7 +808,7 @@ export default function MissioneImmobiliareV2Page() {
               <div className="bg-[#FFF7ED] border border-[#EF7B11]/20 rounded-xl p-4 mb-6 sm:mb-8">
                 <p className="text-[#1e293b] text-sm font-medium text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
                   <span className="text-[#EF7B11] font-bold">Requisito:</span>{' '}
-                  Disponibilita di almeno 20.000 euro da investire nell&apos;immobiliare
+                  Avere almeno 20.000 euro da destinare a un investimento immobiliare, o essere gi&agrave; operativo e voler migliorare i propri margini.
                 </p>
               </div>
 
